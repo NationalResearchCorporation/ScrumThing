@@ -219,7 +219,7 @@
     </ArtifactReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Scrum.Database\ScrumThing.Database.sqlproj">
+    <ProjectReference Include="..\..\ScrumThing.Database\ScrumThing.Database.sqlproj">
       <Name>ScrumThing.Database</Name>
       <Project>{87a41bef-4796-4733-a7ab-7bea7dac7b86}</Project>
       <Private>True</Private>

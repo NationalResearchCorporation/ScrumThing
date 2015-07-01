@@ -1,0 +1,51 @@
+﻿@using System.Security.Principal
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScrumThing</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/underscore")
+    @Scripts.Render("~/bundles/bootstrap")
+    @* TODO: Figure out why the NuGet package for highcharts isn't working *@
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+</head>
+<body id="body">
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="@(Request.RawUrl == "/PlanSprint" ? "active" : "")"><a href="/PlanSprint">Plan</a></li>
+            <li class="@(Request.RawUrl == "/ViewSprint" ? "active" : "")"><a href="/ViewSprint">View</a></li>
+            <li class="@(Request.RawUrl == "/Burndown" ? "active" : "")"><a href="/Burndown">Burndown</a></li>
+            <li class="@(Request.RawUrl == "/EstimatesVsActuals" ? "active" : "")"><a href="/EstimatesVsActuals">Estimates vs Actuals</a></li>
+
+            <!-- Single button -->
+            <li class="navbar-text pull-right">
+                <div class="dropdown">
+                    @User.Identity.Name
+                    <button class="btn btn-default dropdown-toggle" type="button" id="teamMenu" data-toggle="dropdown" aria-expanded="true">
+                        <span data-bind="text: currentTeam() ? currentTeam().TeamName : ''"></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="teamMenu">
+                        <!-- ko foreach: { data: teams, as: 'team' } -->
+                        <li role="presentation"><a role="menuitem" href="#" data-bind="text: team.TeamName, click: function(){ $parent.currentTeam(team); }"></a></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        @RenderBody()
+    </div>
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="~/TypeScript/Shared/Models.js"></script>
+    <script src="~/TypeScript/Shared/Utility.js"></script>
+    <script src="~/TypeScript/Knockout/TooltipBinding.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

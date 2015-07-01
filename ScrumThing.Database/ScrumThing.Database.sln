@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ScrumThing.Database", "ScrumThing.Database.sqlproj", "{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ScrumThing.tSQLt", "ScrumThing.tSQLt\ScrumThing.tSQLt.sqlproj", "{6BD2A372-D47A-48E7-99E6-8F7EC7935596}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A41BEF-4796-4733-A7AB-7BEA7DAC7B86}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD2A372-D47A-48E7-99E6-8F7EC7935596}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

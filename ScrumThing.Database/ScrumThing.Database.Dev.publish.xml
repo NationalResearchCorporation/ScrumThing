@@ -2,9 +2,9 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseName>ScrumThingTool_Dev</TargetDatabaseName>
+    <TargetDatabaseName>ScrumThing_Dev</TargetDatabaseName>
     <DeployScriptFileName>ScrumThing.Database.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <TargetConnectionString>Data Source=piScrumThingweb01;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=piScrumweb01;Integrated Security=True;Pooling=False</TargetConnectionString>
   </PropertyGroup>
 </Project>

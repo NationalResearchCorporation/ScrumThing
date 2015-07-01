@@ -1,0 +1,9 @@
+﻿CREATE TABLE tSQLt.TestResult(
+    Id INT IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+    Class NVARCHAR(MAX) NOT NULL,
+    TestCase NVARCHAR(MAX) NOT NULL,
+    Name AS (QUOTENAME(Class) + '.' + QUOTENAME(TestCase)),
+    TranName NVARCHAR(MAX) NOT NULL,
+    Result NVARCHAR(MAX) NULL,
+    Msg NVARCHAR(MAX) NULL
+);

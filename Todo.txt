@@ -1,0 +1,21 @@
+
+User stories:
+    As a team member, I want visual feedback when I need to save/have saved changes
+    As a team member, I want to be able to track retro items and sprint goals
+    As a team member, I want to be able to have multiple teams use this tool at once
+    As a team member, I want to be able to add/review notes on tasks
+    As a team member, I want the home page to be more engaging
+    As a team member, I want to be able to manage a backlog of user stories
+    As a team member, I want to be able to reorder stories/tasks easily
+    As a team member, I want story points/hour estimates to be limited to fibinocci numbers (unless timeboxed)
+    As a team member, I want to be able to mark a task as timeboxed
+    As a team member, I want incident/defect counts on my virtual cardwall
+    As a qs team member, I want to be able to link a task's requirements to test cases
+    As a scrum master, I want an easy to fill out form for daily updates with burndown and incidents/defects
+    As a scrum master, I want some basic sprint trending data
+    As a scrum master, I want to be able to assign stories to categories
+
+Technical:
+    Open Source
+    Missing FKs
+

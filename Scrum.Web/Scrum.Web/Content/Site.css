@@ -1,0 +1,124 @@
+﻿body, p, h1, span {
+    color: rgba(51,71,79,0.87);
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.table-bordered, .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px #9E9E9E solid;
+}
+
+thead {
+    background-color: rgba(207, 216, 220, 0.82);
+}
+
+tbody {
+    background-color: #ECEFF1;
+}
+
+.active, .active span {
+    color: #ffffff;
+}
+
+.break-word {
+    word-break: break-word;
+}
+
+.columns {
+    margin: 0 5% 0 5%;
+    width: 90%;
+}
+
+    .columns td {
+        background-color: #f4f4f4;
+        border: 1px solid #808080;
+        width: 16.66%;
+        vertical-align: top;
+    }
+
+        .columns td div {
+            height: 40px;
+        }
+
+.indent {
+    list-style: none;
+}
+
+.invert {
+    color: #ffffff;
+}
+
+.locked-resize {
+    resize: vertical;
+}
+
+.table th {
+    text-align: center;
+}
+
+.table tr {
+    text-align: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.table-fixed {
+    table-layout: fixed;
+}
+
+.tags {
+    display: block;
+    float: right;
+    cursor: default;
+}
+
+.complete {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+    background-color: #B2E0C2;
+}
+
+.blocked {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+    background-color: #FF7777;
+}
+
+.progressing {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+    background-color: #ECEFF1;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+    cursor: move;
+}
+
+.reachGoalLine {
+    background-color: #c9302c;
+    color: #fff;
+    font-size: 1.2em;
+    border-color: #c9302c;
+    border-width: 2px 2px 0 2px;
+    border-style: solid;
+}
+
+.reachGoalSection {
+    border-color: #c9302c;
+    border-width: 0 2px 2px 2px;
+    border-style: solid;
+}

@@ -1,0 +1,231 @@
+﻿<h1>Current Sprint: <span data-bind="text: sprintName"></span></h1>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-primary" data-bind="click: AddSprint">Create New Sprint</button>
+</div>
+<div class="btn-group">
+    <div class="dropdown">
+        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+            Change Sprint<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <!-- ko foreach: sprints -->
+                <li><a href="#" data-bind="click: $root.ChangeSprint(SprintId, Name), text: Name"></a></li>
+            <!-- /ko -->
+        </ul>
+    </div>
+</div>
+<div class="row"><div class="col-md-12">&nbsp;</div></div>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion" href="#sprintInfoPanel">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#sprintInfoPanel">Sprint Info</a></h4>
+        </div>
+        <div id="sprintInfoPanel" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Sprint Name</label>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control" name="sprintName" data-bind="textInput: sprintName" />
+                    </div>                    
+                </div>   
+                <div class="row">
+                    <ul>
+                        <li class="btn-group">
+                            <button class="btn btn-success" data-bind="click: UpdateSprint">Save Sprint Info</button>
+                            <button class="btn btn-info" data-bind="click: ExportSprint">Export Sprint Info</button>
+                        </li>
+                    </ul>
+                </div>             
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading pointer collapsed" data-toggle="collapse" data-parent="#accordion" href="#sprintDaysPanel">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#sprintDaysPanel">Sprint Days</a></h4>
+        </div>
+        <div id="sprintDaysPanel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="sprintDaysPicker"></div>
+                <div class="btn-group">
+                    <button class="btn btn-success" data-bind="click: SetSprintDays">Save Sprint Days</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default collapsed">
+        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion" href="#resourcesPanel">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#resourcesPanel">Resources</a></h4>
+        </div>
+        <div id="resourcesPanel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Dev %</th>
+                            <th>QS %</th>
+                            <th>Days Available</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: resources">
+                        <tr>
+                            <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
+                            <td><input class="form-control" type="number" data-bind="value: DevPercentage" /></td>
+                            <td><input class="form-control" type="number" data-bind="value: QsPercentage" /></td>
+                            <td><input class="form-control" type="number" data-bind="value: Days" /></td>
+                            <td data-bind="text: TotalHours"></td>
+                            <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-bind="click: AddResource">Add Resource</button>
+                    <button class="btn btn-success" data-bind="click: SetResources">Save Resources</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading collapsed pointer" data-toggle="collapse" data-parent="#accordion" href="#storiesPanel">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#storiesPanel">Stories</a></h4>
+        </div>
+        <div id="storiesPanel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Story / Task</th>
+                            <th>Points (<span data-bind="text: totalStoryPoints"></span>)</th>
+                            <th data-bind="css: $root.HoursRemainingClass(totalDevHoursRemaining)">Dev Hours: (<span data-bind="text: totalDevHoursRemaining"></span> remain)</th>
+                            <th data-bind="css: $root.HoursRemainingClass(totalQsHoursRemaining)">QS Hours: (<span data-bind="text: totalQsHoursRemaining"></span> remain)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ko template: { name: 'planSprintStoryTemplate', foreach: committedStories() } -->
+                        <!-- /ko -->
+                    </tbody>
+                    <tbody>
+                        <tr class="reachGoalLine">
+                            <td colspan="6" data-bind="visible: reachStories().length > 0">Reach Goals</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="reachGoalSection">
+                        <!-- ko template: { name: 'planSprintStoryTemplate', foreach: reachStories() } -->
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <div class="btn-group" data-bind="visible: sprintIsEmpty()">
+                    <button class="btn btn-primary" data-bind="click: AddStory">Add Story</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading collapsed pointer" data-toggle="collapse" data-parent="#accordion" href="#byTheNumbersPanel">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#byTheNumbersPanel">By The Numbers</a></h4>
+        </div>
+        <div id="byTheNumbersPanel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Story Points</th>
+                            <th>Dev Hours</th>
+                            <th>QS Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-bind="text: totalStoryPoints"></td>
+                            <td data-bind="text: totalDevHoursAllocated"></td>
+                            <td data-bind="text: totalQsHoursAllocated"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form style="display: none" id="exportSprintForm" method="post" action="/Export/ExportSprintToXlsx">
+    <input id="SprintId" name="SprintId" data-bind="value: sprintId" />
+</form>
+
+<script type="text/html" id="planSprintStoryTemplate">
+    <tr data-bind="attr: { ondrop: $root.OnDropStory($index())}" ondragover="viewModel.AllowDrop(event)">
+        <td draggable="true"
+            ondragstart="viewModel.Drag(event)"
+            data-bind="attr: { id: HtmlId }">
+            <span data-bind="text: Ordinal()"></span>
+        </td>
+        <td><textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea></td>
+        <td><input class="form-control" type="number" data-bind="value: StoryPoints" /></td>
+        <td data-bind="text: TotalDevHours"></td>
+        <td data-bind="text: TotalQsHours"></td>
+        <td>
+            <div class="btn-group-vertical">
+                <button class="btn btn-danger btn-sm" data-bind="click: function () { $root.RemoveStory.call($root, $data); }">Remove Story</button>
+                <button class="btn btn-default btn-sm" data-bind="text: ReachToggleText, click: ToggleReachGoal"></button>
+            </div>
+        </td>
+    </tr>
+    <!-- ko foreach: _.sortBy(Tasks(), function (task) { return task.Ordinal(); }) -->
+    <tr data-bind="attr: { ondrop: $root.OnDropTask($parent, $index()) }" ondragover="viewModel.AllowDrop(event)">
+        <td draggable="true"
+            ondragstart="viewModel.Drag(event)"
+            data-bind="attr: { id: HtmlId }">
+            <ul class="indent">
+                <li>
+                    <span data-bind="text: $parent.Ordinal() + '.' + Ordinal()"></span>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <ul class="indent">
+                <li>
+                    <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
+                </li>
+            </ul>
+        </td>
+        <td class="text-left">
+            <!-- ko foreach: Tags -->
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="value: TagId, checked: IsIncluded, event: { click: $parent.UpdateTask }" />
+                    <span data-bind="text: TagDescription" class="small"></span>
+                </label>
+            </div>
+            <!-- /ko -->
+        </td>
+        <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
+        <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
+        <td>
+            <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
+        </td>
+    </tr>
+    <!-- /ko -->
+    <tr>
+        <td colspan="6">
+            <ul class="indent">
+                <li class="btn-group pull-left">
+                    <button class="btn btn-primary btn-sm" data-bind="click: $data.AddTask">Add Task</button>
+                    <button class="btn btn-primary btn-sm" data-bind="click: function() { $parent.AddStory.call($parent, $data); }">Insert Story</button>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</script>
+
+<script src="~/TypeScript/Shared/BaseSprintViewModel.js"></script>
+<script src="~/TypeScript/Home/PlanSprint.js"></script>

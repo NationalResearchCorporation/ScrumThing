@@ -1,0 +1,31 @@
+
+General CSS styling
+
+From Tim
+    User authentication
+
+Sprint planning
+    .Resource planning
+        .People, percentage allocation, days allocated, dev vs qs
+    Backlog
+        Add user story
+        Add task
+        Promote to current sprint
+    Current sprint
+        .Add user story
+        .Add task
+        Demote to backlog
+        Move to reach goal
+        .View resources remaining
+    .Begin sprint
+
+Sprint execution
+    Burn hours
+    Add note to sticky
+    .Move task
+        What are the available columns?
+    Burndown chart
+
+Sprint completion
+    Summary
+

@@ -16,9 +16,9 @@ BEGIN
 
     DELETE FROM TasksInTags
     WHERE TaskId = @TaskId
-      AND TagId NOT IN (SELECT TagId from @TagIds);
+      AND TaskTagId NOT IN (SELECT TagId from @TagIds);
 
-    INSERT INTO TasksInTags (TaskId, TagId)
+    INSERT INTO TasksInTags (TaskId, TaskTagId)
     SELECT @TaskId, TagId
     FROM @TagIds T
     WHERE T.TagId NOT IN (SELECT TagId FROM TasksInTags WHERE TaskId = @TaskId);

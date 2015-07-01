@@ -92,7 +92,7 @@
     <Build Include="Tables\Teams.sql" />
     <Build Include="Stored Procedures\AddTeam.sql" />
     <Build Include="Stored Procedures\GetTeams.sql" />
-    <Build Include="Tables\Tags.sql" />
+    <Build Include="Tables\TaskTags.sql" />
     <Build Include="Tables\TasksInTags.sql" />
     <Build Include="Stored Procedures\SetTaskTags.sql" />
     <Build Include="Stored Procedures\RemoveTask.sql" />

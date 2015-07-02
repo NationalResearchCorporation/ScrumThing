@@ -9,7 +9,7 @@ CREATE PROCEDURE [dbo].[UpdateTask]
     @QsHoursBurned FLOAT,
     @RemainingDevHours FLOAT,
     @RemainingQsHours FLOAT,
-    @Tags VARCHAR(MAX)
+    @TaskTags VARCHAR(MAX)
 AS
 BEGIN
     BEGIN TRANSACTION
@@ -50,7 +50,7 @@ BEGIN
         RemainingQsHours = @RemainingQsHours
     WHERE TaskId = @TaskId;
 
-    EXEC dbo.SetTaskTags @TaskId, @Tags
+    EXEC dbo.SetTaskTags @TaskId, @TaskTags
 
     IF @NeedToLogWork = 1 BEGIN
         EXEC dbo.LogWork @TaskId

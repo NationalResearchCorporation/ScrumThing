@@ -41,10 +41,13 @@ namespace ScrumThing.Web.Controllers {
         }
 
         [HttpPost]
-        [OutputCache(Duration = 3600, VaryByParam = "none")]
-        public ActionResult GetTags()
-        {
-            return Json(context.GetTags());
+        public ActionResult GetStoryTags() {
+            return Json(context.GetStoryTags());
+        }
+
+        [HttpPost]
+        public ActionResult GetTaskTags() {
+            return Json(context.GetTaskTags());
         }
 
         [HttpPost]
@@ -67,6 +70,10 @@ namespace ScrumThing.Web.Controllers {
                                      .Where(task => task.StoryId == story.StoryId)
                                      .ToList();
 
+                story.StoryTags = results.StoryTags
+                                         .Where(tag => tag.StoryId == story.StoryId)
+                                         .ToList();
+
                 // Add Assignments and Notes to Tasks
                 foreach (var task in story.Tasks) {
                     task.Assignments = results.Assignments
@@ -77,7 +84,7 @@ namespace ScrumThing.Web.Controllers {
                                         .Where(note => note.TaskId == task.TaskId)
                                         .ToList();
 
-                    task.Tags = results.Tags
+                    task.TaskTags = results.TaskTags
                                        .Where(tag => tag.TaskId == task.TaskId)
                                        .ToList();
                 }
@@ -112,7 +119,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult UpdateTask(Input_UpdateTask formData) {
-            context.UpdateTask(formData.TaskId, formData.TaskText, formData.State, formData.EstimatedDevHours, formData.EstimatedQsHours, formData.DevHoursBurned, formData.QsHoursBurned, formData.RemainingDevHours, formData.RemainingQsHours, formData.Tags);
+            context.UpdateTask(formData.TaskId, formData.TaskText, formData.State, formData.EstimatedDevHours, formData.EstimatedQsHours, formData.DevHoursBurned, formData.QsHoursBurned, formData.RemainingDevHours, formData.RemainingQsHours, formData.TaskTags);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
@@ -141,6 +148,12 @@ namespace ScrumThing.Web.Controllers {
         [HttpPost]
         public ActionResult MoveTask(Input_MoveTask formData) {
             return Json(context.MoveTask(formData.TaskId, formData.NewStoryId, formData.NewOrdinal));
+        }
+
+        [HttpPost]
+        public ActionResult SetStoryTags(Input_SetStoryTags formData) {
+            context.SetStoryTags(formData.StoryId, formData.StoryTagIds);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

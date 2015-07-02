@@ -8,7 +8,7 @@ namespace ScrumThing.Web.Database.Inputs
         public int TaskId { get; set; }
         public string TaskText { get; set; }
         public string State { get; set; }
-        public string Tags { get; set; }
+        public string TaskTags { get; set; }
         public double EstimatedDevHours { get; set; }
         public double EstimatedQsHours { get; set; }
         public double DevHoursBurned { get; set; }

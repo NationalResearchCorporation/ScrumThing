@@ -6,7 +6,8 @@ namespace ScrumThing.Web.Database.Outputs {
         public List<Output_GetSprintInfo_Task> Tasks { get; set; }
         public List<Output_GetSprintInfo_Assignment> Assignments { get; set; }
         public List<Output_GetSprintInfo_Note> Notes { get; set; }
-        public List<Output_GetSprintInfo_Tag> Tags { get; set; }
+        public List<Output_GetSprintInfo_StoryTag> StoryTags { get; set; }
+        public List<Output_GetSprintInfo_TaskTag> TaskTags { get; set; }
     }
 
     public class Output_GetSprintInfo_Story {
@@ -20,6 +21,7 @@ namespace ScrumThing.Web.Database.Outputs {
 
         // Will be filled in by the controller, not the database
         public List<Output_GetSprintInfo_Task> Tasks { get; set; }
+        public List<Output_GetSprintInfo_StoryTag> StoryTags { get; set; }
     }
 
     public class Output_GetSprintInfo_Task {
@@ -38,7 +40,7 @@ namespace ScrumThing.Web.Database.Outputs {
         // Will be filled in by the controller, not the database
         public List<Output_GetSprintInfo_Assignment> Assignments { get; set; }
         public List<Output_GetSprintInfo_Note> Notes { get; set; }
-        public List<Output_GetSprintInfo_Tag> Tags { get; set; }
+        public List<Output_GetSprintInfo_TaskTag> TaskTags { get; set; }
     }
 
     public class Output_GetSprintInfo_Assignment {
@@ -53,13 +55,17 @@ namespace ScrumThing.Web.Database.Outputs {
         public string Timestamp { get; set; }
     }
 
-    public class Output_GetSprintInfo_Tag
-    {
-        public int TaskId { get; set; }
-        public int TagId { get; set; }
-        public string TagDescription { get; set; }
-        public string TagClasses { get; set; }
-        public bool IsIncluded { get; set; }
+    public class Output_GetSprintInfo_StoryTag {
+        public int StoryId { get; set; }
+        public int StoryTagId { get; set; }
+        public string StoryTagDescription { get; set; }
     }
 
+    public class Output_GetSprintInfo_TaskTag {
+        public int TaskId { get; set; }
+        public int TaskTagId { get; set; }
+        public string TaskTagDescription { get; set; }
+        public string TaskTagClasses { get; set; }
+        public bool IsIncluded { get; set; }
+    }
 }

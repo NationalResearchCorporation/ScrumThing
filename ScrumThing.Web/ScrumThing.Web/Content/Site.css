@@ -67,7 +67,7 @@ tbody {
     table-layout: fixed;
 }
 
-.tags {
+.taskTags {
     display: block;
     float: right;
     cursor: default;
@@ -121,4 +121,8 @@ tbody {
     border-color: #c9302c;
     border-width: 0 2px 2px 2px;
     border-style: solid;
+}
+
+.storyTagsDropdown {
+    margin-top: 2px;
 }

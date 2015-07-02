@@ -107,6 +107,12 @@
     <Build Include="Stored Procedures\UpdateSprint.sql" />
     <Build Include="Views\TaskCommitmentLog.sql" />
     <Build Include="Stored Procedures\SetAssignments.sql" />
+    <Build Include="Tables\StoryTags.sql" />
+    <Build Include="Stored Procedures\SetStoryTags.sql" />
+    <Build Include="Tables\StoriesInTags.sql" />
+    <None Include="PostScripts\StoryTags.sql" />
+    <PostDeploy Include="PostScripts\PostDeployment.sql" />
+    <Build Include="Stored Procedures\GetStoryTags.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -118,8 +124,8 @@
     <None Include="ScrumThing.Database.Dev.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <PostDeploy Include="PostScripts\Tags.sql" />
-    <Build Include="Stored Procedures\GetTags.sql" />
+    <None Include="PostScripts\TaskTags.sql" />
+    <Build Include="Stored Procedures\GetTaskTags.sql" />
     <None Include="ScrumThing.Database.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

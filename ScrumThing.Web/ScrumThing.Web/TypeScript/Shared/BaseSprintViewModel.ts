@@ -19,7 +19,8 @@ module ScrumThing {
         public committedStories: KnockoutComputed<Story[]>;
         public committedTasks: KnockoutComputed<Task[]>;
         public sprintIsEmpty: KnockoutComputed<boolean>;
-        public tags: RawTag[];
+        public storyTags: KnockoutObservableArray<RawStoryTag>;
+        public taskTags: KnockoutObservableArray<RawTaskTag>;
 
         public stories: KnockoutObservableArray<Story> = ko.observableArray<Story>();
         public tasks: KnockoutComputed<Task[]>;
@@ -85,7 +86,8 @@ module ScrumThing {
             });
 
             this.GetTeams();
-            this.GetTags();
+            this.GetStoryTags();
+            this.GetTaskTags();
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
             this.currentTeam.subscribe(this.GetSprints, this);
@@ -186,15 +188,29 @@ module ScrumThing {
             }
         }
 
-        public GetTags() {
+        public GetStoryTags() {
+            this.storyTags = ko.observableArray<RawStoryTag>();
+
             jQuery.ajax({
                 type: 'POST',
-                url: '/PlanSprint/GetTags',
-                success: (data: Array<RawTag>) => {
-                    this.tags = new Array<RawTag>();
-                    for (var ii = 0; ii < data.length; ii++) {
-                        this.tags.push(new RawTag(data[ii].TagId, data[ii].TagDescription, data[ii].TagClasses));
-                    }
+                url: '/PlanSprint/GetStoryTags',
+                success: (data: Array<RawStoryTag>) => {
+                    this.storyTags(data);
+                },
+                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                    jQuery.jGrowl("Failed to get story tags: " + errorThrown);
+                }
+            });
+        }
+
+        public GetTaskTags() {
+            this.taskTags = ko.observableArray<RawTaskTag>();
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/GetTaskTags',
+                success: (data: Array<RawTaskTag>) => {
+                    this.taskTags(data);
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     jQuery.jGrowl("Failed to get task tags: " + errorThrown);
@@ -213,15 +229,12 @@ module ScrumThing {
 
                         for (var ii = 0; ii < data.length; ii++) {
                             var story = data[ii];
-                            var newStory = new Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, this.tags)
-
-                            for (var jj = 0; jj < story.Tasks.length; jj++) {
-                                var task = story.Tasks[jj];
-                                newStory.Tasks.push(new Task(task));
-                            }
-
+                            var storyTags = _.map(story.StoryTags, (tag) => tag.StoryTagId);
+                            var newStory = new Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags, this.taskTags())
+                            newStory.Tasks(_.map(story.Tasks, (task) => new Task(task)));
                             newStories.push(newStory);
                         }
+
                         this.stories(newStories);
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {

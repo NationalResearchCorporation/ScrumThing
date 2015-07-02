@@ -60,6 +60,7 @@ module ScrumThing {
         public StoryPoints: number;
         public IsReachGoal: boolean;
         public Tasks: RawTask[];
+        public StoryTags: RawStoryTag[];
     }
 
     export class Story {
@@ -69,26 +70,30 @@ module ScrumThing {
         public StoryText: KnockoutObservable<string> = ko.observable<string>();
         public StoryPoints: KnockoutObservable<number> = observableNumber();
         public Tasks: KnockoutObservableArray<Task> = ko.observableArray<Task>();
+        public StoryTags: KnockoutObservableArray<number> = ko.observableArray<number>();
+        public StoryTagsForDropdown: KnockoutComputed<number[]>;
         public IsReachGoal: KnockoutObservable<boolean> = ko.observable<boolean>();
+
         public TotalDevHours: KnockoutComputed<number>;
         public TotalQsHours: KnockoutComputed<number>;
         public Collapsed: KnockoutComputed<boolean>;
         public CollapsedOverride: KnockoutObservable<boolean> = ko.observable<boolean>();
 
         public Complete: KnockoutComputed<boolean>;
-        public Tags: RawTag[];
+        public TaskTags: RawTaskTag[];
         public Blocked: KnockoutComputed<boolean>;
         public Progressing: KnockoutComputed<boolean>;
         public ReachToggleText: KnockoutComputed<string>;
 
-        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, tags: RawTag[]) {
+        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[], taskTags: RawTaskTag[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
             this.Ordinal(ordinal);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
+            this.StoryTags(storyTags);
             this.IsReachGoal(isReachGoal);
-            this.Tags = tags;
+            this.TaskTags = taskTags;
 
             this.ReachToggleText = ko.computed(() => {
                 return this.IsReachGoal() ? 'Make this a commitment.' : 'Make this a reach goal.';
@@ -100,6 +105,28 @@ module ScrumThing {
 
             this.TotalQsHours = ko.computed(() => {
                 return sum(_.map(this.Tasks(), (task) => { return task.EstimatedQsHours(); }));
+            });
+
+            this.StoryTagsForDropdown = ko.computed<number[]>({
+                read: (): number[] => {
+                    return this.StoryTags();
+                },
+                write: (newStoryTagIds: number[]) => {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/PlanSprint/SetStoryTags',
+                        data: {
+                            StoryId: this.StoryId,
+                            StoryTagIds: newStoryTagIds.join('|')
+                        },
+                        success: () => {
+                            this.StoryTags(newStoryTagIds);
+                        },
+                        error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                            jQuery.jGrowl("Failed to set story tags: " + errorThrown);
+                        }
+                    });
+                }
             });
 
             this.Complete = ko.computed(() => {
@@ -166,7 +193,7 @@ module ScrumThing {
                     jQuery.jGrowl("Failed to add task: " + errorThrown);
                 },
                 success: (data: { TaskId: number; Ordinal: number }) => {
-                    var task = new RawTask(data.TaskId, data.Ordinal, this.GetNewTags());
+                    var task = new RawTask(data.TaskId, data.Ordinal, this.GetNewTaskTags());
                     this.Tasks.push(new Task(task));
                 }
             });
@@ -188,10 +215,10 @@ module ScrumThing {
             });
         }
 
-        private GetNewTags(): RawTag[] {
-            var tags = new Array<RawTag>();
-            for (var ii = 0; ii < this.Tags.length; ii++) {
-                tags.push(this.Tags[ii].ToRaw());
+        private GetNewTaskTags(): RawTaskTag[] {
+            var tags = new Array<RawTaskTag>();
+            for (var ii = 0; ii < this.TaskTags.length; ii++) {
+                tags.push(this.TaskTags[ii]);
             }
             return tags;
         }
@@ -220,12 +247,12 @@ module ScrumThing {
         public RemainingQsHours: number = 0;
         public Assignments: RawAssignment[];
         public Notes: RawNote[];
-        public Tags: RawTag[];
+        public TaskTags: RawTaskTag[];
 
-        constructor(taskId: number, ordinal: number, tags: RawTag[]) {
+        constructor(taskId: number, ordinal: number, taskTags: RawTaskTag[]) {
             this.TaskId = taskId;
             this.Ordinal = ordinal;
-            this.Tags = tags;
+            this.TaskTags = taskTags;
         }
     }
 
@@ -243,7 +270,7 @@ module ScrumThing {
         public RemainingQsHours: KnockoutObservable<number> = observableNumber();
         public Assignments: KnockoutObservableArray<RawAssignment> = ko.observableArray<RawAssignment>();
         public Notes: KnockoutObservableArray<RawNote> = ko.observableArray<RawNote>();
-        public Tags: KnockoutObservableArray<RawTag> = ko.observableArray<RawTag>();
+        public TaskTags: KnockoutObservableArray<RawTaskTag> = ko.observableArray<RawTaskTag>();
         public AssignmentsForDropdown: KnockoutComputed<string[]> = ko.pureComputed<string[]>({
             read: () => {
                 return _.map(this.Assignments(), (assignment) => { return assignment.UserName; });
@@ -285,7 +312,7 @@ module ScrumThing {
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
             this.Notes(raw.Notes);
-            this.Tags(raw.Tags);
+            this.TaskTags(raw.TaskTags);
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);
@@ -310,7 +337,7 @@ module ScrumThing {
                     QsHoursBurned: this.QsHoursBurned,
                     RemainingDevHours: this.RemainingDevHours,
                     RemainingQsHours: this.RemainingQsHours,
-                    Tags: _.map(_.filter(this.Tags(), (tag) => tag.IsIncluded), (tag) => tag.TagId).join('|')
+                    TaskTags: _.map(_.filter(this.TaskTags(), (tag) => tag.IsIncluded), (tag) => tag.TaskTagId).join('|')
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     jQuery.jGrowl("Failed to update task: " + errorThrown);
@@ -320,7 +347,7 @@ module ScrumThing {
         }
 
         public ToRaw(): RawTask {
-            var raw = new RawTask(this.TaskId, this.Ordinal(), this.Tags());
+            var raw = new RawTask(this.TaskId, this.Ordinal(), this.TaskTags());
             raw.TaskText = this.TaskText();
             raw.EstimatedDevHours = this.EstimatedDevHours();
             raw.EstimatedQsHours = this.EstimatedQsHours();
@@ -349,21 +376,26 @@ module ScrumThing {
         public TeamName: string;
     }
 
-    export class RawTag {
-        public TagId: number;
-        public TagDescription: string;
-        public TagClasses: string;
-        public IsIncluded: boolean = false;
+    export class RawStoryTag {
+        public StoryTagId: number;
+        public StoryTagDescription: string;
 
-        public constructor(tagId: number, tagDescription: string, tagClasses: string) {
-            this.TagId = tagId;
-            this.TagClasses = tagClasses;
-            this.TagDescription = tagDescription;
-        }
-
-        public ToRaw(): RawTag {
-            return new RawTag(this.TagId, this.TagDescription, this.TagClasses);
+        public constructor(storyTagId: number, storyTagDescription: string) {
+            this.StoryTagId = storyTagId;
+            this.StoryTagDescription = storyTagDescription;
         }
     }
 
+    export class RawTaskTag {
+        public TaskTagId: number;
+        public TaskTagDescription: string;
+        public TaskTagClasses: string;
+        public IsIncluded: boolean = false;
+
+        public constructor(tagId: number, tagDescription: string, tagClasses: string) {
+            this.TaskTagId = tagId;
+            this.TaskTagClasses = tagClasses;
+            this.TaskTagDescription = tagDescription;
+        }
+    }
 }

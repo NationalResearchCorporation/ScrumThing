@@ -36,9 +36,13 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public List<Output_GetTags> GetTags()
-        {
-            return RunSproc<Output_GetTags>(new object[] {});
+        public List<Output_GetStoryTags> GetStoryTags() {
+            return RunSproc<Output_GetStoryTags>(new object[] {});
+        }
+
+        [Schema("dbo")]
+        public List<Output_GetTaskTags> GetTaskTags() {
+            return RunSproc<Output_GetTaskTags>(new object[] {});
         }
 
         [Schema("dbo")]
@@ -57,13 +61,15 @@ namespace ScrumThing.Web.Database {
                                   Output_GetSprintInfo_Task,
                                   Output_GetSprintInfo_Assignment,
                                   Output_GetSprintInfo_Note,
-                                  Output_GetSprintInfo_Tag>(new object[] { sprintId });
+                                  Output_GetSprintInfo_StoryTag,
+                                  Output_GetSprintInfo_TaskTag>(new object[] { sprintId });
             return new Output_GetSprintInfo() {
                 Stories = result.Item1,
                 Tasks = result.Item2,
                 Assignments = result.Item3,
                 Notes = result.Item4,
-                Tags = result.Item5
+                StoryTags = result.Item5,
+                TaskTags = result.Item6
             };
         }
 
@@ -89,8 +95,8 @@ namespace ScrumThing.Web.Database {
 
         [Schema("dbo")]
         public void UpdateTask(int taskId, string taskText, string state, double estimatedDevHours, double estimatedQsHours,
-                               double devHoursBurned, double qsHoursBurned, double remainingDevHours, double remainingQsHours, string tags) {
-            RunSproc(new object[] { taskId, taskText, state, estimatedDevHours, estimatedQsHours, devHoursBurned, qsHoursBurned, remainingDevHours, remainingQsHours, tags });
+                               double devHoursBurned, double qsHoursBurned, double remainingDevHours, double remainingQsHours, string taskTags) {
+            RunSproc(new object[] { taskId, taskText, state, estimatedDevHours, estimatedQsHours, devHoursBurned, qsHoursBurned, remainingDevHours, remainingQsHours, taskTags });
         }
 
         [Schema("dbo")]
@@ -142,6 +148,11 @@ namespace ScrumThing.Web.Database {
         [Schema("dbo")]
         public List<Output_MoveTask> MoveTask(int taskId, int newStoryId, int newOrdinal) {
             return RunSproc<Output_MoveTask>(new object[] { taskId, newStoryId, newOrdinal });
+        }
+
+        [Schema("dbo")]
+        public void SetStoryTags(int storyId, string storyTagIds) {
+            RunSproc(new object[] { storyId, storyTagIds });
         }
     }
 }

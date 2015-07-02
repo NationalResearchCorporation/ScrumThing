@@ -183,6 +183,7 @@
     <Compile Include="Database\Inputs\AddSprint.cs" />
     <Compile Include="Database\Inputs\GetSprintDays.cs" />
     <Compile Include="Database\Inputs\GetResources.cs" />
+    <Compile Include="Database\Inputs\SetStoryTags.cs" />
     <Compile Include="Database\Inputs\MoveTask.cs" />
     <Compile Include="Database\Inputs\MoveStory.cs" />
     <Compile Include="Database\Inputs\GetSprintInfo.cs" />
@@ -202,7 +203,8 @@
     <Compile Include="Database\Outputs\AddStory.cs" />
     <Compile Include="Database\Outputs\GetSprintDays.cs" />
     <Compile Include="Database\Outputs\GetBurndown.cs" />
-    <Compile Include="Database\Outputs\GetTags.cs" />
+    <Compile Include="Database\Outputs\GetStoryTags.cs" />
+    <Compile Include="Database\Outputs\GetTaskTags.cs" />
     <Compile Include="Database\Outputs\GetEstimatesVsActuals.cs" />
     <Compile Include="Database\Outputs\AddTask.cs" />
     <Compile Include="Database\Outputs\MoveTask.cs" />

@@ -58,12 +58,13 @@
     ScrumThing.RawStory = RawStory;
 
     var Story = (function () {
-        function Story(storyId, storyText, storyPoints, ordinal, isReachGoal, tags) {
+        function Story(storyId, storyText, storyPoints, ordinal, isReachGoal, storyTags, taskTags) {
             var _this = this;
             this.Ordinal = ko.observable();
             this.StoryText = ko.observable();
             this.StoryPoints = ScrumThing.observableNumber();
             this.Tasks = ko.observableArray();
+            this.StoryTags = ko.observableArray();
             this.IsReachGoal = ko.observable();
             this.CollapsedOverride = ko.observable();
             this.UpdateStory = function () {
@@ -86,8 +87,9 @@
             this.Ordinal(ordinal);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
+            this.StoryTags(storyTags);
             this.IsReachGoal(isReachGoal);
-            this.Tags = tags;
+            this.TaskTags = taskTags;
 
             this.ReachToggleText = ko.computed(function () {
                 return _this.IsReachGoal() ? 'Make this a commitment.' : 'Make this a reach goal.';
@@ -103,6 +105,28 @@
                 return ScrumThing.sum(_.map(_this.Tasks(), function (task) {
                     return task.EstimatedQsHours();
                 }));
+            });
+
+            this.StoryTagsForDropdown = ko.computed({
+                read: function () {
+                    return _this.StoryTags();
+                },
+                write: function (newStoryTagIds) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/PlanSprint/SetStoryTags',
+                        data: {
+                            StoryId: _this.StoryId,
+                            StoryTagIds: newStoryTagIds.join('|')
+                        },
+                        success: function () {
+                            _this.StoryTags(newStoryTagIds);
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            jQuery.jGrowl("Failed to set story tags: " + errorThrown);
+                        }
+                    });
+                }
             });
 
             this.Complete = ko.computed(function () {
@@ -156,7 +180,7 @@
                     jQuery.jGrowl("Failed to add task: " + errorThrown);
                 },
                 success: function (data) {
-                    var task = new RawTask(data.TaskId, data.Ordinal, _this.GetNewTags());
+                    var task = new RawTask(data.TaskId, data.Ordinal, _this.GetNewTaskTags());
                     _this.Tasks.push(new Task(task));
                 }
             });
@@ -179,10 +203,10 @@
             });
         };
 
-        Story.prototype.GetNewTags = function () {
+        Story.prototype.GetNewTaskTags = function () {
             var tags = new Array();
-            for (var ii = 0; ii < this.Tags.length; ii++) {
-                tags.push(this.Tags[ii].ToRaw());
+            for (var ii = 0; ii < this.TaskTags.length; ii++) {
+                tags.push(this.TaskTags[ii]);
             }
             return tags;
         };
@@ -203,7 +227,7 @@
     ScrumThing.Story = Story;
 
     var RawTask = (function () {
-        function RawTask(taskId, ordinal, tags) {
+        function RawTask(taskId, ordinal, taskTags) {
             this.TaskId = -1;
             this.TaskText = '';
             this.Ordinal = 1;
@@ -216,7 +240,7 @@
             this.RemainingQsHours = 0;
             this.TaskId = taskId;
             this.Ordinal = ordinal;
-            this.Tags = tags;
+            this.TaskTags = taskTags;
         }
         return RawTask;
     })();
@@ -236,7 +260,7 @@
             this.RemainingQsHours = ScrumThing.observableNumber();
             this.Assignments = ko.observableArray();
             this.Notes = ko.observableArray();
-            this.Tags = ko.observableArray();
+            this.TaskTags = ko.observableArray();
             this.AssignmentsForDropdown = ko.pureComputed({
                 read: function () {
                     return _.map(_this.Assignments(), function (assignment) {
@@ -279,10 +303,10 @@
                         QsHoursBurned: _this.QsHoursBurned,
                         RemainingDevHours: _this.RemainingDevHours,
                         RemainingQsHours: _this.RemainingQsHours,
-                        Tags: _.map(_.filter(_this.Tags(), function (tag) {
+                        TaskTags: _.map(_.filter(_this.TaskTags(), function (tag) {
                             return tag.IsIncluded;
                         }), function (tag) {
-                            return tag.TagId;
+                            return tag.TaskTagId;
                         }).join('|')
                     },
                     error: function (xhr, textStatus, errorThrown) {
@@ -304,7 +328,7 @@
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
             this.Notes(raw.Notes);
-            this.Tags(raw.Tags);
+            this.TaskTags(raw.TaskTags);
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);
@@ -315,7 +339,7 @@
             this.RemainingQsHours.subscribe(this.UpdateTask);
         }
         Task.prototype.ToRaw = function () {
-            var raw = new RawTask(this.TaskId, this.Ordinal(), this.Tags());
+            var raw = new RawTask(this.TaskId, this.Ordinal(), this.TaskTags());
             raw.TaskText = this.TaskText();
             raw.EstimatedDevHours = this.EstimatedDevHours();
             raw.EstimatedQsHours = this.EstimatedQsHours();
@@ -350,18 +374,24 @@
     })();
     ScrumThing.RawTeam = RawTeam;
 
-    var RawTag = (function () {
-        function RawTag(tagId, tagDescription, tagClasses) {
-            this.IsIncluded = false;
-            this.TagId = tagId;
-            this.TagClasses = tagClasses;
-            this.TagDescription = tagDescription;
+    var RawStoryTag = (function () {
+        function RawStoryTag(storyTagId, storyTagDescription) {
+            this.StoryTagId = storyTagId;
+            this.StoryTagDescription = storyTagDescription;
         }
-        RawTag.prototype.ToRaw = function () {
-            return new RawTag(this.TagId, this.TagDescription, this.TagClasses);
-        };
-        return RawTag;
+        return RawStoryTag;
     })();
-    ScrumThing.RawTag = RawTag;
+    ScrumThing.RawStoryTag = RawStoryTag;
+
+    var RawTaskTag = (function () {
+        function RawTaskTag(tagId, tagDescription, tagClasses) {
+            this.IsIncluded = false;
+            this.TaskTagId = tagId;
+            this.TaskTagClasses = tagClasses;
+            this.TaskTagDescription = tagDescription;
+        }
+        return RawTaskTag;
+    })();
+    ScrumThing.RawTaskTag = RawTaskTag;
 })(ScrumThing || (ScrumThing = {}));
 //# sourceMappingURL=Models.js.map

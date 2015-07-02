@@ -85,7 +85,8 @@ var ScrumThing;
             });
 
             this.GetTeams();
-            this.GetTags();
+            this.GetStoryTags();
+            this.GetTaskTags();
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
             this.currentTeam.subscribe(this.GetSprints, this);
@@ -192,16 +193,31 @@ var ScrumThing;
             }
         };
 
-        BaseSprintViewModel.prototype.GetTags = function () {
+        BaseSprintViewModel.prototype.GetStoryTags = function () {
             var _this = this;
+            this.storyTags = ko.observableArray();
+
             jQuery.ajax({
                 type: 'POST',
-                url: '/PlanSprint/GetTags',
+                url: '/PlanSprint/GetStoryTags',
                 success: function (data) {
-                    _this.tags = new Array();
-                    for (var ii = 0; ii < data.length; ii++) {
-                        _this.tags.push(new ScrumThing.RawTag(data[ii].TagId, data[ii].TagDescription, data[ii].TagClasses));
-                    }
+                    _this.storyTags(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    jQuery.jGrowl("Failed to get story tags: " + errorThrown);
+                }
+            });
+        };
+
+        BaseSprintViewModel.prototype.GetTaskTags = function () {
+            var _this = this;
+            this.taskTags = ko.observableArray();
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/GetTaskTags',
+                success: function (data) {
+                    _this.taskTags(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     jQuery.jGrowl("Failed to get task tags: " + errorThrown);
@@ -221,15 +237,16 @@ var ScrumThing;
 
                         for (var ii = 0; ii < data.length; ii++) {
                             var story = data[ii];
-                            var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, _this.tags);
-
-                            for (var jj = 0; jj < story.Tasks.length; jj++) {
-                                var task = story.Tasks[jj];
-                                newStory.Tasks.push(new ScrumThing.Task(task));
-                            }
-
+                            var storyTags = _.map(story.StoryTags, function (tag) {
+                                return tag.StoryTagId;
+                            });
+                            var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags, _this.taskTags());
+                            newStory.Tasks(_.map(story.Tasks, function (task) {
+                                return new ScrumThing.Task(task);
+                            }));
                             newStories.push(newStory);
                         }
+
                         _this.stories(newStories);
                     },
                     error: function (xhr, textStatus, errorThrown) {

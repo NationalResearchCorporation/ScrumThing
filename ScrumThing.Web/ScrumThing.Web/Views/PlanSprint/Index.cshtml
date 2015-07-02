@@ -3,6 +3,7 @@
 <div class="btn-group">
     <button type="button" class="btn btn-primary" data-bind="click: AddSprint">Create New Sprint</button>
 </div>
+
 <div class="btn-group">
     <div class="dropdown">
         <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -16,6 +17,7 @@
     </div>
 </div>
 <div class="row"><div class="col-md-12">&nbsp;</div></div>
+
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion" href="#sprintInfoPanel">
@@ -170,7 +172,14 @@
             <span data-bind="text: Ordinal()"></span>
         </td>
         <td><textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea></td>
-        <td><input class="form-control" type="number" data-bind="value: StoryPoints" /></td>
+        <td>
+            <input class="form-control" type="number" data-bind="value: StoryPoints" />
+            <select data-bind="multiselect: { numberDisplayed: 2, buttonWidth: '100%', buttonClass: 'multiselect dropdown-toggle btn btn-default storyTagsDropdown' },
+                               options: $root.storyTags,
+                               optionsValue: 'StoryTagId',
+                               optionsText: 'StoryTagDescription',
+                               selectedOptions: $data.StoryTagsForDropdown" multiple="multiple"></select>
+        </td>
         <td data-bind="text: TotalDevHours"></td>
         <td data-bind="text: TotalQsHours"></td>
         <td>
@@ -181,39 +190,39 @@
         </td>
     </tr>
     <!-- ko foreach: _.sortBy(Tasks(), function (task) { return task.Ordinal(); }) -->
-    <tr data-bind="attr: { ondrop: $root.OnDropTask($parent, $index()) }" ondragover="viewModel.AllowDrop(event)">
-        <td draggable="true"
-            ondragstart="viewModel.Drag(event)"
-            data-bind="attr: { id: HtmlId }">
-            <ul class="indent">
-                <li>
-                    <span data-bind="text: $parent.Ordinal() + '.' + Ordinal()"></span>
-                </li>
-            </ul>
-        </td>
-        <td>
-            <ul class="indent">
-                <li>
-                    <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
-                </li>
-            </ul>
-        </td>
-        <td class="text-left">
-            <!-- ko foreach: Tags -->
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-bind="value: TagId, checked: IsIncluded, event: { click: $parent.UpdateTask }" />
-                    <span data-bind="text: TagDescription" class="small"></span>
-                </label>
-            </div>
-            <!-- /ko -->
-        </td>
-        <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
-        <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
-        <td>
-            <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
-        </td>
-    </tr>
+        <tr data-bind="attr: { ondrop: $root.OnDropTask($parent, $index()) }" ondragover="viewModel.AllowDrop(event)">
+            <td draggable="true"
+                ondragstart="viewModel.Drag(event)"
+                data-bind="attr: { id: HtmlId }">
+                <ul class="indent">
+                    <li>
+                        <span data-bind="text: $parent.Ordinal() + '.' + Ordinal()"></span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="indent">
+                    <li>
+                        <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
+                    </li>
+                </ul>
+            </td>
+            <td class="text-left">
+                <!-- ko foreach: TaskTags -->
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" data-bind="value: TaskTagId, checked: IsIncluded, event: { click: $parent.UpdateTask }" />
+                            <span data-bind="text: TaskTagDescription" class="small"></span>
+                        </label>
+                    </div>
+                <!-- /ko -->
+            </td>
+            <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
+            <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
+            <td>
+                <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
+            </td>
+        </tr>
     <!-- /ko -->
     <tr>
         <td colspan="6">

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Hook script to verify that AssemblyInfo.cs version numbers have been incremented when necessary.
+# This script is executed before every commit.
+
+# determine the root of our git repo (e.g. 'D:/Code/Reveal')
+GITROOT=`git rev-parse --show-toplevel`
+
+# This command will check to ensure version numbers have been updated.  If not, it provides a
+# command to automatically increment version numbers, and then will fail with non-zero status,
+# cancelling the commit.
+# powershell $GITROOT/Ops/Shell/checkVersions.ps1 check
+
+# This command will check to ensure version numbers have been updated.  If not, it prompts users
+# to increment version numbers
+powershell $GITROOT/Ops/Shell/checkVersions.ps1 prompt
+
+# This command will check to ensure version numbers have been updated.  If not, it automatically
+# increments version numbers where appropriate.
+# WARNING - this appears to be magic!  Ensure users understand what is going on behind the scenes.
+# powershell $GITROOT/Ops/Shell/checkVersions.ps1 fix

@@ -1,0 +1,14 @@
+{
+    "ScrumThing.Web": {
+        "AssemblyInfo": "ScrumThing.Web/ScrumThing.Web/Properties/AssemblyInfo.cs",
+        "Directories": [
+            "ScrumThing.Web"
+        ]
+    },
+    "ScrumThing.Database": {
+        "AssemblyInfo": "ScrumThing.Database/Properties/AssemblyInfo.cs",
+        "Directories": [
+            "ScrumThing.Database"
+        ]
+    }
+}

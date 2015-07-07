@@ -59,7 +59,7 @@ namespace ScrumThing.Web.Controllers {
             foreach (var story in results.Stories.OrderBy(story => story.Ordinal)) {
                 worksheet.Cell(row, storyOrdinalColumn).Value = story.Ordinal;
                 worksheet.Cell(row, storyTextColumn).Value = story.StoryText;
-                worksheet.Cell(row, storyPointsColumn).Value = story.Ordinal;
+                worksheet.Cell(row, storyPointsColumn).Value = story.StoryPoints;
 
                 foreach (var task in story.Tasks) {
                     worksheet.Cell(row, taskOrdinalColumn).Value = task.Ordinal;

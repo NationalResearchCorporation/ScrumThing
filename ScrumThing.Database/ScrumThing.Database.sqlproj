@@ -118,18 +118,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ScrumThing.Database.localhost.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScrumThing.Database.Dev.publish.xml">
+    <None Include="ScrumThing.Database.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="PostScripts\TaskTags.sql" />
     <Build Include="Stored Procedures\GetTaskTags.sql" />
     <None Include="ScrumThing.Database.nuspec">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScrumThing.Database.Prod.publish.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

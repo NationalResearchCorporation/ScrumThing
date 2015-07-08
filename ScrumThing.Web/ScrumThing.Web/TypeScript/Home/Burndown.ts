@@ -30,10 +30,6 @@ module ScrumThing {
                                 text: 'Sprint Burndown',
                                 x: -20
                             },
-                            subtitle: {
-                                text: 'brought to you by the letter narf',
-                                x: -20
-                            },
                             xAxis: {
                                 categories: _.pluck(data, 'FormattedBurnDate')
                             },

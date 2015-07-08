@@ -44,10 +44,6 @@ module ScrumThing {
                             title: {
                                 text: 'Estimates vs Actuals'
                             },
-                            subtitle: {
-                                text: 'brought to you by the letter narf',
-                                x: -20
-                            },
                             xAxis: {
                                 categories: _.uniq(_.pluck(data, 'StoryText')),
                                 title: {

@@ -106,7 +106,6 @@ module ScrumThing {
             jQuery(document).on("active.idleTimer", () => { this.GetSprintInfo(); })
         }
 
-
         public GetSprints() {
             jQuery.ajax({
                 type: 'POST',
@@ -210,7 +209,8 @@ module ScrumThing {
                 type: 'POST',
                 url: '/PlanSprint/GetTaskTags',
                 success: (data: Array<RawTaskTag>) => {
-                    this.taskTags(data);
+                    // The data coming back doesn't actually include "IsIncluded" field, so we populate that manually by calling the constructor
+                    this.taskTags(_.map(data, (tag) => new RawTaskTag(tag.TaskTagId, tag.TaskTagDescription, tag.TaskTagClasses)));
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     jQuery.jGrowl("Failed to get task tags: " + errorThrown);

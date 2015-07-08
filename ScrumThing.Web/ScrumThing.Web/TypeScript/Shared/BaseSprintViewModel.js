@@ -217,7 +217,10 @@ var ScrumThing;
                 type: 'POST',
                 url: '/PlanSprint/GetTaskTags',
                 success: function (data) {
-                    _this.taskTags(data);
+                    // The data coming back doesn't actually include "IsIncluded" field, so we populate that manually by calling the constructor
+                    _this.taskTags(_.map(data, function (tag) {
+                        return new ScrumThing.RawTaskTag(tag.TaskTagId, tag.TaskTagDescription, tag.TaskTagClasses);
+                    }));
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     jQuery.jGrowl("Failed to get task tags: " + errorThrown);

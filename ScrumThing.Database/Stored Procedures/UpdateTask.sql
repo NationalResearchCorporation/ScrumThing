@@ -18,12 +18,9 @@ BEGIN
     DECLARE @PreviousEstimatedQsHours FLOAT = (SELECT EstimatedQsHours FROM Tasks WHERE TaskId = @TaskId);
 
     -- If we are updating estimated hours, then reset burned and remaining
-    IF @EstimatedDevHours != @PreviousEstimatedDevHours BEGIN
+    IF @EstimatedDevHours != @PreviousEstimatedDevHours OR @EstimatedQsHours != @PreviousEstimatedQsHours BEGIN
         SET @DevHoursBurned = 0
         SET @RemainingDevHours = @EstimatedDevHours
-    END
-
-    IF @EstimatedQsHours != @PreviousEstimatedQsHours BEGIN
         SET @QsHoursBurned = 0
         SET @RemainingQsHours = @EstimatedQsHours
     END

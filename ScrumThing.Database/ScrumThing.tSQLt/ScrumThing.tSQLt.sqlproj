@@ -200,6 +200,7 @@
     <Build Include="Schemas\testScrum\SetupTests.sql" />
     <Build Include="Schemas\dbo\MoveTask.tests.sql" />
     <Build Include="Schemas\dbo\FixOrdinals.sql" />
+    <Build Include="Schemas\dbo\RemoveStory.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

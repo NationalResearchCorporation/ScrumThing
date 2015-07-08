@@ -126,3 +126,9 @@ tbody {
 .storyTagsDropdown {
     margin-top: 2px;
 }
+
+.fixed-top-right {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}

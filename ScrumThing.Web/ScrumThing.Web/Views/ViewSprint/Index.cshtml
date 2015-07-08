@@ -1,4 +1,6 @@
-﻿<h1>Current Sprint: <span data-bind="text: sprintName"></span></h1>
+﻿<button class="btn btn-default glyphicon glyphicon-refresh fixed-top-right" data-bind="click: GetSprintInfo"></button>
+
+<h1>Current Sprint: <span data-bind="text: sprintName"></span></h1>
 
 <h2>
     <span class="btn-group">
@@ -11,13 +13,13 @@
 <table id="viewSprintTable" class="table table-bordered table-fixed">
     <thead>
         <tr>
-            <th style="width: 14.28%">Story</th>
-            <th style="width: 14.28%">Blocked</th>
-            <th style="width: 14.28%">Ready For Dev</th>
-            <th style="width: 14.28%">Dev In Progress</th>
-            <th style="width: 14.28%">Ready For QS</th>
-            <th style="width: 14.28%">QS In Progress</th>
-            <th style="width: 14.28%">Complete</th>
+            <th>Story</th>
+            <th>Blocked</th>
+            <th>Ready For Dev</th>
+            <th>Dev In Progress</th>
+            <th>Ready For QS</th>
+            <th>QS In Progress</th>
+            <th>Complete</th>
         </tr>
     </thead>
     <tbody>

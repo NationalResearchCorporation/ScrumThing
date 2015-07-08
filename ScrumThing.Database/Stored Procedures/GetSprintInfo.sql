@@ -15,7 +15,6 @@ BEGIN
     WHERE SprintId = @SprintId;
 
     SELECT
-        SprintId,
         StoryId,
         StoryText,
         StoryPoints,

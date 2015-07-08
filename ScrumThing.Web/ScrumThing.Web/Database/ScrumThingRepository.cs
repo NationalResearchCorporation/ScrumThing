@@ -86,8 +86,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public void RemoveStory(int storyId) {
-            RunSproc(new object[] { storyId });
+        public List<Output_RemoveStory> RemoveStory(int storyId) {
+            return RunSproc<Output_RemoveStory>(new object[] { storyId });
         }
 
         [Schema("dbo")]
@@ -102,8 +102,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public void RemoveTask(int taskId) {
-            RunSproc(new object[] { taskId });
+        public List<Output_RemoveTask> RemoveTask(int taskId) {
+            return RunSproc<Output_RemoveTask>(new object[] { taskId });
         } 
 
         [Schema("dbo")]

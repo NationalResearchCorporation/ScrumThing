@@ -109,8 +109,13 @@ module ScrumThing {
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     jQuery.jGrowl("Failed to remove story: " + errorThrown);
                 },
-                success: (storyId: number) => {
+                success: (newOrdinals: Array<{ StoryId: number; Ordinal: number }>) => {
                     this.stories.remove(story);
+
+                    _.each(this.stories(), (story) => {
+                        var newOrdinal = _.find(newOrdinals, (item) => item.StoryId == story.StoryId);
+                        story.Ordinal(newOrdinal.Ordinal);
+                    });
                 }
             });
         }

@@ -121,8 +121,15 @@ var ScrumThing;
                 error: function (xhr, textStatus, errorThrown) {
                     jQuery.jGrowl("Failed to remove story: " + errorThrown);
                 },
-                success: function (storyId) {
+                success: function (newOrdinals) {
                     _this.stories.remove(story);
+
+                    _.each(_this.stories(), function (story) {
+                        var newOrdinal = _.find(newOrdinals, function (item) {
+                            return item.StoryId == story.StoryId;
+                        });
+                        story.Ordinal(newOrdinal.Ordinal);
+                    });
                 }
             });
         };

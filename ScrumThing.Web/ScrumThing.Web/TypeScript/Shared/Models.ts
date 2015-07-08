@@ -209,8 +209,13 @@ module ScrumThing {
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     jQuery.jGrowl("Failed to add task: " + errorThrown);
                 },
-                success: (taskId: number) => {
+                success: (newOrdinals: Array<{ TaskId: number; Ordinal: number }>) => {
                     this.Tasks.remove(task);
+
+                    _.each(this.Tasks(), (task) => {
+                        var newOrdinal = _.find(newOrdinals, (item) => item.TaskId == task.TaskId);
+                        task.Ordinal(newOrdinal.Ordinal);
+                    });
                 }
             });
         }

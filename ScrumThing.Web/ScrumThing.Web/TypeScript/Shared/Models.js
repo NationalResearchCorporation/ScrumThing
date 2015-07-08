@@ -197,8 +197,15 @@
                 error: function (xhr, textStatus, errorThrown) {
                     jQuery.jGrowl("Failed to add task: " + errorThrown);
                 },
-                success: function (taskId) {
+                success: function (newOrdinals) {
                     _this.Tasks.remove(task);
+
+                    _.each(_this.Tasks(), function (task) {
+                        var newOrdinal = _.find(newOrdinals, function (item) {
+                            return item.TaskId == task.TaskId;
+                        });
+                        task.Ordinal(newOrdinal.Ordinal);
+                    });
                 }
             });
         };

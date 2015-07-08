@@ -107,8 +107,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult RemoveStory(Input_RemoveStory formData) {
-            context.RemoveStory(formData.StoryId);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return Json(context.RemoveStory(formData.StoryId));
         }
 
         [HttpPost]
@@ -125,8 +124,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult RemoveTask(Input_RemoveTask formData) {
-            context.RemoveTask(formData.TaskId);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return Json(context.RemoveTask(formData.TaskId));
         }
 
         [HttpPost]

@@ -63,33 +63,7 @@ namespace ScrumThing.Web.Controllers {
         [HttpPost]
         public ActionResult GetSprintInfo(Input_GetSprintInfo formData) {
             var results = context.GetSprintInfo(formData.SprintId);
-
-            // Link Tasks to Stories
-            foreach (var story in results.Stories) {
-                story.Tasks = results.Tasks
-                                     .Where(task => task.StoryId == story.StoryId)
-                                     .ToList();
-
-                story.StoryTags = results.StoryTags
-                                         .Where(tag => tag.StoryId == story.StoryId)
-                                         .ToList();
-
-                // Add Assignments and Notes to Tasks
-                foreach (var task in story.Tasks) {
-                    task.Assignments = results.Assignments
-                                              .Where(assignment => assignment.TaskId == task.TaskId)
-                                              .ToList();
-
-                    task.Notes = results.Notes
-                                        .Where(note => note.TaskId == task.TaskId)
-                                        .ToList();
-
-                    task.TaskTags = results.TaskTags
-                                       .Where(tag => tag.TaskId == task.TaskId)
-                                       .ToList();
-                }
-            }
-
+            results.LinkHierarchicalInformation();
             return Json(results.Stories);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ScrumThing.Web.Database.Outputs {
     public class Output_GetSprintInfo {
@@ -9,6 +10,34 @@ namespace ScrumThing.Web.Database.Outputs {
         public List<Output_GetSprintInfo_Note> Notes { get; set; }
         public List<Output_GetSprintInfo_StoryTag> StoryTags { get; set; }
         public List<Output_GetSprintInfo_TaskTag> TaskTags { get; set; }
+
+        public void LinkHierarchicalInformation() {
+            Stories = Stories.OrderBy(story => story.IsReachGoal)
+                             .ThenBy(story => story.Ordinal)
+                             .ToList();
+
+            // Link Tasks to Stories
+            foreach (var story in Stories) {
+                story.Tasks = Tasks.Where(task => task.StoryId == story.StoryId)
+                                   .OrderBy(task => task.Ordinal)
+                                   .ToList();
+
+                story.StoryTags = StoryTags.Where(tag => tag.StoryId == story.StoryId)
+                                           .ToList();
+
+                // Add Assignments and Notes to Tasks
+                foreach (var task in story.Tasks) {
+                    task.Assignments = Assignments.Where(assignment => assignment.TaskId == task.TaskId)
+                                                  .ToList();
+
+                    task.Notes = Notes.Where(note => note.TaskId == task.TaskId)
+                                      .ToList();
+
+                    task.TaskTags = TaskTags.Where(tag => tag.TaskId == task.TaskId)
+                                            .ToList();
+                }
+            }
+        }
     }
 
     public class Output_GetSprintInfo_Sprint {

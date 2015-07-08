@@ -66,27 +66,26 @@ namespace ScrumThing.Web.Database {
             }
         }
 
-        /// <summary>
+        #region Generic RunSproc Methods
+
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected List<T1> RunSproc<T1>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new() {
             return RunSprocHelper(sprocInput, memberName,
                 (ds) => ConvertDataRow<T1>(ds.Tables[0].CreateDataReader()));
         }
 
-        /// <summary>
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T2">An entity class that represents a row in the second result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected Tuple<List<T1>, List<T2>> RunSproc<T1, T2>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new()
             where T2 : new() {
@@ -97,15 +96,12 @@ namespace ScrumThing.Web.Database {
                 ));
         }
 
-        /// <summary>
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T2">An entity class that represents a row in the second result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T3">An entity class that represents a row in the third result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected Tuple<List<T1>, List<T2>, List<T3>> RunSproc<T1, T2, T3>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new()
             where T2 : new()
@@ -118,16 +114,12 @@ namespace ScrumThing.Web.Database {
                 ));
         }
 
-        /// <summary>
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T2">An entity class that represents a row in the second result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T3">An entity class that represents a row in the third result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T4">An entity class that represents a row in the fourth result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected Tuple<List<T1>, List<T2>, List<T3>, List<T4>> RunSproc<T1, T2, T3, T4>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new()
             where T2 : new()
@@ -142,17 +134,12 @@ namespace ScrumThing.Web.Database {
                 ));
         }
 
-        /// <summary>
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T2">An entity class that represents a row in the second result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T3">An entity class that represents a row in the third result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T4">An entity class that represents a row in the fourth result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T5">An entity class that represents a row in the fifth result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected Tuple<List<T1>, List<T2>, List<T3>, List<T4>, List<T5>> RunSproc<T1, T2, T3, T4, T5>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new()
             where T2 : new()
@@ -172,15 +159,10 @@ namespace ScrumThing.Web.Database {
         /// <summary>
         /// Runs a stored procedure
         /// </summary>
-        /// <typeparam name="T1">An entity class that represents a row in the first result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T2">An entity class that represents a row in the second result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T3">An entity class that represents a row in the third result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T4">An entity class that represents a row in the fourth result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T5">An entity class that represents a row in the fifth result set.  Property names must match column names.</typeparam>
-        /// <typeparam name="T6">An entity class that represents a row in the sixth result set.  Property names must match column names.</typeparam>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
         /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
         /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
-        /// <returns>A tuple containing two lists, one of type T1 and the other of type T2</returns>
+        /// <returns>A tuple containing a list for each generic type </returns>
         protected Tuple<List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>> RunSproc<T1, T2, T3, T4, T5, T6>(object[] sprocInput, [CallerMemberName] string memberName = "")
             where T1 : new()
             where T2 : new()
@@ -198,6 +180,34 @@ namespace ScrumThing.Web.Database {
                     ConvertDataRow<T6>(ds.Tables[5].CreateDataReader())
                 ));
         }
+
+        /// <summary>
+        /// Runs a stored procedure
+        /// </summary>
+        /// <typeparam name="TN">An entity class that represents a row in the Nth result set.  Property names must match column names.</typeparam>
+        /// <param name="sprocInput">Values passed as parameters to the stored procedure.  The order must be the same as they are listed in the signiture of the calling method.</param>
+        /// <param name="memberName">Populated automatically via .NET reflection.  This is the name of the calling method.</param>
+        /// <returns>A tuple containing a list for each generic type </returns>
+        protected Tuple<List<T1>, List<T2>, List<T3>, List<T4>, List<T5>, List<T6>, List<T7>> RunSproc<T1, T2, T3, T4, T5, T6, T7>(object[] sprocInput, [CallerMemberName] string memberName = "")
+            where T1 : new()
+            where T2 : new()
+            where T3 : new()
+            where T4 : new()
+            where T5 : new()
+            where T6 : new()
+            where T7 : new() {
+            return RunSprocHelper(sprocInput, memberName,
+                (ds) => Tuple.Create(
+                    ConvertDataRow<T1>(ds.Tables[0].CreateDataReader()),
+                    ConvertDataRow<T2>(ds.Tables[1].CreateDataReader()),
+                    ConvertDataRow<T3>(ds.Tables[2].CreateDataReader()),
+                    ConvertDataRow<T4>(ds.Tables[3].CreateDataReader()),
+                    ConvertDataRow<T5>(ds.Tables[4].CreateDataReader()),
+                    ConvertDataRow<T6>(ds.Tables[5].CreateDataReader()),
+                    ConvertDataRow<T7>(ds.Tables[6].CreateDataReader())
+                ));
+        }
+        #endregion
 
         private T RunSprocHelper<T>(object[] sprocInput, string memberName, Func<DataSet, T> processDataSet) {
             var method = this.GetType().GetMethod(memberName);

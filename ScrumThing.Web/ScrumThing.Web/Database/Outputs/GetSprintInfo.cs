@@ -2,6 +2,7 @@
 
 namespace ScrumThing.Web.Database.Outputs {
     public class Output_GetSprintInfo {
+        public List<Output_GetSprintInfo_Sprint> Sprint { get; set; }
         public List<Output_GetSprintInfo_Story> Stories { get; set; }
         public List<Output_GetSprintInfo_Task> Tasks { get; set; }
         public List<Output_GetSprintInfo_Assignment> Assignments { get; set; }
@@ -10,8 +11,14 @@ namespace ScrumThing.Web.Database.Outputs {
         public List<Output_GetSprintInfo_TaskTag> TaskTags { get; set; }
     }
 
-    public class Output_GetSprintInfo_Story {
+    public class Output_GetSprintInfo_Sprint {
+        public int TeamId { get; set; }
+        public string TeamName { get; set; }
         public int SprintId { get; set; }
+        public string SprintName { get; set; }
+    }
+
+    public class Output_GetSprintInfo_Story {
         public int StoryId { get; set; }
         public string StoryText { get; set; }
         public double StoryPoints { get; set; }

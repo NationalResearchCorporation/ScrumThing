@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -86,8 +87,8 @@ namespace ScrumThing.Web.Controllers {
                 stream.Flush();
                 stream.Position = 0;
 
-                // TODO: Change this to the actual sprint name
-                CreateExcelResponse(stream, string.Format("Sprint {0} Export.xlsx", sprintId));
+                var sprint = results.Sprint.First();
+                CreateExcelResponse(stream, string.Format("{0}_{1}.xlsx", RemoveWhiteSpace(sprint.TeamName), RemoveWhiteSpace(sprint.SprintName)));
             }
         }
 
@@ -111,6 +112,10 @@ namespace ScrumThing.Web.Controllers {
             response.End();
 
             return response;
+        }
+
+        private string RemoveWhiteSpace(string input) {
+            return Regex.Replace(input, "\\s+", ""); ;
         }
     }
 }

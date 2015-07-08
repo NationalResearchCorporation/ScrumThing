@@ -4,6 +4,16 @@ CREATE PROCEDURE GetSprintInfo
     @SprintId INT
 AS
 BEGIN
+
+    SELECT
+        t.TeamId,
+		t.TeamName,
+		s.SprintId,
+        SprintName = s.Name
+    FROM Sprints s
+	JOIN Teams t ON s.TeamId = t.TeamId
+    WHERE SprintId = @SprintId;
+
     SELECT
         SprintId,
         StoryId,

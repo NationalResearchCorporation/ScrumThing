@@ -57,19 +57,21 @@ namespace ScrumThing.Web.Database {
 
         [Schema("dbo")]
         public Output_GetSprintInfo GetSprintInfo(int sprintId) {
-            var result = RunSproc<Output_GetSprintInfo_Story,
+            var result = RunSproc<Output_GetSprintInfo_Sprint,
+                                  Output_GetSprintInfo_Story,
                                   Output_GetSprintInfo_Task,
                                   Output_GetSprintInfo_Assignment,
                                   Output_GetSprintInfo_Note,
                                   Output_GetSprintInfo_StoryTag,
                                   Output_GetSprintInfo_TaskTag>(new object[] { sprintId });
             return new Output_GetSprintInfo() {
-                Stories = result.Item1,
-                Tasks = result.Item2,
-                Assignments = result.Item3,
-                Notes = result.Item4,
-                StoryTags = result.Item5,
-                TaskTags = result.Item6
+                Sprint = result.Item1,
+                Stories = result.Item2,
+                Tasks = result.Item3,
+                Assignments = result.Item4,
+                Notes = result.Item5,
+                StoryTags = result.Item6,
+                TaskTags = result.Item7
             };
         }
 

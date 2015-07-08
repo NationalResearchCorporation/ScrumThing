@@ -18,6 +18,7 @@ var ScrumThing;
     var ViewSprintViewModel = (function (_super) {
         __extends(ViewSprintViewModel, _super);
         function ViewSprintViewModel() {
+            var _this = this;
             _super.call(this);
             this.currentTask = ko.observable(null);
             this.newNote = ko.observable();
@@ -33,6 +34,14 @@ var ScrumThing;
             // TODO: Move this to a custom binding
             this.currentTask.subscribe(function () {
                 jQuery("#taskDetails").modal();
+            });
+
+            // If the user goes idle for more than 60 seconds
+            jQuery(document).idleTimer(60 * 1000);
+
+            // Then when they return, reload all the sprint info
+            jQuery(document).on("active.idleTimer", function () {
+                _this.GetSprintInfo();
             });
         }
         ViewSprintViewModel.prototype.GetStoryTasksInState = function (story, state) {

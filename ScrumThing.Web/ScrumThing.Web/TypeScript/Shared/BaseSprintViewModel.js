@@ -98,14 +98,6 @@ var ScrumThing;
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
             });
-
-            // If the user goes idle for more than 60 seconds
-            jQuery(document).idleTimer(60 * 1000);
-
-            // Then when they return, reload all the sprint info
-            jQuery(document).on("active.idleTimer", function () {
-                _this.GetSprintInfo();
-            });
         }
         BaseSprintViewModel.prototype.GetSprints = function () {
             var _this = this;

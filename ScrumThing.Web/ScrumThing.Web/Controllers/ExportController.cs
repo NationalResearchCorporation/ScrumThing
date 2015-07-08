@@ -68,7 +68,7 @@ namespace ScrumThing.Web.Controllers {
                 worksheet.Cell(row, storyTagsColumn).Value = string.Join(", ", story.StoryTags.Select(tag => tag.StoryTagDescription));
 
                 foreach (var task in story.Tasks) {
-                    worksheet.Cell(row, taskOrdinalColumn).Value = task.Ordinal;
+                    worksheet.Cell(row, taskOrdinalColumn).Value = string.Format("{0}.{1}", story.Ordinal, task.Ordinal);
                     worksheet.Cell(row, taskTextColumn).Value = task.TaskText;
                     worksheet.Cell(row, devHoursEstimatedColumn).Value = task.EstimatedDevHours;
                     worksheet.Cell(row, qsHoursEstimatedColumn).Value = task.EstimatedQsHours;

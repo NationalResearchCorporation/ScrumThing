@@ -156,18 +156,7 @@
 
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
-            this.IsReachGoal.subscribe(this.UpdateStory);
         }
-        Story.prototype.ToggleReachGoal = function () {
-            if (this.IsReachGoal()) {
-                this.IsReachGoal(false);
-                jQuery.jGrowl('Story ' + this.Ordinal() + ' is now a commitment, and has been moved above the reach line.');
-            } else {
-                this.IsReachGoal(true);
-                jQuery.jGrowl('Story ' + this.Ordinal() + ' is now a reach goal, and has been moved below the reach line.');
-            }
-        };
-
         Story.prototype.AddTask = function () {
             var _this = this;
             jQuery.ajax({

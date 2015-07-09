@@ -8,5 +8,8 @@ namespace ScrumThing.Web.Database.Inputs {
 
         [Required]
         public int NewOrdinal { get; set; }
+
+        [Required]
+        public bool IsReachGoal { get; set; }
     }
 }

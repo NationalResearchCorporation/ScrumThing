@@ -152,7 +152,6 @@ module ScrumThing {
 
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
-            this.IsReachGoal.subscribe(this.UpdateStory);
         }
 
         public UpdateStory = () => {
@@ -169,17 +168,6 @@ module ScrumThing {
                     jQuery.jGrowl("Failed to update story: " + errorThrown);
                 }
             });
-        }
-
-        public ToggleReachGoal() {
-            if (this.IsReachGoal()) {
-                this.IsReachGoal(false);
-                jQuery.jGrowl('Story ' + this.Ordinal() + ' is now a commitment, and has been moved above the reach line.');
-            }
-            else {
-                this.IsReachGoal(true);
-                jQuery.jGrowl('Story ' + this.Ordinal() + ' is now a reach goal, and has been moved below the reach line.');
-            }
         }
 
         public AddTask() {

@@ -185,7 +185,7 @@
         <td>
             <div class="btn-group-vertical">
                 <button class="btn btn-danger btn-sm" data-bind="click: function () { $root.RemoveStory.call($root, $data); }">Remove Story</button>
-                <button class="btn btn-default btn-sm" data-bind="text: ReachToggleText, click: ToggleReachGoal"></button>
+                <button class="btn btn-default btn-sm" data-bind="text: ReachToggleText, click:  function () { $root.ToggleReachGoal.call($root, $data); }"></button>
             </div>
         </td>
     </tr>

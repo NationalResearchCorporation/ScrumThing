@@ -1,7 +1,8 @@
 ﻿
 CREATE PROCEDURE MoveStory
     @StoryId INT,
-    @NewOrdinal INT
+    @NewOrdinal INT,
+    @IsReachGoal BIT
 AS
 BEGIN
 
@@ -31,8 +32,9 @@ BEGIN
     END
 
     -- And then move this story into the new position
-    UPDATE Stories
-    SET Ordinal = @NewOrdinal
+    UPDATE Stories SET
+	Ordinal = @NewOrdinal,
+	IsReachGoal = @IsReachGoal
     WHERE StoryId = @StoryId;
 
     -- Return all updated information so the front end doesn't have to replicate it

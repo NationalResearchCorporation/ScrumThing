@@ -143,8 +143,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public List<Output_MoveStory> MoveStory(int storyId, int newOrdinal) {
-            return RunSproc<Output_MoveStory>(new object[] { storyId, newOrdinal });
+        public List<Output_MoveStory> MoveStory(int storyId, int newOrdinal, bool IsReachGoal) {
+            return RunSproc<Output_MoveStory>(new object[] { storyId, newOrdinal, IsReachGoal });
         }
 
         [Schema("dbo")]

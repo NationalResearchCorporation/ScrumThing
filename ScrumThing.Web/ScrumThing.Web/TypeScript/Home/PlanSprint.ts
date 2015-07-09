@@ -120,6 +120,47 @@ module ScrumThing {
             });
         }
 
+        public MoveStory(storyId: number, newOrdinal: number, isReachGoal: boolean, growlMsg?: string) {
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/MoveStory',
+                data: {
+                    StoryId: storyId,
+                    NewOrdinal: newOrdinal,
+                    IsReachGoal: isReachGoal
+                },
+                success: (data: Array<{ StoryId: number; Ordinal: number }>) => {
+                    for (var ii = 0; ii < data.length; ii++) {
+                        var modifiedStory = _.findWhere(this.stories(), { StoryId: data[ii].StoryId });
+                        modifiedStory.Ordinal(data[ii].Ordinal);
+                    }
+
+                    if (growlMsg) {
+                        jQuery.jGrowl(growlMsg);
+                    }
+                },
+                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
+                }
+            });
+        }
+
+        public ToggleReachGoal(story: Story) {
+
+            var msg: string, newOrdinal: number;
+
+            if (story.IsReachGoal()) {
+                newOrdinal = _.max(this.stories(), (story) => story.IsReachGoal() ? -1 : story.Ordinal()).Ordinal() + 1;
+                msg = 'Story ' + story.Ordinal() + ' is now a commitment.  The new story number is ' + newOrdinal + '.';
+            } else {
+                newOrdinal = _.max(this.stories(), (story) => story.Ordinal()).Ordinal();
+                msg = 'Story ' + story.Ordinal() + ' is now a reach goal.  The new story number is ' + newOrdinal + '.';
+            }
+
+            story.IsReachGoal(!story.IsReachGoal());
+            this.MoveStory(story.StoryId, newOrdinal, story.IsReachGoal(), msg);
+        }
+
         public HoursRemainingClass(hours: KnockoutObservable<number>): string {
             if (hours() < 10) {
                 return "text-danger";
@@ -140,23 +181,8 @@ module ScrumThing {
         public DropStory(event: any, ordinal: number) {
             var htmlId = event.dataTransfer.getData('text');
             var story = _.find(this.stories(), (t) => { return t.HtmlId == htmlId; });
-            jQuery.ajax({
-                type: 'POST',
-                url: '/PlanSprint/MoveStory',
-                data: {
-                    StoryId: story.StoryId,
-                    NewOrdinal: ordinal
-                },
-                success: (data: Array<{ StoryId: number; Ordinal: number }>) => {
-                    for (var ii = 0; ii < data.length; ii++) {
-                        var modifiedStory = _.findWhere(this.stories(), { StoryId: data[ii].StoryId });
-                        modifiedStory.Ordinal(data[ii].Ordinal);
-                    }
-                },
-                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
-                }
-            });
+
+            this.MoveStory(story.StoryId, ordinal, story.IsReachGoal());
         }
 
         public DropTask(event: any, story: number, ordinal: number) {

@@ -114,7 +114,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult MoveStory(Input_MoveStory formData) {
-            return Json(context.MoveStory(formData.StoryId, formData.NewOrdinal));
+            return Json(context.MoveStory(formData.StoryId, formData.NewOrdinal, formData.IsReachGoal));
         }
 
         [HttpPost]

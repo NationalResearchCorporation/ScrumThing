@@ -134,6 +134,51 @@ var ScrumThing;
             });
         };
 
+        PlanSprintViewModel.prototype.MoveStory = function (storyId, newOrdinal, isReachGoal, growlMsg) {
+            var _this = this;
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/MoveStory',
+                data: {
+                    StoryId: storyId,
+                    NewOrdinal: newOrdinal,
+                    IsReachGoal: isReachGoal
+                },
+                success: function (data) {
+                    for (var ii = 0; ii < data.length; ii++) {
+                        var modifiedStory = _.findWhere(_this.stories(), { StoryId: data[ii].StoryId });
+                        modifiedStory.Ordinal(data[ii].Ordinal);
+                    }
+
+                    if (growlMsg) {
+                        jQuery.jGrowl(growlMsg);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
+                }
+            });
+        };
+
+        PlanSprintViewModel.prototype.ToggleReachGoal = function (story) {
+            var msg, newOrdinal;
+
+            if (story.IsReachGoal()) {
+                newOrdinal = _.max(this.stories(), function (story) {
+                    return story.IsReachGoal() ? -1 : story.Ordinal();
+                }).Ordinal() + 1;
+                msg = 'Story ' + story.Ordinal() + ' is now a commitment.  The new story number is ' + newOrdinal + '.';
+            } else {
+                newOrdinal = _.max(this.stories(), function (story) {
+                    return story.Ordinal();
+                }).Ordinal();
+                msg = 'Story ' + story.Ordinal() + ' is now a reach goal.  The new story number is ' + newOrdinal + '.';
+            }
+
+            story.IsReachGoal(!story.IsReachGoal());
+            this.MoveStory(story.StoryId, newOrdinal, story.IsReachGoal(), msg);
+        };
+
         PlanSprintViewModel.prototype.HoursRemainingClass = function (hours) {
             if (hours() < 10) {
                 return "text-danger";
@@ -152,28 +197,12 @@ var ScrumThing;
         };
 
         PlanSprintViewModel.prototype.DropStory = function (event, ordinal) {
-            var _this = this;
             var htmlId = event.dataTransfer.getData('text');
             var story = _.find(this.stories(), function (t) {
                 return t.HtmlId == htmlId;
             });
-            jQuery.ajax({
-                type: 'POST',
-                url: '/PlanSprint/MoveStory',
-                data: {
-                    StoryId: story.StoryId,
-                    NewOrdinal: ordinal
-                },
-                success: function (data) {
-                    for (var ii = 0; ii < data.length; ii++) {
-                        var modifiedStory = _.findWhere(_this.stories(), { StoryId: data[ii].StoryId });
-                        modifiedStory.Ordinal(data[ii].Ordinal);
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
-                }
-            });
+
+            this.MoveStory(story.StoryId, ordinal, story.IsReachGoal());
         };
 
         PlanSprintViewModel.prototype.DropTask = function (event, story, ordinal) {

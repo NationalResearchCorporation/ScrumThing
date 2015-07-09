@@ -11,7 +11,7 @@ BEGIN
     DECLARE @actual INT;
 
     -- Move Story 2 to the first position
-    EXEC MoveStory 2, 1;
+    EXEC MoveStory 2, 1, 0;
 
     -- Assert it moved
     SET @actual = (SELECT Ordinal FROM Stories WHERE StoryId = 2);
@@ -31,7 +31,7 @@ BEGIN
     DECLARE @actual INT;
 
     -- Move Story 1 to the second position
-    EXEC MoveStory 1, 2;
+    EXEC MoveStory 1, 2, 0;
 
     -- Assert it moved
     SET @actual = (SELECT Ordinal FROM Stories WHERE StoryId = 1);
@@ -51,7 +51,7 @@ BEGIN
     DECLARE @actual INT;
 
     -- "Move" Story 1 to the first position
-    EXEC MoveStory 1, 1;
+    EXEC MoveStory 1, 1, 0;
 
     -- Assert it didn't move
     SET @actual = (SELECT Ordinal FROM Stories WHERE StoryId = 1);

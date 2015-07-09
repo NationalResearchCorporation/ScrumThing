@@ -89,6 +89,14 @@ tbody {
     background-color: #FF7777;
 }
 
+.readyForQS {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
+    background-color: #77D8FF;
+}
+
 .progressing {
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;

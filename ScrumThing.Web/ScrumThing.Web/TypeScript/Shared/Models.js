@@ -141,8 +141,14 @@
                 });
             });
 
+            this.ReadyForQS = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) {
+                    return task.State() == "Ready For QS";
+                });
+            });
+
             this.Progressing = ko.computed(function () {
-                return !(_this.Complete() || _this.Blocked());
+                return !(_this.Complete() || _this.Blocked() || _this.ReadyForQS);
             });
 
             this.Collapsed = ko.computed(function () {

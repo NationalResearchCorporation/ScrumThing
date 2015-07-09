@@ -82,6 +82,7 @@ module ScrumThing {
         public Complete: KnockoutComputed<boolean>;
         public TaskTags: RawTaskTag[];
         public Blocked: KnockoutComputed<boolean>;
+        public ReadyForQS: KnockoutComputed<boolean>;
         public Progressing: KnockoutComputed<boolean>;
         public ReachToggleText: KnockoutComputed<string>;
 
@@ -137,8 +138,12 @@ module ScrumThing {
                 return _.any(this.Tasks(), (task) => { return task.State() == "Blocked"; });
             });
 
+            this.ReadyForQS = ko.computed(() => {
+                return _.any(this.Tasks(), (task) => { return task.State() == "Ready For QS"; });
+            });
+
             this.Progressing = ko.computed(() => {
-                return !(this.Complete() || this.Blocked());
+                return !(this.Complete() || this.Blocked() || this.ReadyForQS);
             });
 
             this.Collapsed = ko.computed(() => {

@@ -151,10 +151,14 @@
     <!-- ko if: Collapsed() -->
     <tr data-bind="css: { complete : Complete(), blocked : Blocked(), progressing : Progressing(), qsReadyOrInProgress: QSReadyOrInProgress() }">
         <td colspan="7">
-            <div class="pull-left text-left">
+            <div class="text-left">
                 <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
                 <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
                 <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
+            </div>
+            <div style="display: inherit;">
+                <!-- ko template: { name: 'storyTagTemplate' } -->
+                <!-- /ko -->
             </div>
         </td>
     </tr>
@@ -166,8 +170,7 @@
             <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
             <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
             <div>
-                <!-- ko foreach: $parent.GetSelectedStoryTags($data) -->
-                <span class="label label-info" data-bind="text: StoryTagDescription"></span>
+                <!-- ko template: { name: 'storyTagTemplate' } -->
                 <!-- /ko -->
             </div>
         </td>
@@ -189,6 +192,12 @@
         <!-- /ko -->
         <!-- /ko -->
     </div>
+    <!-- /ko -->
+</script>
+
+<script type="text/html" id="storyTagTemplate">
+    <!-- ko foreach: $parent.GetSelectedStoryTags($data) -->
+    <span class="label label-info" data-bind="text: StoryTagDescription"></span>
     <!-- /ko -->
 </script>
 

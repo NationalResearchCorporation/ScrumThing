@@ -18,6 +18,7 @@
         public Complete: KnockoutComputed<boolean>;
         public TaskTags: RawTaskTag[];
         public Blocked: KnockoutComputed<boolean>;
+        public QSReadyOrInProgress: KnockoutComputed<boolean>;
         public Progressing: KnockoutComputed<boolean>;
         public ReachToggleText: KnockoutComputed<string>;
 
@@ -72,6 +73,11 @@
             this.Blocked = ko.computed(() => {
                 return _.any(this.Tasks(), (task) => { return task.State() == "Blocked"; });
             });
+
+            this.QSReadyOrInProgress = ko.computed(() => {
+                return !this.Blocked() && (_.any(this.Tasks(), (task) => { return task.State() == "ReadyForQs" }) || _.any(this.Tasks(), (task) => { return task.State() == "QsInProgress"; }));
+            });
+
 
             this.Progressing = ko.computed(() => {
                 return !(this.Complete() || this.Blocked());

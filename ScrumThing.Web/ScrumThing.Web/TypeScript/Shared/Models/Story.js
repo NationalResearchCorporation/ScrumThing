@@ -84,6 +84,14 @@
                 });
             });
 
+            this.QSReadyOrInProgress = ko.computed(function () {
+                return !_this.Blocked() && (_.any(_this.Tasks(), function (task) {
+                    return task.State() == "ReadyForQs";
+                }) || _.any(_this.Tasks(), function (task) {
+                    return task.State() == "QsInProgress";
+                }));
+            });
+
             this.Progressing = ko.computed(function () {
                 return !(_this.Complete() || _this.Blocked());
             });

@@ -89,12 +89,12 @@ tbody {
     background-color: #FF7777;
 }
 
-.readyForQS {
+.qsReadyOrInProgress {
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease;
-    background-color: #77D8FF;
+    background-color: #ABD2DB;
 }
 
 .progressing {

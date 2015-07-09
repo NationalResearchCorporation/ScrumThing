@@ -154,7 +154,7 @@
 
 <script type="text/html" id="viewSprintStoryTemplate">
     <!-- ko if: Collapsed() -->
-    <tr data-bind="css: { complete : Complete(), blocked : Blocked(), progressing : Progressing(), readyForQS: ReadyForQS() }">
+    <tr data-bind="css: { complete : Complete(), blocked : Blocked(), progressing : Progressing(), qsReadyOrInProgress: QSReadyOrInProgress() }">
         <td colspan="7">
             <div class="pull-left text-left">
                 <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
@@ -165,7 +165,7 @@
     </tr>
     <!-- /ko -->
     <!-- ko if: !Collapsed() -->
-    <tr data-bind="css: { complete : Complete(), blocked : Blocked(), progressing : Progressing(), readyForQS: ReadyForQS() }">
+    <tr data-bind="css: { complete : Complete(), blocked : Blocked(), progressing : Progressing(), qsReadyOrInProgress: QSReadyOrInProgress() }">
         <td class="break-word">
             <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
             <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>

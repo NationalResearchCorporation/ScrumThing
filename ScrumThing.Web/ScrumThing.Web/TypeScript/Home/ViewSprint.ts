@@ -43,6 +43,12 @@ module ScrumThing {
             });
         }
 
+        public GetSelectedStoryTags(story: Story): KnockoutComputed<RawStoryTag[]> {
+            return ko.computed(() => {
+                return _.filter(this.storyTags(), (tag) => { return _.contains(story.StoryTags(), tag.StoryTagId) });
+            });
+        }
+
         public Drag(event: any) {
             event.dataTransfer.setData('text', event.target.id);
         }

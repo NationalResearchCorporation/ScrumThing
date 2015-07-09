@@ -54,6 +54,15 @@ var ScrumThing;
             });
         };
 
+        ViewSprintViewModel.prototype.GetSelectedStoryTags = function (story) {
+            var _this = this;
+            return ko.computed(function () {
+                return _.filter(_this.storyTags(), function (tag) {
+                    return _.contains(story.StoryTags(), tag.StoryTagId);
+                });
+            });
+        };
+
         ViewSprintViewModel.prototype.Drag = function (event) {
             event.dataTransfer.setData('text', event.target.id);
         };

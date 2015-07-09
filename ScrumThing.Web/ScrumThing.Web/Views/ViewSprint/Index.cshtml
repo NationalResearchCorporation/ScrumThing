@@ -47,18 +47,9 @@
 
             <div class="modal-body">
                 <!-- ko if: currentTask() != null -->
-                <!-- ko if: _.any(currentTask().TaskTags(), function (tag) { return tag.IsIncluded; }) -->
-                <div class="taskTags">
-                    <!-- ko foreach: currentTask().Tags -->
-                    <!-- ko if: IsIncluded -->
-                    <span data-bind="text: TaskTagDescription, attr: { class: TaskTagClasses }"></span>
-                    <!-- /ko -->
-                    <!-- /ko -->
-                </div>
+                <!-- ko template: { name: 'taskTagTemplate', data: currentTask() } -->
                 <!-- /ko -->
-
                 <h2>Hours</h2>
-
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -142,6 +133,10 @@
         <!-- ko foreach: Assignments() -->
         <span class="label label-info" data-bind="text: UserName"></span>
         <!-- /ko -->
+
+        <!-- ko template: { name: 'taskTagTemplate' } -->
+        <!-- /ko -->
+
         <!-- ko if: Notes().length > 0-->
         <div class="label label-default">
             <span class="glyphicon glyphicon-comment invert"></span>
@@ -182,6 +177,18 @@
         <!-- /ko -->
         <!-- /ko -->
     </tr>
+    <!-- /ko -->
+</script>
+
+<script type="text/html" id="taskTagTemplate">
+    <!-- ko if: _.any(TaskTags(), function (tag) { return tag.IsIncluded; }) -->
+    <div class="taskTags">
+        <!-- ko foreach: TaskTags() -->
+        <!-- ko if: IsIncluded -->
+        <span data-bind="text: TaskTagDescription, attr: { class: TaskTagClasses }"></span>
+        <!-- /ko -->
+        <!-- /ko -->
+    </div>
     <!-- /ko -->
 </script>
 

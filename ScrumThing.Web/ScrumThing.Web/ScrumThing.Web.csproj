@@ -391,7 +391,18 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScript\Home\ViewSprint.ts" />
-    <TypeScriptCompile Include="TypeScript\Shared\Models.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawTaskTag.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawAssignment.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawNote.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawResource.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawStory.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawStoryTag.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawTask.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawTeam.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\Resource.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\Sprint.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\Story.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\Task.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Utility.ts" />
   </ItemGroup>
   <PropertyGroup>

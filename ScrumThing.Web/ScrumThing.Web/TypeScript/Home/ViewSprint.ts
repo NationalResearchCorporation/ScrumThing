@@ -11,7 +11,6 @@ jQuery(function () {
 module ScrumThing {
     export class ViewSprintViewModel extends BaseSprintViewModel {
         public currentTask: KnockoutObservable<Task> = ko.observable<Task>(null);
-
         public newNote: KnockoutObservable<string> = ko.observable<string>();
 
         public states: string[] = [

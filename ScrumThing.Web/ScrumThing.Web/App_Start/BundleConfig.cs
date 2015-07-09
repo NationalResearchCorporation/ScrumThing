@@ -39,6 +39,11 @@ namespace ScrumThing.Web {
                       "~/Scripts/respond.js",
                       "~/Scripts/bootstrap-multiselect.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/nrc").Include(
+                      "~/TypeScript/Shared/Models/*.js",
+                      "~/TypeScript/Shared/Utility.js",
+                      "~/TypeScript/Knockout/TooltipBinding.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/jquery.jgrowl.css",
                       "~/Content/bootstrap.css",

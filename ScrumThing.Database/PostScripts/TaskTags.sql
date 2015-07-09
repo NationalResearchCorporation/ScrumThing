@@ -3,7 +3,7 @@ BEGIN
 
     INSERT INTO dbo.TaskTags( TaskTagId, TaskTagDescription, TaskTagClasses)
     VALUES
-    ( 1 , 'Paired Programming', 'label label-info'),
-    ( 2 , 'Timeboxed', 'label label-danger')
+    ( 1 , 'Paired Programming', 'label tag-task'),
+    ( 2 , 'Timeboxed', 'label tag-task')
 
 END

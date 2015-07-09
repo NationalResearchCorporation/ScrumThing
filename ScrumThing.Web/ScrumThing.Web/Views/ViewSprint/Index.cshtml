@@ -131,7 +131,7 @@
         <br />
 
         <!-- ko foreach: Assignments() -->
-        <span class="label label-info" data-bind="text: UserName"></span>
+        <span class="label tag-assignment" data-bind="text: UserName"></span>
         <!-- /ko -->
 
         <!-- ko template: { name: 'taskTagTemplate' } -->
@@ -159,6 +159,12 @@
             <div style="display: inherit;">
                 <!-- ko template: { name: 'storyTagTemplate' } -->
                 <!-- /ko -->
+
+                <!-- ko foreach: $root.GetAllAssignmentsForStory($data) -->
+                <span class="label tag-assignment" data-bind="text: $data"></span>
+                <!-- /ko -->
+
+
             </div>
         </td>
     </tr>
@@ -197,7 +203,7 @@
 
 <script type="text/html" id="storyTagTemplate">
     <!-- ko foreach: $parent.GetSelectedStoryTags($data) -->
-    <span class="label label-info" data-bind="text: StoryTagDescription"></span>
+    <span class="label tag-story" data-bind="text: StoryTagDescription"></span>
     <!-- /ko -->
 </script>
 

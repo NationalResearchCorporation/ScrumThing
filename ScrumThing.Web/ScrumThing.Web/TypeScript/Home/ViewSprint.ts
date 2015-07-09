@@ -49,6 +49,15 @@ module ScrumThing {
             });
         }
 
+        public GetAllAssignmentsForStory(story: Story): KnockoutComputed<string[]> {
+            return ko.computed(() => {
+                var assignments: RawAssignment[][] = _.map(story.Tasks(), (task) => task.Assignments());
+                var flattenedAssignments: RawAssignment[] = _.flatten(assignments);
+                var userNames: string[] = _.map(flattenedAssignments, (rawAssignment) => rawAssignment.UserName);
+                return _.unique(userNames);
+            });
+        }
+
         public Drag(event: any) {
             event.dataTransfer.setData('text', event.target.id);
         }

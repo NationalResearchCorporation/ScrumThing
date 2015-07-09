@@ -63,6 +63,19 @@ var ScrumThing;
             });
         };
 
+        ViewSprintViewModel.prototype.GetAllAssignmentsForStory = function (story) {
+            return ko.computed(function () {
+                var assignments = _.map(story.Tasks(), function (task) {
+                    return task.Assignments();
+                });
+                var flattenedAssignments = _.flatten(assignments);
+                var userNames = _.map(flattenedAssignments, function (rawAssignment) {
+                    return rawAssignment.UserName;
+                });
+                return _.unique(userNames);
+            });
+        };
+
         ViewSprintViewModel.prototype.Drag = function (event) {
             event.dataTransfer.setData('text', event.target.id);
         };

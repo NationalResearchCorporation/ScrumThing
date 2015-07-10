@@ -80,7 +80,7 @@
 
 
             this.Progressing = ko.computed(() => {
-                return !(this.Complete() || this.Blocked());
+                return !(this.Complete() || this.Blocked() || this.QSReadyOrInProgress);
             });
 
             this.Collapsed = ko.computed(() => {

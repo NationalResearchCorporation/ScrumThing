@@ -93,7 +93,7 @@
             });
 
             this.Progressing = ko.computed(function () {
-                return !(_this.Complete() || _this.Blocked());
+                return !(_this.Complete() || _this.Blocked() || _this.QSReadyOrInProgress);
             });
 
             this.Collapsed = ko.computed(function () {

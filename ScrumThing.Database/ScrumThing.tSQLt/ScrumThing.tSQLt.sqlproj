@@ -199,8 +199,14 @@
     <Build Include="Schemas\tSQLt\Views\Tests.sql" />
     <Build Include="Schemas\testScrum\SetupTests.sql" />
     <Build Include="Schemas\dbo\MoveTask.tests.sql" />
-    <Build Include="Schemas\dbo\FixOrdinals.sql" />
-    <Build Include="Schemas\dbo\RemoveStory.sql" />
+    <Build Include="Schemas\dbo\FixOrdinals.tests.sql" />
+    <Build Include="Schemas\dbo\RemoveStory.tests.sql" />
+    <Build Include="Schemas\dbo\AddNote.tests.sql" />
+    <Build Include="Schemas\dbo\AddResource.tests.sql" />
+    <Build Include="Schemas\dbo\AddSprint.tests.sql" />
+    <Build Include="Schemas\dbo\AddStory.tests.sql" />
+    <Build Include="Schemas\dbo\AddTask.tests.sql" />
+    <Build Include="Schemas\dbo\AddTeam.tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

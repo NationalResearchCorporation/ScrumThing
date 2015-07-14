@@ -207,6 +207,9 @@
     <Build Include="Schemas\dbo\AddStory.tests.sql" />
     <Build Include="Schemas\dbo\AddTask.tests.sql" />
     <Build Include="Schemas\dbo\AddTeam.tests.sql" />
+    <Build Include="Schemas\dbo\UpdateTask.tests.sql" />
+    <Build Include="Schemas\dbo\UpdateSprint.tests.sql" />
+    <Build Include="Schemas\dbo\UpdateStory.tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

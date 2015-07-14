@@ -9,6 +9,16 @@ AS
 BEGIN
     EXEC testScrumThing.SetupTests;
 
-	
+	DECLARE @TeamId INT,
+			@Name VARCHAR(200),
+			@returnedvalue INT;
+
+	SET @TeamId = 1;
+	SET @Name = 'Sprint 5';
+
+	EXEC @returnedvalue = dbo.AddSprint @TeamId, @Name;
+	PRINT @returnedvalue;
+
+	EXEC tSQLt.AssertEquals @returnedvalue, 5;
 END
 GO

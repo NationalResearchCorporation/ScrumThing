@@ -4,7 +4,7 @@ GO
 EXECUTE sp_addextendedproperty @name = N'tSQLt.TestClass', @value = 1, @level0type = N'SCHEMA', @level0name = N'AddNote';
 GO
 
-CREATE PROCEDURE AddNote.test_Successful
+CREATE PROCEDURE AddNote.test_Successful_AddNote
 AS
 BEGIN
     EXEC testScrumThing.SetupTests;

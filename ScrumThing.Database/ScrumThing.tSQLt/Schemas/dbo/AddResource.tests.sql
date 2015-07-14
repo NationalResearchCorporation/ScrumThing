@@ -4,7 +4,7 @@ GO
 EXECUTE sp_addextendedproperty @name = N'tSQLt.TestClass', @value = 1, @level0type = N'SCHEMA', @level0name = N'AddResource';
 GO
 
-CREATE PROCEDURE AddResource.test_Successful
+CREATE PROCEDURE AddResource.test_Successful_NewUser
 AS
 BEGIN
     EXEC testScrumThing.SetupTests;
@@ -14,5 +14,7 @@ BEGIN
 
 	SET @actual = (SELECT QsPercentage FROM Resources WHERE UserName = 'ResourceUser');
 	EXEC tSQLt.AssertEquals 50, @actual;
+	SET @actual = (SELECT DevPercentage FROM Resources WHERE UserName = 'ResourceUser');
+	EXEC tSQLt.AssertEquals 0, @actual;
 END
 GO

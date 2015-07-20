@@ -4,6 +4,8 @@ CREATE PROCEDURE SetAssignments
     @Assignments VARCHAR(MAX)
 AS
 BEGIN
+    BEGIN TRANSACTION
+
     DELETE FROM Assignments
     WHERE TaskId = @TaskId
 
@@ -12,4 +14,6 @@ BEGIN
         TaskId = @TaskId,
         UserName = s
     FROM SplitString(@Assignments, '|');
+
+    COMMIT TRANSACTION
 END

@@ -116,7 +116,7 @@ module ScrumThing {
                     }
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to get sprints: " + errorThrown);
+                    toastr.error("Failed to get sprints: " + errorThrown);
                 },
             });
         }
@@ -140,7 +140,7 @@ module ScrumThing {
                     this.GetSprints();
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to create sprint: " + errorThrown);
+                    toastr.error("Failed to create sprint: " + errorThrown);
                 }
             });
         }
@@ -157,7 +157,7 @@ module ScrumThing {
                     this.GetSprints();
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to update sprint: " + errorThrown);
+                    toastr.error("Failed to update sprint: " + errorThrown);
                 }
             });
         }
@@ -176,7 +176,7 @@ module ScrumThing {
                         this.resources(newResources);
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to get resources: " + errorThrown);
+                        toastr.error("Failed to get resources: " + errorThrown);
                     }
                 });
             }
@@ -192,7 +192,7 @@ module ScrumThing {
                     this.storyTags(data);
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to get story tags: " + errorThrown);
+                    toastr.error("Failed to get story tags: " + errorThrown);
                 }
             });
         }
@@ -208,7 +208,7 @@ module ScrumThing {
                     this.taskTags(_.map(data, (tag) => new RawTaskTag(tag.TaskTagId, tag.TaskTagDescription, tag.TaskTagClasses)));
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to get task tags: " + errorThrown);
+                    toastr.error("Failed to get task tags: " + errorThrown);
                 }
             });
         }
@@ -233,7 +233,7 @@ module ScrumThing {
                         this.stories(newStories);
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to get sprint information: " + errorThrown);
+                        toastr.error("Failed to get sprint information: " + errorThrown);
                     }
                 });
             }
@@ -259,7 +259,7 @@ module ScrumThing {
                     this.currentTeam(newTeam);
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to get teams: " + errorThrown);
+                    toastr.error("Failed to get teams: " + errorThrown);
                 }
             });
         }

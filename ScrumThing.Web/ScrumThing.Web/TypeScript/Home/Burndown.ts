@@ -59,7 +59,7 @@ module ScrumThing {
                         });
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to get burndown: " + errorThrown);
+                        toastr.error("Failed to get burndown: " + errorThrown);
                     }
                 });
             }

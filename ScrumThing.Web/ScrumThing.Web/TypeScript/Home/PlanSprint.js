@@ -44,7 +44,7 @@ var ScrumThing;
                     }))
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to save resources: " + errorThrown);
+                    toastr.error("Failed to save resources: " + errorThrown);
                 }
             });
         };
@@ -64,7 +64,7 @@ var ScrumThing;
                         }
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        jQuery.jGrowl("Failed to get sprint days: " + errorThrown);
+                        toastr.error("Failed to get sprint days: " + errorThrown);
                     }
                 });
             }
@@ -83,7 +83,7 @@ var ScrumThing;
                 success: function (data) {
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to save sprint days: " + errorThrown);
+                    toastr.error("Failed to save sprint days: " + errorThrown);
                 }
             });
         };
@@ -97,7 +97,7 @@ var ScrumThing;
                     SprintId: this.sprintId
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to add story: " + errorThrown);
+                    toastr.error("Failed to add story: " + errorThrown);
                 },
                 success: function (data) {
                     _this.stories.push(new ScrumThing.Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, [], _this.taskTags()));
@@ -119,7 +119,7 @@ var ScrumThing;
                     StoryId: story.StoryId
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to remove story: " + errorThrown);
+                    toastr.error("Failed to remove story: " + errorThrown);
                 },
                 success: function (newOrdinals) {
                     _this.stories.remove(story);
@@ -151,11 +151,11 @@ var ScrumThing;
                     }
 
                     if (growlMsg) {
-                        jQuery.jGrowl(growlMsg);
+                        toastr.info(growlMsg);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
+                    toastr.error("Failed to change story's order: " + errorThrown);
                 }
             });
         };
@@ -239,7 +239,7 @@ var ScrumThing;
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to change task's order: " + errorThrown);
+                    toastr.error("Failed to change task's order: " + errorThrown);
                 }
             });
         };

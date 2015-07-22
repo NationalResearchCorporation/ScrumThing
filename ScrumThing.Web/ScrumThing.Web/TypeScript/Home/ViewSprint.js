@@ -142,7 +142,7 @@ var ScrumThing;
                     _this.currentTask().Notes.unshift(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to add note: " + errorThrown);
+                    toastr.error("Failed to add note: " + errorThrown);
                 }
             });
         };

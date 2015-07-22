@@ -35,7 +35,7 @@
                         }));
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to set assignments: " + errorThrown);
+                        toastr.error("Failed to set assignments: " + errorThrown);
                     }
                 });
             }
@@ -83,7 +83,7 @@
                     TaskTags: _.map(_.filter(this.TaskTags(), (tag) => tag.IsIncluded), (tag) => tag.TaskTagId).join('|')
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to update task: " + errorThrown);
+                    toastr.error("Failed to update task: " + errorThrown);
                 }
             });
             return true; // Needed for checkbox click event

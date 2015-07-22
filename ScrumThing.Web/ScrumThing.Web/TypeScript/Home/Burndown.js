@@ -66,7 +66,7 @@ var ScrumThing;
                         });
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        jQuery.jGrowl("Failed to get burndown: " + errorThrown);
+                        toastr.error("Failed to get burndown: " + errorThrown);
                     }
                 });
             }

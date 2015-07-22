@@ -37,7 +37,7 @@ module ScrumThing {
                     ResourcesJson: JSON.stringify(_.map(this.resources(), (resource) => { return resource.ToRaw(); }))
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to save resources: " + errorThrown);
+                    toastr.error("Failed to save resources: " + errorThrown);
                 }
             });
         }
@@ -54,7 +54,7 @@ module ScrumThing {
                             jQuery('#sprintDaysPicker').multiDatesPicker('addDates', dates);
                         }                    },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to get sprint days: " + errorThrown);
+                        toastr.error("Failed to get sprint days: " + errorThrown);
                     }
                 });
             }
@@ -73,7 +73,7 @@ module ScrumThing {
                 success: (data: Array<string>) => {
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to save sprint days: " + errorThrown);
+                    toastr.error("Failed to save sprint days: " + errorThrown);
                 }
             });
         }
@@ -86,7 +86,7 @@ module ScrumThing {
                     SprintId: this.sprintId
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to add story: " + errorThrown);
+                    toastr.error("Failed to add story: " + errorThrown);
                 },
                 success: (data: { StoryId: number; Ordinal: number; IsReachGoal: boolean }) => {
                     this.stories.push(new Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, [], this.taskTags()));
@@ -107,7 +107,7 @@ module ScrumThing {
                     StoryId: story.StoryId
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to remove story: " + errorThrown);
+                    toastr.error("Failed to remove story: " + errorThrown);
                 },
                 success: (newOrdinals: Array<{ StoryId: number; Ordinal: number }>) => {
                     this.stories.remove(story);
@@ -136,11 +136,11 @@ module ScrumThing {
                     }
 
                     if (growlMsg) {
-                        jQuery.jGrowl(growlMsg);
+                        toastr.info(growlMsg);
                     }
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to change story's order: " + errorThrown);
+                    toastr.error("Failed to change story's order: " + errorThrown);
                 }
             });
         }
@@ -216,7 +216,7 @@ module ScrumThing {
                     }
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to change task's order: " + errorThrown);
+                    toastr.error("Failed to change task's order: " + errorThrown);
                 }
             });
         }

@@ -116,7 +116,7 @@ module ScrumThing {
                     this.currentTask().Notes.unshift(data);
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to add note: " + errorThrown);
+                    toastr.error("Failed to add note: " + errorThrown);
                 }
             });
         }

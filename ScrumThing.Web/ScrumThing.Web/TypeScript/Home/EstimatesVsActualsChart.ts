@@ -126,7 +126,7 @@ module ScrumThing {
                         });
                     },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                        jQuery.jGrowl("Failed to get estimates vs actuals: " + errorThrown);
+                        toastr.error("Failed to get estimates vs actuals: " + errorThrown);
                     }
                 });
             }

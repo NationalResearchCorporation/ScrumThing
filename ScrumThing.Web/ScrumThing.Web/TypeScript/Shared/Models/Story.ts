@@ -60,7 +60,7 @@
                             this.StoryTags(newStoryTagIds);
                         },
                         error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                            jQuery.jGrowl("Failed to set story tags: " + errorThrown);
+                            toastr.error("Failed to set story tags: " + errorThrown);
                         }
                     });
                 }
@@ -107,7 +107,7 @@
                     IsReachGoal: this.IsReachGoal()
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to update story: " + errorThrown);
+                    toastr.error("Failed to update story: " + errorThrown);
                 }
             });
         }
@@ -120,7 +120,7 @@
                     StoryId: this.StoryId
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to add task: " + errorThrown);
+                    toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: (data: { TaskId: number; Ordinal: number }) => {
                     var task = new RawTask(data.TaskId, data.Ordinal, this.GetNewTaskTags());
@@ -137,7 +137,7 @@
                     TaskId: task.TaskId
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    jQuery.jGrowl("Failed to add task: " + errorThrown);
+                    toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: (taskId: number) => {
                     this.Tasks.remove(task);

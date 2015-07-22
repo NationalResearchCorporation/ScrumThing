@@ -126,7 +126,7 @@ var ScrumThing;
                         });
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        jQuery.jGrowl("Failed to get estimates vs actuals: " + errorThrown);
+                        toastr.error("Failed to get estimates vs actuals: " + errorThrown);
                     }
                 });
             }

@@ -21,7 +21,7 @@
                         IsReachGoal: _this.IsReachGoal()
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        jQuery.jGrowl("Failed to update story: " + errorThrown);
+                        toastr.error("Failed to update story: " + errorThrown);
                     }
                 });
             };
@@ -66,7 +66,7 @@
                             _this.StoryTags(newStoryTagIds);
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            jQuery.jGrowl("Failed to set story tags: " + errorThrown);
+                            toastr.error("Failed to set story tags: " + errorThrown);
                         }
                     });
                 }
@@ -117,7 +117,7 @@
                     StoryId: this.StoryId
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to add task: " + errorThrown);
+                    toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: function (data) {
                     var task = new ScrumThing.RawTask(data.TaskId, data.Ordinal, _this.GetNewTaskTags());
@@ -135,7 +135,7 @@
                     TaskId: task.TaskId
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    jQuery.jGrowl("Failed to add task: " + errorThrown);
+                    toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: function (taskId) {
                     _this.Tasks.remove(task);

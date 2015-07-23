@@ -163,3 +163,15 @@ tbody {
     background-color: #7986CB;
     color: #FFFFFF;
 }
+
+/* modify bootstrap modal to be a little smaller than the viewport and overflow accordingly */
+
+.modal-dialog .modal-body {
+    max-height: calc(100vh - 230px);
+    overflow-y: auto;
+}
+
+.modal .modal-dialog {
+    margin: 0 auto;
+    margin-top: 25px;
+}

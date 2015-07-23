@@ -94,7 +94,6 @@
     <Build Include="Stored Procedures\GetTeams.sql" />
     <Build Include="Tables\TaskTags.sql" />
     <Build Include="Tables\TasksInTags.sql" />
-    <Build Include="Stored Procedures\SetTaskTags.sql" />
     <Build Include="Stored Procedures\RemoveTask.sql" />
     <Build Include="Stored Procedures\RemoveStory.sql" />
     <Build Include="Stored Procedures\UpdateTask.sql" />

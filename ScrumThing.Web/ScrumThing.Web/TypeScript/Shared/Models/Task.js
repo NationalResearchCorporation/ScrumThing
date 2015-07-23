@@ -13,8 +13,8 @@
             this.RemainingDevHours = ScrumThing.observableNumber();
             this.RemainingQsHours = ScrumThing.observableNumber();
             this.Assignments = ko.observableArray();
-            this.Notes = ko.observableArray();
             this.TaskTags = ko.observableArray();
+            this.Notes = ko.observableArray();
             this.AssignmentsForDropdown = ko.pureComputed({
                 read: function () {
                     return _.map(_this.Assignments(), function (assignment) {
@@ -76,9 +76,11 @@
             this.RemainingDevHours(raw.RemainingDevHours);
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
-            this.Notes(raw.Notes);
             this.TaskTags(_.map(raw.TaskTags, function (tag) {
                 return tag.TaskTagId;
+            }));
+            this.Notes(_.map(raw.Notes, function (raw) {
+                return new ScrumThing.Note(raw);
             }));
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);

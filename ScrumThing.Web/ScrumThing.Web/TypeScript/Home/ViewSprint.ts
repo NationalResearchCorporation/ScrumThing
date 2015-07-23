@@ -113,7 +113,7 @@ module ScrumThing {
                 },
                 success: (data: RawNote) => {
                     this.newNote('');
-                    this.currentTask().Notes.unshift(data);
+                    this.currentTask().Notes.unshift(new Note(data));
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to add note: " + errorThrown);

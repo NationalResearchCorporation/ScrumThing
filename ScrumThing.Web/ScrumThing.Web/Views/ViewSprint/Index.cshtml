@@ -88,10 +88,15 @@
                     <textarea class="form-control" data-bind="text: newNote, value: newNote" placeholder="Add note"></textarea>
                     <input class="btn btn-default" type="button" value="Add Note" data-bind="click: $root.AddNote" />
 
+                    <!-- TODO: fix ALLLLL this -->
+                    <p></p>
+
                     <div class="list-group">
                         <!-- ko foreach: currentTask().Notes -->
-                        <h4 data-bind="text: UserName + ' - ' + Timestamp"></h4>
-                        <span class="list-group-item" data-bind="text: Note"></span>
+                        <span class="list-group-item">
+                            <span class="badge" data-bind="text: UserName() + ' - ' + DisplayTimestamp()"></span>
+                            <span data-bind="text: Note"></span>
+                        </span>
                         <!-- /ko -->
                     </div>
                 <!-- /ko -->

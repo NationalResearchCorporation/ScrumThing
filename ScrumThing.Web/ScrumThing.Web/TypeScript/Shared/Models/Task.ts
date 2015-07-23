@@ -12,8 +12,8 @@
         public RemainingDevHours: KnockoutObservable<number> = observableNumber();
         public RemainingQsHours: KnockoutObservable<number> = observableNumber();
         public Assignments: KnockoutObservableArray<RawAssignment> = ko.observableArray<RawAssignment>();
-        public Notes: KnockoutObservableArray<RawNote> = ko.observableArray<RawNote>();
         public TaskTags: KnockoutObservableArray<number> = ko.observableArray<number>();
+        public Notes: KnockoutObservableArray<Note> = ko.observableArray<Note>();
 
         public AssignmentsForDropdown: KnockoutComputed<string[]> = ko.pureComputed<string[]>({
             read: () => {
@@ -55,8 +55,8 @@
             this.RemainingDevHours(raw.RemainingDevHours);
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
-            this.Notes(raw.Notes);
             this.TaskTags(_.map(raw.TaskTags, (tag) => tag.TaskTagId));
+            this.Notes(_.map(raw.Notes, (raw) => new Note(raw)));
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);

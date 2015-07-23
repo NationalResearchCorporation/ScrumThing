@@ -139,7 +139,7 @@ var ScrumThing;
                 },
                 success: function (data) {
                     _this.newNote('');
-                    _this.currentTask().Notes.unshift(data);
+                    _this.currentTask().Notes.unshift(new ScrumThing.Note(data));
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to add note: " + errorThrown);

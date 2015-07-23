@@ -146,43 +146,6 @@ var ScrumThing;
                 }
             });
         };
-
-        ViewSprintViewModel.prototype.MakeSetCollapsedHandler = function (story, collapsed) {
-            var _this = this;
-            return function () {
-                _this.SetCollapsed(story, collapsed);
-            };
-        };
-
-        ViewSprintViewModel.prototype.SetCollapsed = function (story, collapsed) {
-            localStorage.setItem('collapsed' + story.StoryId, JSON.stringify(collapsed));
-            story.CollapsedOverride(collapsed);
-        };
-
-        ViewSprintViewModel.prototype.ExpandAll = function () {
-            var _this = this;
-            _.forEach(this.stories(), function (story) {
-                _this.SetCollapsed(story, false);
-            });
-        };
-
-        ViewSprintViewModel.prototype.CollapseAll = function () {
-            var _this = this;
-            _.forEach(this.stories(), function (story) {
-                _this.SetCollapsed(story, true);
-            });
-        };
-
-        ViewSprintViewModel.prototype.SmartCollapse = function () {
-            Object.keys(localStorage).forEach(function (key) {
-                if (/^collapsed/.test(key)) {
-                    localStorage.removeItem(key);
-                }
-            });
-            _.forEach(this.stories(), function (story) {
-                story.CollapsedOverride(null);
-            });
-        };
         return ViewSprintViewModel;
     })(ScrumThing.BaseSprintViewModel);
     ScrumThing.ViewSprintViewModel = ViewSprintViewModel;

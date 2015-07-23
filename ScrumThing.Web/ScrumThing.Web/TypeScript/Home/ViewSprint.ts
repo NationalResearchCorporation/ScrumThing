@@ -121,39 +121,5 @@ module ScrumThing {
             });
         }
 
-        public MakeSetCollapsedHandler(story: Story, collapsed: boolean) {
-            return () => {
-                this.SetCollapsed(story, collapsed);
-            };
-        }
-
-        public SetCollapsed(story: Story, collapsed: boolean) {
-            localStorage.setItem('collapsed' + story.StoryId, JSON.stringify(collapsed));
-            story.CollapsedOverride(collapsed);
-        }
-
-        public ExpandAll() {
-            _.forEach(this.stories(), (story) => {
-                this.SetCollapsed(story, false);
-            });
-        }
-
-        public CollapseAll() {
-            _.forEach(this.stories(), (story) => {
-                this.SetCollapsed(story, true);
-            });
-        }
-
-        public SmartCollapse() {
-            Object.keys(localStorage)
-                .forEach((key) => {
-                    if (/^collapsed/.test(key)) {
-                        localStorage.removeItem(key);
-                    }
-                });
-            _.forEach(this.stories(), (story) => {
-                story.CollapsedOverride(null);
-            });
-        }
     }
 }

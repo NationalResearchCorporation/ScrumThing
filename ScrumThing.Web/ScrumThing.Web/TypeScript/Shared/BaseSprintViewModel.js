@@ -277,6 +277,43 @@ var ScrumThing;
             });
         };
 
+        BaseSprintViewModel.prototype.MakeSetCollapsedHandler = function (story, collapsed) {
+            var _this = this;
+            return function () {
+                _this.SetCollapsed(story, collapsed);
+            };
+        };
+
+        BaseSprintViewModel.prototype.SetCollapsed = function (story, collapsed) {
+            localStorage.setItem('collapsed' + story.StoryId, JSON.stringify(collapsed));
+            story.CollapsedOverride(collapsed);
+        };
+
+        BaseSprintViewModel.prototype.ExpandAll = function () {
+            var _this = this;
+            _.forEach(this.stories(), function (story) {
+                _this.SetCollapsed(story, false);
+            });
+        };
+
+        BaseSprintViewModel.prototype.CollapseAll = function () {
+            var _this = this;
+            _.forEach(this.stories(), function (story) {
+                _this.SetCollapsed(story, true);
+            });
+        };
+
+        BaseSprintViewModel.prototype.SmartCollapse = function () {
+            Object.keys(localStorage).forEach(function (key) {
+                if (/^collapsed/.test(key)) {
+                    localStorage.removeItem(key);
+                }
+            });
+            _.forEach(this.stories(), function (story) {
+                story.CollapsedOverride(null);
+            });
+        };
+
         // Read a page's GET URL variables and return them as an associative array.
         // http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
         BaseSprintViewModel.prototype.getUrlVars = function () {

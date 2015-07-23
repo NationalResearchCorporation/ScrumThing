@@ -129,11 +129,13 @@ module ScrumThing {
                     NewOrdinal: newOrdinal,
                     IsReachGoal: isReachGoal
                 },
-                success: (data: Array<{ StoryId: number; Ordinal: number }>) => {
+                success: (data: Array<{ StoryId: number; Ordinal: number; IsReachGoal: boolean }>) => {
                     for (var ii = 0; ii < data.length; ii++) {
                         var modifiedStory = _.findWhere(this.stories(), { StoryId: data[ii].StoryId });
                         modifiedStory.Ordinal(data[ii].Ordinal);
+                        modifiedStory.IsReachGoal(data[ii].IsReachGoal);
                     }
+
 
                     if (growlMsg) {
                         toastr.info(growlMsg);
@@ -178,11 +180,11 @@ module ScrumThing {
             event.preventDefault();
         }
 
-        public DropStory(event: any, ordinal: number) {
+        public DropStory(event: any, ordinal: number, isReachGoal: boolean) {
             var htmlId = event.dataTransfer.getData('text');
             var story = _.find(this.stories(), (t) => { return t.HtmlId == htmlId; });
 
-            this.MoveStory(story.StoryId, ordinal, story.IsReachGoal());
+            this.MoveStory(story.StoryId, ordinal, isReachGoal);
         }
 
         public DropTask(event: any, story: number, ordinal: number) {
@@ -221,8 +223,8 @@ module ScrumThing {
             });
         }
 
-        public OnDropStory(index: number) {
-            return "viewModel.DropStory(event, " + (index + 1) + ")";
+        public OnDropStory(ordinal: number, isReachGoal: boolean) {
+            return "viewModel.DropStory(event, " + ordinal + ", " + isReachGoal + ")";
         }
 
         public OnDropTask(story: Story, index: number) {

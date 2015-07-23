@@ -148,6 +148,7 @@ var ScrumThing;
                     for (var ii = 0; ii < data.length; ii++) {
                         var modifiedStory = _.findWhere(_this.stories(), { StoryId: data[ii].StoryId });
                         modifiedStory.Ordinal(data[ii].Ordinal);
+                        modifiedStory.IsReachGoal(data[ii].IsReachGoal);
                     }
 
                     if (growlMsg) {
@@ -196,13 +197,13 @@ var ScrumThing;
             event.preventDefault();
         };
 
-        PlanSprintViewModel.prototype.DropStory = function (event, ordinal) {
+        PlanSprintViewModel.prototype.DropStory = function (event, ordinal, isReachGoal) {
             var htmlId = event.dataTransfer.getData('text');
             var story = _.find(this.stories(), function (t) {
                 return t.HtmlId == htmlId;
             });
 
-            this.MoveStory(story.StoryId, ordinal, story.IsReachGoal());
+            this.MoveStory(story.StoryId, ordinal, isReachGoal);
         };
 
         PlanSprintViewModel.prototype.DropTask = function (event, story, ordinal) {
@@ -244,8 +245,8 @@ var ScrumThing;
             });
         };
 
-        PlanSprintViewModel.prototype.OnDropStory = function (index) {
-            return "viewModel.DropStory(event, " + (index + 1) + ")";
+        PlanSprintViewModel.prototype.OnDropStory = function (ordinal, isReachGoal) {
+            return "viewModel.DropStory(event, " + ordinal + ", " + isReachGoal + ")";
         };
 
         PlanSprintViewModel.prototype.OnDropTask = function (story, index) {

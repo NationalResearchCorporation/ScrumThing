@@ -38,7 +38,7 @@ BEGIN
     WHERE StoryId = @StoryId;
 
     -- Return all updated information so the front end doesn't have to replicate it
-    SELECT StoryId, Ordinal
+    SELECT StoryId, Ordinal, IsReachGoal
     FROM Stories
     WHERE SprintId = @SprintId;
 

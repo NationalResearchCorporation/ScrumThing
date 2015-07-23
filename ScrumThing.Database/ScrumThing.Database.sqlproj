@@ -112,6 +112,7 @@
     <None Include="PostScripts\StoryTags.sql" />
     <PostDeploy Include="PostScripts\PostDeployment.sql" />
     <Build Include="Stored Procedures\GetStoryTags.sql" />
+    <Build Include="Stored Procedures\SetTaskTags.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

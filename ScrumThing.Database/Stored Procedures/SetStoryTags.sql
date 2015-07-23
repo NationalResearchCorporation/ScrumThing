@@ -4,7 +4,6 @@ CREATE PROCEDURE [dbo].[SetStoryTags]
     @StoryTagIds VARCHAR(MAX)
 AS
 BEGIN
-
     BEGIN TRANSACTION
 
     DECLARE @TagIds TABLE ( TagId INT NOT NULL );
@@ -20,5 +19,4 @@ BEGIN
     FROM @TagIds t;
 
     COMMIT
-
 END

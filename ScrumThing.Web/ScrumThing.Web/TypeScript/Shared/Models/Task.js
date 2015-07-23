@@ -57,17 +57,12 @@
                         QsHoursBurned: _this.QsHoursBurned,
                         RemainingDevHours: _this.RemainingDevHours,
                         RemainingQsHours: _this.RemainingQsHours,
-                        TaskTags: _.map(_.filter(_this.TaskTags(), function (tag) {
-                            return tag.IsIncluded;
-                        }), function (tag) {
-                            return tag.TaskTagId;
-                        }).join('|')
+                        TaskTags: _this.TaskTags().join('|')
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         toastr.error("Failed to update task: " + errorThrown);
                     }
                 });
-                return true;
             };
             this.TaskId = raw.TaskId;
             this.HtmlId = 'task' + raw.TaskId;
@@ -82,7 +77,9 @@
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
             this.Notes(raw.Notes);
-            this.TaskTags(raw.TaskTags);
+            this.TaskTags(_.map(raw.TaskTags, function (tag) {
+                return tag.TaskTagId;
+            }));
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);
@@ -92,16 +89,22 @@
             this.RemainingDevHours.subscribe(this.UpdateTask);
             this.RemainingQsHours.subscribe(this.UpdateTask);
         }
-        Task.prototype.ToRaw = function () {
-            var raw = new ScrumThing.RawTask(this.TaskId, this.Ordinal(), this.TaskTags());
-            raw.TaskText = this.TaskText();
-            raw.EstimatedDevHours = this.EstimatedDevHours();
-            raw.EstimatedQsHours = this.EstimatedQsHours();
-            raw.DevHoursBurned = this.DevHoursBurned();
-            raw.QsHoursBurned = this.QsHoursBurned();
-            raw.RemainingDevHours = this.RemainingDevHours();
-            raw.RemainingQsHours = this.RemainingQsHours();
-            return raw;
+        Task.prototype.HasTaskTag = function (taskTagId) {
+            return _.contains(this.TaskTags(), taskTagId);
+        };
+
+        Task.prototype.ToggleTaskTag = function (taskTagId) {
+            var _this = this;
+            return function () {
+                if (_this.HasTaskTag(taskTagId)) {
+                    _this.TaskTags.remove(taskTagId);
+                } else {
+                    _this.TaskTags.push(taskTagId);
+                }
+
+                _this.UpdateTask();
+                return true;
+            };
         };
         return Task;
     })();

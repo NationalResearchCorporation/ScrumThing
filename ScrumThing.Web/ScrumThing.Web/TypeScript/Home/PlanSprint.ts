@@ -89,7 +89,7 @@ module ScrumThing {
                     toastr.error("Failed to add story: " + errorThrown);
                 },
                 success: (data: { StoryId: number; Ordinal: number; IsReachGoal: boolean }) => {
-                    this.stories.push(new Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, [], this.taskTags()));
+                    this.stories.push(new Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, []));
 
                     //This is a shite UX bandaid to bring the new story into view until the
                     // UX story that covers this behavior fully is completed.

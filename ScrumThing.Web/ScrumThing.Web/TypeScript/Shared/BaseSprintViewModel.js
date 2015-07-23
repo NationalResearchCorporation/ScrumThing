@@ -209,10 +209,7 @@ var ScrumThing;
                 type: 'POST',
                 url: '/PlanSprint/GetTaskTags',
                 success: function (data) {
-                    // The data coming back doesn't actually include "IsIncluded" field, so we populate that manually by calling the constructor
-                    _this.taskTags(_.map(data, function (tag) {
-                        return new ScrumThing.RawTaskTag(tag.TaskTagId, tag.TaskTagDescription, tag.TaskTagClasses);
-                    }));
+                    _this.taskTags(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to get task tags: " + errorThrown);
@@ -235,7 +232,7 @@ var ScrumThing;
                             var storyTags = _.map(story.StoryTags, function (tag) {
                                 return tag.StoryTagId;
                             });
-                            var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags, _this.taskTags());
+                            var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags);
                             newStory.Tasks(_.map(story.Tasks, function (task) {
                                 return new ScrumThing.Task(task);
                             }));

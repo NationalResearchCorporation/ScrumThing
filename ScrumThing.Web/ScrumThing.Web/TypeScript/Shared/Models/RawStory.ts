@@ -1,4 +1,5 @@
-﻿module ScrumThing {
+﻿
+module ScrumThing {
     export class RawStory {
         public StoryId: number;
         public Ordinal: number;

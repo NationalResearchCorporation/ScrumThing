@@ -16,21 +16,19 @@
         public CollapsedOverride: KnockoutObservable<boolean> = ko.observable<boolean>();
 
         public Complete: KnockoutComputed<boolean>;
-        public TaskTags: RawTaskTag[];
         public Blocked: KnockoutComputed<boolean>;
         public QSReadyOrInProgress: KnockoutComputed<boolean>;
         public Progressing: KnockoutComputed<boolean>;
         public ReachToggleText: KnockoutComputed<string>;
 
-        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[], taskTags: RawTaskTag[]) {
+        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
-            this.Ordinal(ordinal);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
-            this.StoryTags(storyTags);
+            this.Ordinal(ordinal);
             this.IsReachGoal(isReachGoal);
-            this.TaskTags = taskTags;
+            this.StoryTags(storyTags);
 
             this.ReachToggleText = ko.computed(() => {
                 return this.IsReachGoal() ? 'Make this a commitment.' : 'Make this a reach goal.';
@@ -123,7 +121,7 @@
                     toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: (data: { TaskId: number; Ordinal: number }) => {
-                    var task = new RawTask(data.TaskId, data.Ordinal, this.GetNewTaskTags());
+                    var task = new RawTask(data.TaskId, data.Ordinal);
                     this.Tasks.push(new Task(task));
                 }
             });
@@ -144,23 +142,5 @@
                 }
             });
         }
-
-        private GetNewTaskTags(): RawTaskTag[] {
-            var tags = new Array<RawTaskTag>();
-            for (var ii = 0; ii < this.TaskTags.length; ii++) {
-                tags.push(this.TaskTags[ii]);
-            }
-            return tags;
-        }
-
-        public ToRaw(): RawStory {
-            var raw = new RawStory();
-            raw.StoryText = this.StoryText();
-            raw.StoryPoints = this.StoryPoints();
-            raw.Ordinal = this.Ordinal();
-            raw.IsReachGoal = this.IsReachGoal();
-            raw.Tasks = _.map(this.Tasks(), (task) => { return task.ToRaw(); });
-            return raw;
-        }
     }
-} 
+}

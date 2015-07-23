@@ -13,7 +13,8 @@
         public RemainingQsHours: KnockoutObservable<number> = observableNumber();
         public Assignments: KnockoutObservableArray<RawAssignment> = ko.observableArray<RawAssignment>();
         public Notes: KnockoutObservableArray<RawNote> = ko.observableArray<RawNote>();
-        public TaskTags: KnockoutObservableArray<RawTaskTag> = ko.observableArray<RawTaskTag>();
+        public TaskTags: KnockoutObservableArray<number> = ko.observableArray<number>();
+
         public AssignmentsForDropdown: KnockoutComputed<string[]> = ko.pureComputed<string[]>({
             read: () => {
                 return _.map(this.Assignments(), (assignment) => { return assignment.UserName; });
@@ -55,7 +56,7 @@
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
             this.Notes(raw.Notes);
-            this.TaskTags(raw.TaskTags);
+            this.TaskTags(_.map(raw.TaskTags, (tag) => tag.TaskTagId));
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);
@@ -80,26 +81,29 @@
                     QsHoursBurned: this.QsHoursBurned,
                     RemainingDevHours: this.RemainingDevHours,
                     RemainingQsHours: this.RemainingQsHours,
-                    TaskTags: _.map(_.filter(this.TaskTags(), (tag) => tag.IsIncluded), (tag) => tag.TaskTagId).join('|')
+                    TaskTags: this.TaskTags().join('|')
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to update task: " + errorThrown);
                 }
             });
-            return true; // Needed for checkbox click event
         }
 
-        public ToRaw(): RawTask {
-            var raw = new RawTask(this.TaskId, this.Ordinal(), this.TaskTags());
-            raw.TaskText = this.TaskText();
-            raw.EstimatedDevHours = this.EstimatedDevHours();
-            raw.EstimatedQsHours = this.EstimatedQsHours();
-            raw.DevHoursBurned = this.DevHoursBurned();
-            raw.QsHoursBurned = this.QsHoursBurned();
-            raw.RemainingDevHours = this.RemainingDevHours();
-            raw.RemainingQsHours = this.RemainingQsHours();
-            return raw;
+        public HasTaskTag(taskTagId: number) {
+            return _.contains(this.TaskTags(), taskTagId);
+        }
+
+        public ToggleTaskTag(taskTagId: number) {
+            return () => {
+                if (this.HasTaskTag(taskTagId)) {
+                    this.TaskTags.remove(taskTagId);
+                } else {
+                    this.TaskTags.push(taskTagId);
+                }
+
+                this.UpdateTask();
+                return true;
+            };
         }
     }
-
 } 

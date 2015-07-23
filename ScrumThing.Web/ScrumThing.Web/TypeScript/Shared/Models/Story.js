@@ -1,7 +1,7 @@
 ﻿var ScrumThing;
 (function (ScrumThing) {
     var Story = (function () {
-        function Story(storyId, storyText, storyPoints, ordinal, isReachGoal, storyTags, taskTags) {
+        function Story(storyId, storyText, storyPoints, ordinal, isReachGoal, storyTags) {
             var _this = this;
             this.Ordinal = ko.observable();
             this.StoryText = ko.observable();
@@ -27,12 +27,11 @@
             };
             this.StoryId = storyId;
             this.HtmlId = 'story' + storyId;
-            this.Ordinal(ordinal);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
-            this.StoryTags(storyTags);
+            this.Ordinal(ordinal);
             this.IsReachGoal(isReachGoal);
-            this.TaskTags = taskTags;
+            this.StoryTags(storyTags);
 
             this.ReachToggleText = ko.computed(function () {
                 return _this.IsReachGoal() ? 'Make this a commitment.' : 'Make this a reach goal.';
@@ -120,7 +119,7 @@
                     toastr.error("Failed to add task: " + errorThrown);
                 },
                 success: function (data) {
-                    var task = new ScrumThing.RawTask(data.TaskId, data.Ordinal, _this.GetNewTaskTags());
+                    var task = new ScrumThing.RawTask(data.TaskId, data.Ordinal);
                     _this.Tasks.push(new ScrumThing.Task(task));
                 }
             });
@@ -141,26 +140,6 @@
                     _this.Tasks.remove(task);
                 }
             });
-        };
-
-        Story.prototype.GetNewTaskTags = function () {
-            var tags = new Array();
-            for (var ii = 0; ii < this.TaskTags.length; ii++) {
-                tags.push(this.TaskTags[ii]);
-            }
-            return tags;
-        };
-
-        Story.prototype.ToRaw = function () {
-            var raw = new ScrumThing.RawStory();
-            raw.StoryText = this.StoryText();
-            raw.StoryPoints = this.StoryPoints();
-            raw.Ordinal = this.Ordinal();
-            raw.IsReachGoal = this.IsReachGoal();
-            raw.Tasks = _.map(this.Tasks(), function (task) {
-                return task.ToRaw();
-            });
-            return raw;
         };
         return Story;
     })();

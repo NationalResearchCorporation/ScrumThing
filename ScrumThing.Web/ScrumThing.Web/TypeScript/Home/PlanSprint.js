@@ -100,7 +100,7 @@ var ScrumThing;
                     toastr.error("Failed to add story: " + errorThrown);
                 },
                 success: function (data) {
-                    _this.stories.push(new ScrumThing.Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, [], _this.taskTags()));
+                    _this.stories.push(new ScrumThing.Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, []));
 
                     //This is a shite UX bandaid to bring the new story into view until the
                     // UX story that covers this behavior fully is completed.

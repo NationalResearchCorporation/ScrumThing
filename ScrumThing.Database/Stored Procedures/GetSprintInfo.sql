@@ -71,16 +71,14 @@ BEGIN
 
     -- Task Tags
     SELECT
-        t.TaskId,
-        tg.TaskTagId,
-        tg.TaskTagDescription,
-        tg.TaskTagClasses,
-        CASE WHEN tt.TaskId IS NOT NULL THEN 1 ELSE 0 END AS IsIncluded
-    FROM Stories s
-    JOIN Tasks t ON s.StoryId = t.StoryId
-    CROSS JOIN dbo.TaskTags AS tg
-    LEFT JOIN dbo.TasksInTags AS tt ON tt.TaskId = t.TaskId AND tt.TaskTagId = tg.TaskTagId
+        tit.TaskId,
+        tit.TaskTagId,
+        tt.TaskTagDescription,
+        tt.TaskTagClasses
+    FROM TasksInTags AS tit
+    JOIN TaskTags tt ON tit.TaskTagId = tt.TaskTagId
+    JOIN Tasks t ON tit.TaskId = t.TaskId
+    JOIN Stories s ON t.StoryId = s.StoryId
     WHERE s.SprintId = @SprintId
-    ORDER BY t.TaskId, tg.TaskTagDescription
-
+    ORDER BY tit.TaskId, tit.TaskTagId
 END

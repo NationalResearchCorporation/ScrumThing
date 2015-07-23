@@ -183,6 +183,7 @@
     <Compile Include="Database\Inputs\AddSprint.cs" />
     <Compile Include="Database\Inputs\GetSprintDays.cs" />
     <Compile Include="Database\Inputs\GetResources.cs" />
+    <Compile Include="Database\Inputs\SetTaskTags.cs" />
     <Compile Include="Database\Inputs\SetStoryTags.cs" />
     <Compile Include="Database\Inputs\MoveTask.cs" />
     <Compile Include="Database\Inputs\MoveStory.cs" />

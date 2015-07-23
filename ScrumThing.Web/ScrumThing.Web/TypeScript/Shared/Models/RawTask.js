@@ -1,7 +1,7 @@
 ﻿var ScrumThing;
 (function (ScrumThing) {
     var RawTask = (function () {
-        function RawTask(taskId, ordinal, taskTags) {
+        function RawTask(taskId, ordinal) {
             this.TaskId = -1;
             this.TaskText = '';
             this.Ordinal = 1;
@@ -12,9 +12,11 @@
             this.QsHoursBurned = 0;
             this.RemainingDevHours = 0;
             this.RemainingQsHours = 0;
+            this.Assignments = [];
+            this.Notes = [];
+            this.TaskTags = [];
             this.TaskId = taskId;
             this.Ordinal = ordinal;
-            this.TaskTags = taskTags;
         }
         return RawTask;
     })();

@@ -223,10 +223,10 @@
                     </ul>
                 </td>
                 <td class="text-left">
-                    <!-- ko foreach: TaskTags -->
+                    <!-- ko foreach: $root.taskTags -->
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" data-bind="value: TaskTagId, checked: IsIncluded, event: { click: $parent.UpdateTask }" />
+                                <input type="checkbox" data-bind="checked: $parent.HasTaskTag(TaskTagId), event: { click: $parent.ToggleTaskTag(TaskTagId) }" />
                                 <span data-bind="text: TaskTagDescription" class="small"></span>
                             </label>
                         </div>
@@ -247,21 +247,6 @@
                         <button class="btn btn-primary btn-sm" data-bind="click: function() { $parent.AddStory.call($parent, $data); }">Insert Story</button>
                     </li>
                 </ul>
-            </td>
-            <td class="text-left">
-                <!-- ko foreach: $root.taskTags -->
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" data-bind="checked: $parent.HasTaskTag(TaskTagId), event: { click: $parent.ToggleTaskTag(TaskTagId) }" />
-                            <span data-bind="text: TaskTagDescription" class="small"></span>
-                        </label>
-                    </div>
-                <!-- /ko -->
-            </td>
-            <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
-            <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
-            <td>
-                <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
             </td>
         </tr>
     <!-- /ko -->

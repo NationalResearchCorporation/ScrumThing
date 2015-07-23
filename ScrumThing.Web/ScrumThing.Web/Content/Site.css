@@ -136,13 +136,13 @@ tbody {
     color: #fff;
     font-size: 1.2em;
     border-color: #263238;
-    border-width: 2px 2px 0 2px;
+    border-width: 1px;
     border-style: solid;
 }
 
 .reachGoalSection {
     border-color: #263238;
-    border-width: 0 2px 2px 2px;
+    border-width: 1px;
     border-style: solid;
 }
 

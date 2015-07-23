@@ -11,7 +11,7 @@
         </button>
         <ul class="dropdown-menu">
             <!-- ko foreach: sprints -->
-                <li><a href="#" data-bind="click: $root.ChangeSprint(SprintId, Name), text: Name"></a></li>
+            <li><a href="#" data-bind="click: $root.ChangeSprint(SprintId, Name), text: Name"></a></li>
             <!-- /ko -->
         </ul>
     </div>
@@ -31,8 +31,8 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <input type="text" class="form-control" name="sprintName" data-bind="textInput: sprintName" />
-                    </div>                    
-                </div>   
+                    </div>
+                </div>
                 <div class="row">
                     <ul>
                         <li class="btn-group">
@@ -40,11 +40,11 @@
                             <button class="btn btn-info" data-bind="click: ExportSprint">Export Sprint Info</button>
                         </li>
                     </ul>
-                </div>             
+                </div>
             </div>
         </div>
     </div>
-    
+
     <div class="panel panel-default">
         <div class="panel-heading pointer collapsed" data-toggle="collapse" data-parent="#accordion" href="#sprintDaysPanel">
             <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#sprintDaysPanel">Sprint Days</a></h4>
@@ -165,20 +165,35 @@
 </form>
 
 <script type="text/html" id="planSprintStoryTemplate">
+    <!-- ko if: Collapsed() -->
+    <tr>
+        <td colspan="6">
+            <div class="pull-left text-left">
+                <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
+                <strong><span data-bind="text: Ordinal()"></span></strong>
+                <span data-bind="text: StoryText"></span>
+            </div>
+        </td>
+    </tr>
+    <!-- /ko -->
+    <!-- ko if: !Collapsed() -->
     <tr data-bind="attr: { ondrop: $root.OnDropStory(Ordinal(), IsReachGoal())}" ondragover="viewModel.AllowDrop(event)">
         <td draggable="true"
             ondragstart="viewModel.Drag(event)"
             data-bind="attr: { id: HtmlId }">
-            <span data-bind="text: Ordinal()"></span>
+            <div class="pull-left">
+                <span class="glyphicon glyphicon-chevron-down" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
+                <strong><span data-bind="text: Ordinal()"></span></strong>
+            </div>
         </td>
         <td><textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea></td>
         <td>
             <input class="form-control" type="number" data-bind="value: StoryPoints" />
             <select data-bind="multiselect: { numberDisplayed: 2, buttonWidth: '100%', buttonClass: 'multiselect dropdown-toggle btn btn-default storyTagsDropdown' },
-                               options: $root.storyTags,
-                               optionsValue: 'StoryTagId',
-                               optionsText: 'StoryTagDescription',
-                               selectedOptions: $data.StoryTagsForDropdown" multiple="multiple"></select>
+                                   options: $root.storyTags,
+                                   optionsValue: 'StoryTagId',
+                                   optionsText: 'StoryTagDescription',
+                                   selectedOptions: $data.StoryTagsForDropdown" multiple="multiple"></select>
         </td>
         <td data-bind="text: TotalDevHours"></td>
         <td data-bind="text: TotalQsHours"></td>
@@ -190,39 +205,39 @@
         </td>
     </tr>
     <!-- ko foreach: _.sortBy(Tasks(), function (task) { return task.Ordinal(); }) -->
-        <tr data-bind="attr: { ondrop: $root.OnDropTask($parent, $index()) }" ondragover="viewModel.AllowDrop(event)">
-            <td draggable="true"
-                ondragstart="viewModel.Drag(event)"
-                data-bind="attr: { id: HtmlId }">
-                <ul class="indent">
-                    <li>
-                        <span data-bind="text: $parent.Ordinal() + '.' + Ordinal()"></span>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul class="indent">
-                    <li>
-                        <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
-                    </li>
-                </ul>
-            </td>
-            <td class="text-left">
-                <!-- ko foreach: $root.taskTags -->
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" data-bind="checked: $parent.HasTaskTag(TaskTagId), event: { click: $parent.ToggleTaskTag(TaskTagId) }" />
-                            <span data-bind="text: TaskTagDescription" class="small"></span>
-                        </label>
-                    </div>
-                <!-- /ko -->
-            </td>
-            <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
-            <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
-            <td>
-                <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
-            </td>
-        </tr>
+    <tr data-bind="attr: { ondrop: $root.OnDropTask($parent, $index()) }" ondragover="viewModel.AllowDrop(event)">
+        <td draggable="true"
+            ondragstart="viewModel.Drag(event)"
+            data-bind="attr: { id: HtmlId }">
+            <ul class="indent">
+                <li>
+                    <span data-bind="text: $parent.Ordinal() + '.' + Ordinal()"></span>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <ul class="indent">
+                <li>
+                    <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
+                </li>
+            </ul>
+        </td>
+        <td class="text-left">
+            <!-- ko foreach: $root.taskTags -->
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: $parent.HasTaskTag(TaskTagId), event: { click: $parent.ToggleTaskTag(TaskTagId) }" />
+                    <span data-bind="text: TaskTagDescription" class="small"></span>
+                </label>
+            </div>
+            <!-- /ko -->
+        </td>
+        <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
+        <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
+        <td>
+            <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
+        </td>
+    </tr>
     <!-- /ko -->
     <tr>
         <td colspan="6">
@@ -234,6 +249,7 @@
             </ul>
         </td>
     </tr>
+    <!-- /ko -->
 </script>
 
 <script src="~/TypeScript/Shared/BaseSprintViewModel.js"></script>

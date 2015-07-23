@@ -17,7 +17,8 @@
 </head>
 <body id="body">
 
-    <div class="container">
+    <button class="btn btn-default glyphicon glyphicon-refresh fixed-top-right" data-bind="click: GetSprintInfo"></button>
+    <div class="container-fluid">
         <ul class="nav nav-tabs">
             <li class="logoIcon"><image src="~/Content/images/ui-logoIcon_36x36.png"></image></li>
             <li class="@(Request.RawUrl == "/PlanSprint" ? "active" : "")"><a href="/PlanSprint">Plan</a></li>

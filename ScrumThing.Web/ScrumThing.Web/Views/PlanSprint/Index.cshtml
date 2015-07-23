@@ -208,10 +208,10 @@
                 </ul>
             </td>
             <td class="text-left">
-                <!-- ko foreach: TaskTags -->
+                <!-- ko foreach: $root.taskTags -->
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" data-bind="value: TaskTagId, checked: IsIncluded, event: { click: $parent.UpdateTask }" />
+                            <input type="checkbox" data-bind="checked: $parent.HasTaskTag(TaskTagId), event: { click: $parent.ToggleTaskTag(TaskTagId) }" />
                             <span data-bind="text: TaskTagDescription" class="small"></span>
                         </label>
                     </div>

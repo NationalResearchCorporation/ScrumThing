@@ -52,6 +52,10 @@ namespace ScrumThing.Web {
                       "~/Content/Site.css",
                       "~/Content/pepper-ginder-custom.css",
                       "~/Content/bootstrap-multiselect.css"));
+
+            #if !DEBUG
+            BundleTable.EnableOptimizations = true;
+            #endif
         }
     }
 }

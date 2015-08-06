@@ -18,6 +18,7 @@ module ScrumThing {
         public reachStories: KnockoutComputed<Story[]>;
         public committedStories: KnockoutComputed<Story[]>;
         public committedTasks: KnockoutComputed<Task[]>;
+        public currentTeamDropdown: KnockoutComputed<string>;
         public sprintIsEmpty: KnockoutComputed<boolean>;
         public storyTags: KnockoutObservableArray<RawStoryTag>;
         public taskTags: KnockoutObservableArray<RawTaskTag>;
@@ -48,6 +49,9 @@ module ScrumThing {
                 return <Task[]>_.flatten(_.map(this.committedStories(), (story) => { return story.Tasks(); }));
             });
 
+            this.currentTeamDropdown = ko.computed(() => {
+                return this.currentTeam() ? this.currentTeam().TeamName : '';
+            });
 
             this.totalDevHoursAvailable = ko.computed(() => {
                 var hours = _.map(this.resources(), (r) => { return r.TotalDevHours(); });
@@ -79,7 +83,6 @@ module ScrumThing {
             this.totalStoryPoints = ko.computed(() => {
                 return sum(_.map(this.committedStories(), (story) => { return story.StoryPoints(); }));
             });
-
 
             this.sprintIsEmpty = ko.computed(() => {
                 return this.stories().length == 0;

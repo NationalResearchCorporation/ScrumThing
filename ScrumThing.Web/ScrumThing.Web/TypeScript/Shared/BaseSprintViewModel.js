@@ -40,6 +40,10 @@ var ScrumThing;
                 }));
             });
 
+            this.currentTeamDropdown = ko.computed(function () {
+                return _this.currentTeam() ? _this.currentTeam().TeamName : '';
+            });
+
             this.totalDevHoursAvailable = ko.computed(function () {
                 var hours = _.map(_this.resources(), function (r) {
                     return r.TotalDevHours();

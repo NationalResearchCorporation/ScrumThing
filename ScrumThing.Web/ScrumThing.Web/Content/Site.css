@@ -7,6 +7,38 @@
     margin-right: 45px;
 }
 
+.navbar .container-fluid {
+    margin-right: auto;
+}
+
+.navbar {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.navbar-default {
+    border-color: #ccc;
+    background-color: #fff;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #fff;
+    background-color: #29B6F6;
+    text-decoration: none;
+}
+
+.navbar-brand {
+    padding: 4px 15px;
+}
+
+.no-link, no-link:hover {
+    text-decoration: none;
+    cursor: default;
+    color: inherit;
+}
+
 .table-bordered, .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
     border: 1px #9E9E9E solid;
 }

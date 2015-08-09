@@ -1,6 +1,7 @@
 ﻿body, p, h1, span {
     color: rgba(51,71,79,0.87);
     font-family: 'Source Sans Pro', sans-serif;
+    -ms-overflow-style: scrollbar;
 }
 
 .container-fluid {

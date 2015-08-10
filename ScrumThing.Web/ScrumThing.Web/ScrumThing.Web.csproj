@@ -374,9 +374,11 @@
     <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Burndown\Index.cshtml" />
     <Content Include="Views\EstimatesVsActuals\Index.cshtml" />
+    <Content Include="Views\Shared\_ChangeSprint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ViewSprint\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,12 +1,8 @@
-﻿<h1>Current Sprint: <span data-bind="text: sprintName"></span></h1>
-
-<h2>
-    <span class="btn-group">
-        <button class="btn btn-default" data-bind="click: $root.ExpandAll">Expand All</button>
-        <button class="btn btn-default" data-bind="click: $root.CollapseAll">Collapse All</button>
-        <button class="btn btn-default" data-bind="click: $root.SmartCollapse, tooltip: { title: 'Collapse complete stories only', placement: 'top' }">Smart Collapse</button>
-    </span>
-</h2>
+﻿<div class="btn-group bottom-spacing">
+    <button class="btn btn-default" data-bind="click: $root.ExpandAll">Expand All</button>
+    <button class="btn btn-default" data-bind="click: $root.CollapseAll">Collapse All</button>
+    <button class="btn btn-default" data-bind="click: $root.SmartCollapse, tooltip: { title: 'Collapse complete stories only', placement: 'top' }">Smart Collapse</button>
+</div>
 
 <table id="viewSprintTable" class="table table-bordered table-fixed">
     <thead>

@@ -54,6 +54,9 @@
                 </div>
             </div>
         </div>
+        @if (Request.RequestContext.RouteData.Values["Controller"] != "Home") {
+            @Html.Partial("~/Views/Shared/_ChangeSprint.cshtml")
+        }
         @RenderBody()
     </div>
     <script src="http://code.highcharts.com/highcharts.js"></script>

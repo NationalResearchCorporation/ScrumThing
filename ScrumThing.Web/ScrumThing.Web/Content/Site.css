@@ -4,6 +4,14 @@
     -ms-overflow-style: scrollbar;
 }
 
+.borderless {
+    border: none;
+}
+
+.bottom-spacing {
+    margin-bottom: 10px;
+}
+
 .container-fluid {
     margin-right: 45px;
 }
@@ -222,4 +230,8 @@ tbody {
 
 .highchart-chart {
     width: 99%;
+}
+
+#viewSprintDropdown {
+    
 }

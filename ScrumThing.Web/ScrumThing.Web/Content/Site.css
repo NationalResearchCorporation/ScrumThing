@@ -16,6 +16,14 @@
     margin-right: 45px;
 }
 
+.dropdown-menu {
+    padding: 0;
+}
+
+.dropdown-menu > li > a {
+    padding: 15px;
+}
+
 .navbar .container-fluid {
     margin-right: auto;
 }

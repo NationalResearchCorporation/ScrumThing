@@ -34,6 +34,7 @@ module ScrumThing {
                                 categories: _.pluck(data, 'FormattedBurnDate')
                             },
                             yAxis: {
+                                min: 0,
                                 title: {
                                     text: 'Hours'
                                 },

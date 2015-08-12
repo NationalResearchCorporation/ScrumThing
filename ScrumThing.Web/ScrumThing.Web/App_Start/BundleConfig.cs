@@ -49,9 +49,9 @@ namespace ScrumThing.Web {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/toastr.css",
                       "~/Content/bootstrap.css",
-                      "~/Content/Site.css",
                       "~/Content/pepper-ginder-custom.css",
-                      "~/Content/bootstrap-multiselect.css"));
+                      "~/Content/bootstrap-multiselect.css",
+                      "~/Content/Site.css"));
 
             #if !DEBUG
             BundleTable.EnableOptimizations = true;

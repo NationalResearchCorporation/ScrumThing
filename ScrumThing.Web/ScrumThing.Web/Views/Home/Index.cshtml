@@ -9,5 +9,6 @@
     <li class="list-group-item"><a href="/EstimatesVsActuals">View Estimates vs. Actuals</a></li>
 </ul>
 
-<script src="~/TypeScript/Shared/BaseSprintViewModel.js"></script>
-<script src="~/TypeScript/Home/Home.js"></script>
+@section scripts {
+    @Scripts.Render("~/bundles/homeScripts")
+}

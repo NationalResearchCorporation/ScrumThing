@@ -1,4 +1,5 @@
 ﻿<div id="burndownChart" class="highchart-chart"></div>
 
-<script src="~/TypeScript/Shared/BaseSprintViewModel.js"></script>
-<script src="~/TypeScript/Home/Burndown.js"></script>
+@section scripts {
+    @Scripts.Render("~/bundles/burndownScripts")
+}

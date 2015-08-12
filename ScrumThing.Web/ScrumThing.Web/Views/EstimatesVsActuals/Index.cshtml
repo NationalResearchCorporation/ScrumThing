@@ -1,4 +1,5 @@
 ﻿<div id="estimatesVsActualsChart" class="highchart-chart"></div>
 
-<script src="~/TypeScript/Shared/BaseSprintViewModel.js"></script>
-<script src="~/TypeScript/Home/EstimatesVsActualsChart.js"></script>
+@section scripts {
+    @Scripts.Render("~/bundles/estimateVsActualsScripts")
+}

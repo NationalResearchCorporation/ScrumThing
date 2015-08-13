@@ -8,6 +8,7 @@ var ScrumThing;
             this.sprints = ko.observableArray();
             this.sprintId = ko.observable();
             this.sprintName = ko.observable();
+            this.newSprintName = ko.observable();
             this.resources = ko.observableArray();
             this.stories = ko.observableArray();
             this.teams = ko.observableArray();
@@ -96,8 +97,9 @@ var ScrumThing;
             this.currentTeam.subscribe(this.GetSprints, this);
             this.currentTeam.subscribe(function () {
                 jQuery.cookie('team', _this.currentTeam().TeamName);
-                _this.sprintName('');
             });
+
+            this.sprintName.subscribe(this.UpdateSprint, this);
 
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
@@ -111,11 +113,14 @@ var ScrumThing;
                 data: {
                     TeamId: this.currentTeam().TeamId
                 },
-                success: function (data) {
-                    _this.sprints(data);
-                    if (data.length > 0) {
-                        _this.sprintId(data[data.length - 1].SprintId);
-                        _this.sprintName(data[data.length - 1].Name);
+                success: function (rawSprints) {
+                    _this.sprints(_.map(rawSprints, function (rawSprint) {
+                        return new ScrumThing.Sprint(rawSprint);
+                    }));
+
+                    if (rawSprints.length > 0) {
+                        _this.sprintId(rawSprints[rawSprints.length - 1].SprintId);
+                        _this.sprintName(rawSprints[rawSprints.length - 1].Name);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -132,6 +137,11 @@ var ScrumThing;
             };
         };
 
+        BaseSprintViewModel.prototype.OpenAddSprintModal = function () {
+            this.newSprintName('');
+            jQuery("#createNewSprintModal").modal();
+        };
+
         BaseSprintViewModel.prototype.AddSprint = function () {
             var _this = this;
             jQuery.ajax({
@@ -139,13 +149,15 @@ var ScrumThing;
                 url: '/PlanSprint/AddSprint',
                 data: {
                     TeamId: this.currentTeam().TeamId,
-                    Name: this.sprintName()
+                    Name: this.newSprintName()
                 },
                 success: function (sprintId) {
                     _this.GetSprints();
+                    jQuery("#createNewSprintModal").modal('hide');
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to create sprint: " + errorThrown);
+                    jQuery("#createNewSprintModal").modal('hide');
                 }
             });
         };
@@ -160,7 +172,10 @@ var ScrumThing;
                     Name: this.sprintName()
                 },
                 success: function (sprintId) {
-                    _this.GetSprints();
+                    var sprint = _.find(_this.sprints(), function (s) {
+                        return s.SprintId == _this.sprintId();
+                    });
+                    sprint.Name(_this.sprintName());
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to update sprint: " + errorThrown);

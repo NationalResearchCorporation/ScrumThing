@@ -6,6 +6,7 @@ module ScrumThing {
         public sprints: KnockoutObservableArray<Sprint> = ko.observableArray<Sprint>();
         public sprintId: KnockoutObservable<number> = ko.observable<number>();
         public sprintName: KnockoutObservable<string> = ko.observable<string>();
+        public newSprintName: KnockoutObservable<string> = ko.observable<string>();
 
         public resources: KnockoutObservableArray<Resource> = ko.observableArray<Resource>();
         public totalDevHoursAvailable: KnockoutComputed<number>;
@@ -96,8 +97,9 @@ module ScrumThing {
             this.currentTeam.subscribe(this.GetSprints, this);
             this.currentTeam.subscribe(() => {
                 jQuery.cookie('team', this.currentTeam().TeamName);
-                this.sprintName('')
             });
+
+            this.sprintName.subscribe(this.UpdateSprint, this);
 
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
@@ -111,11 +113,12 @@ module ScrumThing {
                 data: {
                     TeamId: this.currentTeam().TeamId
                 },
-                success: (data: Array<Sprint>) => {
-                    this.sprints(data);
-                    if (data.length > 0) {
-                        this.sprintId(data[data.length - 1].SprintId);
-                        this.sprintName(data[data.length - 1].Name);
+                success: (rawSprints: Array<RawSprint>) => {
+                    this.sprints(_.map(rawSprints, (rawSprint: RawSprint) => new Sprint(rawSprint)));
+
+                    if (rawSprints.length > 0) {
+                        this.sprintId(rawSprints[rawSprints.length - 1].SprintId);
+                        this.sprintName(rawSprints[rawSprints.length - 1].Name);
                     }
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
@@ -131,19 +134,26 @@ module ScrumThing {
             };
         }
 
+        public OpenAddSprintModal() {
+            this.newSprintName('');
+            jQuery("#createNewSprintModal").modal();
+        }
+
         public AddSprint() {
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/AddSprint',
                 data: {                    
                     TeamId: this.currentTeam().TeamId,
-                    Name: this.sprintName()
+                    Name: this.newSprintName()
                 },
                 success: (sprintId: number) => {
                     this.GetSprints();
+                    jQuery("#createNewSprintModal").modal('hide');
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to create sprint: " + errorThrown);
+                    jQuery("#createNewSprintModal").modal('hide');
                 }
             });
         }
@@ -157,7 +167,8 @@ module ScrumThing {
                     Name: this.sprintName()
                 },
                 success: (sprintId: number) => {
-                    this.GetSprints();
+                    var sprint = _.find(this.sprints(), (s: Sprint) => s.SprintId == this.sprintId());
+                    sprint.Name(this.sprintName());
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to update sprint: " + errorThrown);

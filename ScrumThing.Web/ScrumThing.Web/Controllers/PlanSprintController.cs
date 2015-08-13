@@ -18,8 +18,6 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult AddSprint(Input_AddSprint sprint) {
-            sprint.Name = sprint.Name ?? "";
-
             return Json(context.AddSprint(sprint.TeamId, sprint.Name));
         }
 

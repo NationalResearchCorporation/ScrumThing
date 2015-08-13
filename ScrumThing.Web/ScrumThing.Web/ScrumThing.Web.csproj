@@ -413,6 +413,7 @@
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawTask.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawTeam.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Resource.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\RawSprint.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Sprint.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Story.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Task.ts" />

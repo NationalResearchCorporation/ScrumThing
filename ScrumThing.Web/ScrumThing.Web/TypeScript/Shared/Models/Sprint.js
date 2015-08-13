@@ -1,7 +1,9 @@
 ﻿var ScrumThing;
 (function (ScrumThing) {
     var Sprint = (function () {
-        function Sprint() {
+        function Sprint(rawSprint) {
+            this.SprintId = rawSprint.SprintId;
+            this.Name = ko.observable(rawSprint.Name);
         }
         return Sprint;
     })();

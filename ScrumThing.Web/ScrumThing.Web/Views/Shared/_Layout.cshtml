@@ -41,7 +41,7 @@
                         <li class="@(Request.RawUrl == "/EstimatesVsActuals" ? "active" : "")"><a href="/EstimatesVsActuals" alt="estimates versus actuals" title="Estimates vs Actuals">Estimates vs Actuals</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="no-link" href="#">@User.Identity.Name</a></li>
+                        <li><a class="no-link" href="#"><span data-bind="text: ScrumThing.Globals.CurrentUserIdentity"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-bind="attr: {alt: currentTeamDropdown(), title: currentTeamDropdown()}"><!--ko text: currentTeamDropdown()--><!--/ko--> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -61,6 +61,10 @@
     </div>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     @Scripts.Render("~/bundles/nrc")
+    @Scripts.Render("~/bundles/scrumthing")
+    <script>
+        ScrumThing.Globals.CurrentUserIdentity = '@Html.Raw(@User.Identity.Name).ToString().Replace("\\", "\\\\")';
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

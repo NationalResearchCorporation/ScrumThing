@@ -107,12 +107,13 @@
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
         }
-        Story.prototype.AddTask = function () {
+        Story.prototype.AddTask = function (loggedBy) {
             var _this = this;
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/AddTask',
                 data: {
+                    LoggedBy: loggedBy,
                     StoryId: this.StoryId
                 },
                 error: function (xhr, textStatus, errorThrown) {

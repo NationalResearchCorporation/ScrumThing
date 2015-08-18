@@ -46,24 +46,24 @@ namespace ScrumThing.Web {
                       "~/TypeScript/Shared/Utility.js",
                       "~/TypeScript/Knockout/TooltipBinding.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/burndownScripts").Include(
+            bundles.Add(new ScriptBundle("~/bundles/scrumthing").Include(
                       "~/TypeScript/Shared/BaseSprintViewModel.js",
+                      "~/TypeScript/Shared/Globals.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/burndownScripts").Include(
                       "~/TypeScript/Home/Burndown.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/estimateVsActualsScripts").Include(
-                      "~/TypeScript/Shared/BaseSprintViewModel.js",
                       "~/TypeScript/Home/EstimatesVsActualsChart.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/homeScripts").Include(
-                      "~/TypeScript/Shared/BaseSprintViewModel.js",
                       "~/TypeScript/Home/Home.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/planSprintScripts").Include(
-                      "~/TypeScript/Shared/BaseSprintViewModel.js",
                       "~/TypeScript/Home/PlanSprint.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/viewSprintScripts").Include(
-                      "~/TypeScript/Shared/BaseSprintViewModel.js",
                       "~/TypeScript/Home/ViewSprint.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

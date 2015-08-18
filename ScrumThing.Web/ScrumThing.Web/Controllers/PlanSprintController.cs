@@ -81,13 +81,13 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult AddTask(Input_AddTask formData) {
-            var id = context.AddTask(formData.StoryId);
+            var id = context.AddTask(formData.StoryId, formData.LoggedBy);
             return Json(id);
         }
 
         [HttpPost]
         public ActionResult UpdateTask(Input_UpdateTask formData) {
-            context.UpdateTask(formData.TaskId, formData.TaskText, formData.State, formData.EstimatedDevHours, formData.EstimatedQsHours, formData.DevHoursBurned, formData.QsHoursBurned, formData.RemainingDevHours, formData.RemainingQsHours, formData.TaskTags);
+            context.UpdateTask(formData.LoggedBy, formData.TaskId, formData.TaskText, formData.State, formData.EstimatedDevHours, formData.EstimatedQsHours, formData.DevHoursBurned, formData.QsHoursBurned, formData.RemainingDevHours, formData.RemainingQsHours, formData.TaskTags);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

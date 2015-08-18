@@ -110,11 +110,12 @@
             });
         }
 
-        public AddTask() {
+        public AddTask(loggedBy: string) {
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/AddTask',
                 data: {
+                    LoggedBy: loggedBy,
                     StoryId: this.StoryId
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {

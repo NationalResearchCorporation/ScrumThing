@@ -91,14 +91,14 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public Output_AddTask AddTask(int storyId) {
-            return RunSproc<Output_AddTask>(new object[] { storyId }).First();
+        public Output_AddTask AddTask(int storyId, string loggedBy) {
+            return RunSproc<Output_AddTask>(new object[] { storyId, loggedBy }).First();
         }
 
         [Schema("dbo")]
-        public void UpdateTask(int taskId, string taskText, string state, double estimatedDevHours, double estimatedQsHours,
+        public void UpdateTask(string loggedBy, int taskId, string taskText, string state, double estimatedDevHours, double estimatedQsHours,
                                double devHoursBurned, double qsHoursBurned, double remainingDevHours, double remainingQsHours, string taskTags) {
-            RunSproc(new object[] { taskId, taskText, state, estimatedDevHours, estimatedQsHours, devHoursBurned, qsHoursBurned, remainingDevHours, remainingQsHours, taskTags });
+            RunSproc(new object[] { loggedBy, taskId, taskText, state, estimatedDevHours, estimatedQsHours, devHoursBurned, qsHoursBurned, remainingDevHours, remainingQsHours, taskTags });
         }
 
         [Schema("dbo")]

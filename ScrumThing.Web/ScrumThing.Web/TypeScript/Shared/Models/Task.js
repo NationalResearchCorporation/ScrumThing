@@ -48,6 +48,7 @@
                     type: 'POST',
                     url: '/PlanSprint/UpdateTask',
                     data: {
+                        LoggedBy: ScrumThing.Globals.CurrentUserIdentity,
                         TaskId: _this.TaskId,
                         TaskText: _this.TaskText(),
                         State: _this.State,

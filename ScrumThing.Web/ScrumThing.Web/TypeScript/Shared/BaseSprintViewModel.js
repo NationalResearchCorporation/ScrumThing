@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
 /// <reference path="Utility.ts" />
+/// <reference path="globals.ts" />
 var ScrumThing;
 (function (ScrumThing) {
     var BaseSprintViewModel = (function () {

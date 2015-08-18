@@ -3,11 +3,11 @@
 	StoryId INT NOT NULL,
 	TaskText VARCHAR(1000),
     [State] VARCHAR(20),
-	EstimatedDevHours FLOAT NOT NULL,
-	EstimatedQsHours FLOAT NOT NULL,
-    DevHoursBurned FLOAT NOT NULL,
-    QsHoursBurned FLOAT NOT NULL,
-    RemainingDevHours FLOAT NOT NULL,
-    RemainingQsHours FLOAT NOT NULL,
+	EstimatedDevHours FLOAT NOT NULL DEFAULT 0,
+	EstimatedQsHours FLOAT NOT NULL DEFAULT 0,
+    DevHoursBurned FLOAT NOT NULL DEFAULT 0,
+    QsHoursBurned FLOAT NOT NULL DEFAULT 0,
+    RemainingDevHours FLOAT NOT NULL DEFAULT 0,
+    RemainingQsHours FLOAT NOT NULL DEFAULT 0,
 	Ordinal INT NOT NULL
 )

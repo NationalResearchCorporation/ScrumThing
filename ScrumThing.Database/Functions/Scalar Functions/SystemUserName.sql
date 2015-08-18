@@ -1,0 +1,7 @@
+﻿CREATE FUNCTION [dbo].[SystemUserName]
+()
+RETURNS VARCHAR(40)
+AS
+BEGIN
+    RETURN 'System'
+END

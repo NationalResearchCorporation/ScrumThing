@@ -210,6 +210,7 @@
     <Build Include="Schemas\dbo\UpdateTask.tests.sql" />
     <Build Include="Schemas\dbo\UpdateSprint.tests.sql" />
     <Build Include="Schemas\dbo\UpdateStory.tests.sql" />
+    <Build Include="Schemas\dbo\GetPersonalActionLog.tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

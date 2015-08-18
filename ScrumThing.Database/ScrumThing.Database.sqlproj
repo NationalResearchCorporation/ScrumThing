@@ -113,6 +113,9 @@
     <PostDeploy Include="PostScripts\PostDeployment.sql" />
     <Build Include="Stored Procedures\GetStoryTags.sql" />
     <Build Include="Stored Procedures\SetTaskTags.sql" />
+    <Build Include="Stored Procedures\GetPersonalActionLog.sql" />
+    <Build Include="Functions\Scalar Functions\GetTimeScaleWindowValue.sql" />
+    <Build Include="Functions\Scalar Functions\SystemUserName.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -129,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ScrumThing.Database.refactorlog" />
   </ItemGroup>
   <Import Project="packages\OctoPack.3.0.42\tools\OctoPack.targets" />
 </Project>

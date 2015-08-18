@@ -1,5 +1,6 @@
 ﻿
 CREATE PROCEDURE [dbo].[UpdateTask]
+    @LoggedBy VARCHAR(40),
     @TaskId INT,
     @TaskText VARCHAR(1000),
     @State VARCHAR(20),
@@ -50,7 +51,7 @@ BEGIN
     EXEC dbo.SetTaskTags @TaskId, @TaskTags
 
     IF @NeedToLogWork = 1 BEGIN
-        EXEC dbo.LogWork @TaskId
+        EXEC dbo.LogWork @TaskId, @LoggedBy
     END
 
     COMMIT

@@ -1,5 +1,6 @@
 ﻿
 CREATE PROCEDURE AddTask
+    @LoggedBy VARCHAR(40),
     @StoryId INT
 AS
 BEGIN
@@ -22,7 +23,7 @@ BEGIN
 
     -- We log the initial condition of the task so that the log reflects the state of all tasks
     -- even before any work has actually been done on them.
-    EXEC LogWork @Id
+    EXEC LogWork @Id, @LoggedBy
 
     COMMIT
 END

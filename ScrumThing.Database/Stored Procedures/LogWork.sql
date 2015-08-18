@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[LogWork]
     @TaskId INT,
+    @LoggedBy VARCHAR(40) = NULL,
     @Date DATE = NULL
 AS
 BEGIN
@@ -22,6 +23,7 @@ BEGIN
     WHERE TaskId = @TaskId;
 
     INSERT INTO WorkLogs (
+        LoggedBy,
         SprintId, 
         TaskId, 
         TaskDevHoursBurned, 
@@ -31,12 +33,13 @@ BEGIN
         [Timestamp]
     )
     VALUES (
+        ISNULL(@LoggedBy, dbo.SystemUserName()),
         @SprintId, 
         @TaskId, 
         @DevHoursBurned, 
         @QsHoursBurned, 
         @RemainingDevHours, 
         @RemainingQsHours,
-        COALESCE(@DATE, GETDATE())
+        ISNULL(@DATE, GETDATE())
     );
 END

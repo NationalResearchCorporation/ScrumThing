@@ -255,7 +255,7 @@
         <td colspan="6">
             <ul class="indent">
                 <li class="btn-group pull-left">
-                    <button class="btn btn-primary btn-sm" data-bind="click: $data.AddTask">Add Task</button>
+                    <button class="btn btn-primary btn-sm" data-bind="click: $data.AddTask($parent.currentUserIdentity)">Add Task</button>
                     <button class="btn btn-primary btn-sm" data-bind="click: function() { $parent.AddStory.call($parent, $data); }">Insert Story</button>
                 </li>
             </ul>

@@ -243,3 +243,7 @@ tbody {
 #viewSprintDropdown {
     
 }
+
+.draggable {
+    cursor: ns-resize;
+}

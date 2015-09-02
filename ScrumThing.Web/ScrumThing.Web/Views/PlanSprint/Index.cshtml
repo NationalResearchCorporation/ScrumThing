@@ -182,9 +182,13 @@
 
 <script type="text/html" id="planSprintStoryTemplate">
     <!-- ko if: Collapsed() -->
-    <tr>
+    <tr data-bind="attr: { ondrop: $root.OnDropStory(Ordinal(), IsReachGoal())}" ondragover="viewModel.AllowDrop(event)">
         <td colspan="6">
             <div class="pull-left text-left">
+                <span class="glyphicon glyphicon-th draggable"
+                      draggable="true"
+                      ondragstart="viewModel.Drag(event)"
+                      data-bind="attr: { id: HtmlId }"></span>
                 <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
                 <strong><span data-bind="text: Ordinal()"></span></strong>
                 <span data-bind="text: StoryText"></span>
@@ -194,10 +198,12 @@
     <!-- /ko -->
     <!-- ko if: !Collapsed() -->
     <tr data-bind="attr: { ondrop: $root.OnDropStory(Ordinal(), IsReachGoal())}" ondragover="viewModel.AllowDrop(event)">
-        <td draggable="true"
-            ondragstart="viewModel.Drag(event)"
-            data-bind="attr: { id: HtmlId }">
+        <td data-bind="attr: { id: HtmlId }">
             <div class="pull-left">
+                <span class="glyphicon glyphicon-th draggable"
+                      draggable="true"
+                      ondragstart="viewModel.Drag(event)"
+                      data-bind="attr: { id: HtmlId }"></span>
                 <span class="glyphicon glyphicon-chevron-down" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
                 <strong><span data-bind="text: Ordinal()"></span></strong>
             </div>

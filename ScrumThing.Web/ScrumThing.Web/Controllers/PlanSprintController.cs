@@ -64,7 +64,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult AddStory(Input_AddStory formData) {
-            var id = context.AddStory(formData.SprintId);
+            var id = context.AddStory(formData.SprintId, formData.Ordinal, formData.IsReachGoal);
             return Json(id);
         }
 

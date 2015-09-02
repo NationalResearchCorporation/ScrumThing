@@ -416,6 +416,9 @@
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawSprint.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Sprint.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Story.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\NewStoryInfo.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\StoryOrdinal.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\TaskOrdinal.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Task.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Utility.ts" />
   </ItemGroup>

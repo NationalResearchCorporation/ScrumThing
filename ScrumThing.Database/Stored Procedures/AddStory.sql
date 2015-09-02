@@ -1,18 +1,26 @@
 ﻿
 CREATE PROCEDURE AddStory
-    @SprintId INT
+    @SprintId INT,
+    @Ordinal INT,
+    @IsReachGoal BIT
 AS
 BEGIN
-    DECLARE @Ordinal INT = (SELECT COALESCE(MAX(Ordinal) + 1, 1)
-                            FROM Stories
-                            WHERE SprintId = @SprintId);
+    BEGIN TRANSACTION
+
+    UPDATE Stories
+    SET Ordinal = Ordinal + 1
+    WHERE SprintId = @SprintId AND Ordinal >= @Ordinal;
 
     INSERT INTO Stories
     (SprintId, StoryText, StoryPoints, Ordinal, IsReachGoal)
     VALUES
-    (@SprintId, '', '', @Ordinal, 0);
+    (@SprintId, '', '', @Ordinal, @IsReachGoal);
 
-    SELECT StoryId, Ordinal, IsReachGoal
+    SELECT NewStoryId = SCOPE_IDENTITY();
+
+    SELECT StoryId, Ordinal
     FROM Stories
-    WHERE StoryId = SCOPE_IDENTITY();
+    WHERE SprintId = @SprintId;
+
+    COMMIT TRANSACTION
 END

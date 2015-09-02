@@ -116,7 +116,7 @@
                     </tbody>
                 </table>
                 <div class="btn-group" data-bind="visible: sprintIsEmpty()">
-                    <button class="btn btn-primary" data-bind="click: AddStory">Add Story</button>
+                    <button class="btn btn-primary" data-bind="click: AddStory(1, false)">Add Story</button>
                 </div>
             </div>
         </div>
@@ -259,8 +259,8 @@
         <td colspan="6">
             <ul class="indent">
                 <li class="btn-group pull-left">
-                    <button class="btn btn-primary btn-sm" data-bind="click: $data.AddTask($parent.currentUserIdentity)">Add Task</button>
-                    <button class="btn btn-primary btn-sm" data-bind="click: function() { $parent.AddStory.call($parent, $data); }">Insert Story</button>
+                    <button class="btn btn-primary btn-sm" data-bind="click: function () { $data.AddTask($parent.currentUserIdentity) }">Add Task</button>
+                    <button class="btn btn-primary btn-sm" data-bind="click: $parent.AddStory.call($parent, Ordinal() + 1, IsReachGoal())">Insert Story</button>
                 </li>
             </ul>
         </td>

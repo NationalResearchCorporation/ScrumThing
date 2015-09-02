@@ -76,8 +76,13 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public Output_AddStory AddStory(int sprintId) {
-            return RunSproc<Output_AddStory>(new object[] { sprintId }).First();
+        public Output_AddStory AddStory(int sprintId, int ordinal, bool isReachGoal) {
+            var results = RunSproc<Output_AddStory_NewStoryId,
+                                   Output_AddStory_NewOrdinals>(new object[] { sprintId, ordinal, isReachGoal });
+            return new Output_AddStory() {
+                NewStoryId = (int)results.Item1.First().NewStoryId,
+                NewOrdinals = results.Item2
+            };
         }
 
         [Schema("dbo")]

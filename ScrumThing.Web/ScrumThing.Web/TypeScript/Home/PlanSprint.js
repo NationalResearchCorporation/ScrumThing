@@ -88,26 +88,37 @@ var ScrumThing;
             });
         };
 
-        PlanSprintViewModel.prototype.AddStory = function () {
+        PlanSprintViewModel.prototype.AddStory = function (ordinal, isReachGoal) {
             var _this = this;
-            jQuery.ajax({
-                type: 'POST',
-                url: '/PlanSprint/AddStory',
-                data: {
-                    SprintId: this.sprintId
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    toastr.error("Failed to add story: " + errorThrown);
-                },
-                success: function (data) {
-                    _this.stories.push(new ScrumThing.Story(data.StoryId, '', 0, data.Ordinal, data.IsReachGoal, []));
+            return function () {
+                return jQuery.ajax({
+                    type: 'POST',
+                    url: '/PlanSprint/AddStory',
+                    data: {
+                        SprintId: _this.sprintId,
+                        Ordinal: ordinal,
+                        IsReachGoal: isReachGoal
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        toastr.error("Failed to add story: " + errorThrown);
+                    },
+                    success: function (data) {
+                        _this.stories.push(new ScrumThing.Story(data.NewStoryId, '', 0, ordinal, isReachGoal, []));
 
-                    //This is a shite UX bandaid to bring the new story into view until the
-                    // UX story that covers this behavior fully is completed.
-                    // see http://nrcwiki.nationalresearch.com/mediawiki/index.php/SoftwareEngineering/ScrumThingBoard
-                    jQuery('#story' + data.StoryId)[0].scrollIntoView();
-                }
-            });
+                        _.each(data.NewOrdinals, function (newOrdinal) {
+                            var story = _.find(_this.stories(), function (candidate) {
+                                return candidate.StoryId == newOrdinal.StoryId;
+                            });
+                            story.Ordinal(newOrdinal.Ordinal);
+                        });
+
+                        //This is a shite UX bandaid to bring the new story into view until the
+                        // UX story that covers this behavior fully is completed.
+                        // see http://nrcwiki.nationalresearch.com/mediawiki/index.php/SoftwareEngineering/ScrumThingBoard
+                        jQuery('#story' + data.NewStoryId)[0].scrollIntoView();
+                    }
+                });
+            };
         };
 
         PlanSprintViewModel.prototype.RemoveStory = function (story) {

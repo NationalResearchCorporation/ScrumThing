@@ -138,8 +138,13 @@
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to add task: " + errorThrown);
                 },
-                success: (taskId: number) => {
+                success: (newTaskOrdinals: TaskOrdinal[]) => {
                     this.Tasks.remove(task);
+
+                    _.each(newTaskOrdinals, (newTaskOrdinal: TaskOrdinal) => {
+                        var taskToSetNewOrdinal = _.find(this.Tasks(), (candidate) => candidate.TaskId == newTaskOrdinal.TaskId);
+                        taskToSetNewOrdinal.Ordinal(newTaskOrdinal.Ordinal);
+                    });
                 }
             });
         }

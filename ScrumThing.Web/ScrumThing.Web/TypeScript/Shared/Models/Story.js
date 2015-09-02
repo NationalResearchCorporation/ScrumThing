@@ -137,8 +137,15 @@
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to add task: " + errorThrown);
                 },
-                success: function (taskId) {
+                success: function (newTaskOrdinals) {
                     _this.Tasks.remove(task);
+
+                    _.each(newTaskOrdinals, function (newTaskOrdinal) {
+                        var taskToSetNewOrdinal = _.find(_this.Tasks(), function (candidate) {
+                            return candidate.TaskId == newTaskOrdinal.TaskId;
+                        });
+                        taskToSetNewOrdinal.Ordinal(newTaskOrdinal.Ordinal);
+                    });
                 }
             });
         };

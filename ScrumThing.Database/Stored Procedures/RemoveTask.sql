@@ -33,8 +33,7 @@ BEGIN
     -- Return the latest TaskId, Ordinal pairs so the front end can stay up to date
     SELECT t.TaskId, t.Ordinal
     FROM Tasks t
-    JOIN Stories s ON t.StoryId = s.StoryId
-    WHERE s.SprintId = @SprintId;
+    WHERE StoryId = @StoryId;
 
     COMMIT
 END

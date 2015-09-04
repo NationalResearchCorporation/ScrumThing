@@ -15,11 +15,12 @@ AS
 BEGIN
     BEGIN TRANSACTION
 
+    DECLARE @PreviousTaskText VARCHAR(1000) = (SELECT TaskText FROM Tasks WHERE TaskId = @TaskId);
     DECLARE @PreviousEstimatedDevHours FLOAT = (SELECT EstimatedDevHours FROM Tasks WHERE TaskId = @TaskId);
     DECLARE @PreviousEstimatedQsHours FLOAT = (SELECT EstimatedQsHours FROM Tasks WHERE TaskId = @TaskId);
 
     -- If we are updating estimated hours, then reset burned and remaining
-    IF @EstimatedDevHours != @PreviousEstimatedDevHours OR @EstimatedQsHours != @PreviousEstimatedQsHours BEGIN
+    IF @TaskText != @PreviousTaskText OR @EstimatedDevHours != @PreviousEstimatedDevHours OR @EstimatedQsHours != @PreviousEstimatedQsHours BEGIN
         SET @DevHoursBurned = 0
         SET @RemainingDevHours = @EstimatedDevHours
         SET @QsHoursBurned = 0

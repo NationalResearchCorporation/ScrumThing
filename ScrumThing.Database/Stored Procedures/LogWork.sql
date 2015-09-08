@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[LogWork]
     @TaskId INT,
     @LoggedBy VARCHAR(40) = NULL,
-    @Date DATE = NULL
+    @Date DATETIME = NULL
 AS
 BEGIN
     DECLARE @SprintId INT = (

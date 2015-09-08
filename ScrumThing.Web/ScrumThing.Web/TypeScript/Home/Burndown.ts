@@ -23,7 +23,6 @@ module ScrumThing {
                     url: '/Burndown/GetBurndown',
                     data: { SprintId: this.sprintId() },
                     success: (data: Array<any>) => {
-                        console.log(_.pluck(data, 'HoursBurned'));
                         this.burndown(JSON.stringify(data));
                         jQuery("#burndownChart").highcharts({
                             title: {

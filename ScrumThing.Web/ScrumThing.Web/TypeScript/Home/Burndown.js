@@ -29,7 +29,6 @@ var ScrumThing;
                     url: '/Burndown/GetBurndown',
                     data: { SprintId: this.sprintId() },
                     success: function (data) {
-                        console.log(_.pluck(data, 'HoursBurned'));
                         _this.burndown(JSON.stringify(data));
                         jQuery("#burndownChart").highcharts({
                             title: {

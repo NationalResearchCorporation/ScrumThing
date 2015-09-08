@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hasLicense = bool.Parse(System.Configuration.ConfigurationManager.AppSettings["LicensedWithHighcharts"] ?? "false");
+}
+
+@if (hasLicense) {
+    @RenderBody()
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+} else {
+    <span>Please license with Highcharts.js and configure Web.config appropriately to view burndown.</span>
+}
+
+@section scripts {
+    @RenderSection("scripts", required: false)
+}

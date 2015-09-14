@@ -1,7 +1,7 @@
 # ScrumThing
 ScrumThing is a virtual cardwall dedicated to keeping things simple.  It offers powerful features carefully packaged into a seamless user experience.  This keeps your sprint focused on the work at hand instead of managing spreadsheets or complex online tools.
 
-And we don't just talk the talk.  NRC has multiple teams using ScrumThing as our primary Agile tool.  We are strongly invested in keeping ScrumThing the best tool for keeping teams in sync.
+And we don't just talk the talk.  We already have multiple teams using ScrumThing as our primary Agile tool.  We, as National Research Corporation, are strongly invested in keeping ScrumThing an an excellent tool for keeping teams in sync.
 
 ## Features
 ScrumThing has everything you need to plan and execute a sprint.  However, we've carefully avoided loading it down with extra bells and whistles.

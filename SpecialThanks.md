@@ -1,0 +1,19 @@
+### Special Thanks
+A special thank you to all of our developers, testers, marketers, and otherwise helpful contributors:
+ - Alex Gallichotte
+ - Billy Welch
+ - Chris Fivash
+ - Eric Barsalou
+ - Eric Faust
+ - Hector Mata
+ - Joe Colasurdo
+ - Jon Richards
+ - Justin Meaney
+ - Justin Schuerman
+ - Kayla Lounsberry
+ - Kim Houle
+ - Mitch Bush
+ - Scott Smith
+ - Sergio Rubio
+ - Stephen Fivash
+ - Tim Ottersburg

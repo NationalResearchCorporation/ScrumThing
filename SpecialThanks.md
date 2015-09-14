@@ -3,6 +3,7 @@ A special thank you to all of our developers, testers, marketers, and otherwise 
  - Alex Gallichotte
  - Billy Welch
  - Chris Fivash
+ - Derek Brogger
  - Eric Barsalou
  - Eric Faust
  - Hector Mata

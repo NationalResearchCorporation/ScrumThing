@@ -92,17 +92,14 @@ module ScrumThing {
                         toastr.error("Failed to add story: " + errorThrown);
                     },
                     success: (data: NewStoryInfo) => {
-                        this.stories.push(new Story(data.NewStoryId, '', 0, ordinal, isReachGoal, []));
+                        var story = new Story(data.NewStoryId, '', 0, ordinal, isReachGoal, []);
+                        story.CollapsedOverride(false);
+                        this.stories.push(story);
 
                         _.each(data.NewOrdinals, (newOrdinal) => {
                             var story = _.find(this.stories(), (candidate) => candidate.StoryId == newOrdinal.StoryId);
                             story.Ordinal(newOrdinal.Ordinal);
                         });
-
-                        //This is a shite UX bandaid to bring the new story into view until the
-                        // UX story that covers this behavior fully is completed.
-                        // see http://nrcwiki.nationalresearch.com/mediawiki/index.php/SoftwareEngineering/ScrumThingBoard
-                        jQuery('#story' + data.NewStoryId)[0].scrollIntoView();
                     }
                 });
             }

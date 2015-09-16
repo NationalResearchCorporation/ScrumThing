@@ -1,7 +1,7 @@
-﻿/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
 /// <reference path="../../Scripts/typings/highcharts/highcharts.d.ts" />
 /// <reference path="../Shared/Utility.ts" />
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -11,7 +11,6 @@ jQuery(function () {
     var viewModel = new ScrumThing.BurndownViewModel();
     ko.applyBindings(viewModel, document.getElementById('body'));
 });
-
 var ScrumThing;
 (function (ScrumThing) {
     var BurndownViewModel = (function (_super) {
@@ -49,8 +48,7 @@ var ScrumThing;
                                         color: '#808080'
                                     }]
                             },
-                            series: [
-                                {
+                            series: [{
                                     name: 'Remaining',
                                     data: _.pluck(data, 'HoursRemaining'),
                                     color: '#7CB5EC'

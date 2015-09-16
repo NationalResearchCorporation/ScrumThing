@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var Globals = (function () {
         function Globals() {
@@ -8,4 +8,4 @@
     })();
     ScrumThing.Globals = Globals;
 })(ScrumThing || (ScrumThing = {}));
-//# sourceMappingURL=Globals.js.map
+//# sourceMappingURL=globals.js.map

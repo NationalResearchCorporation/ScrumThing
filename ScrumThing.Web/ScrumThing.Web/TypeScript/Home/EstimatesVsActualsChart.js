@@ -1,7 +1,7 @@
-﻿/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
 /// <reference path="../../Scripts/typings/highcharts/highcharts.d.ts" />
 /// <reference path="../Shared/Utility.ts" />
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -11,7 +11,6 @@ jQuery(function () {
     var viewModel = new ScrumThing.EstimatesVsActualsViewModel();
     ko.applyBindings(viewModel, document.getElementById('body'));
 });
-
 var ScrumThing;
 (function (ScrumThing) {
     var EstimatesVsActualsViewModel = (function (_super) {
@@ -22,13 +21,14 @@ var ScrumThing;
             this.sprintId.subscribe(this.GetEstimatesVsActuals, this);
         }
         EstimatesVsActualsViewModel.prototype.GetSeriesData = function (data, groupByField, aggregateField) {
-            return _.chain(data).groupBy(groupByField).map(function (values, key) {
+            return _.chain(data)
+                .groupBy(groupByField)
+                .map(function (values, key) {
                 return _.reduce(values, function (memo, value) {
                     return memo + value[aggregateField];
                 }, 0);
             }).value();
         };
-
         EstimatesVsActualsViewModel.prototype.GetEstimatesVsActuals = function () {
             var _this = this;
             if (typeof this.sprintId() === 'number') {
@@ -53,11 +53,9 @@ var ScrumThing;
                                 labels: {
                                     formatter: function () {
                                         var currentText = this.value;
-
                                         var ordinal = _.find(data, function (row) {
                                             return row.StoryText == currentText;
                                         }).StoryOrdinal;
-
                                         return '<span><b>' + ordinal + '</b> ' + this.value + '</span>';
                                     }
                                 }

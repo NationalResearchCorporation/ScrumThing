@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var RawStoryTag = (function () {
         function RawStoryTag(storyTagId, storyTagDescription) {

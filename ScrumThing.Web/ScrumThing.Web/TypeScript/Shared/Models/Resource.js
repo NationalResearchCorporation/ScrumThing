@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var Resource = (function () {
         function Resource(userName, devPercentage, qsPercentage, days) {

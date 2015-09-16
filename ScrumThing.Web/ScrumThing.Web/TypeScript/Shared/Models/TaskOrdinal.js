@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var TaskOrdinal = (function () {
         function TaskOrdinal() {

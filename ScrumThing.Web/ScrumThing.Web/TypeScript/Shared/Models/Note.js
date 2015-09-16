@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var Note = (function () {
         function Note(raw) {
@@ -10,16 +10,16 @@
             this.UserName(raw.UserName);
             this.Note(raw.Note);
             this.Timestamp(raw.Timestamp);
-
             this.DisplayTimestamp = ko.computed(function () {
                 return _this.PrettifyDateString(_this.Timestamp());
             });
         }
         Note.prototype.PrettifyDateString = function (rawDate) {
             var d = new Date(rawDate);
-            return d.getMonth() + '/' + this.PadLeadingZero(d.getDay()) + ' ' + (d.getHours() % 12) + ':' + this.PadLeadingZero(d.getMinutes()) + ' ' + (d.getHours() > 12 ? "PM" : "AM");
+            return d.getMonth() + '/' + this.PadLeadingZero(d.getDay()) + ' '
+                + (d.getHours() % 12) + ':' + this.PadLeadingZero(d.getMinutes()) + ' '
+                + (d.getHours() > 12 ? "PM" : "AM");
         };
-
         Note.prototype.PadLeadingZero = function (n) {
             return ("0" + n).slice(-2);
         };

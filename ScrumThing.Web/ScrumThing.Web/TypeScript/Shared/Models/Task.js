@@ -1,4 +1,4 @@
-﻿var ScrumThing;
+var ScrumThing;
 (function (ScrumThing) {
     var Task = (function () {
         function Task(raw) {
@@ -17,9 +17,7 @@
             this.Notes = ko.observableArray();
             this.AssignmentsForDropdown = ko.pureComputed({
                 read: function () {
-                    return _.map(_this.Assignments(), function (assignment) {
-                        return assignment.UserName;
-                    });
+                    return _.map(_this.Assignments(), function (assignment) { return assignment.UserName; });
                 },
                 write: function (newAssignments) {
                     jQuery.ajax({
@@ -77,12 +75,8 @@
             this.RemainingDevHours(raw.RemainingDevHours);
             this.RemainingQsHours(raw.RemainingQsHours);
             this.Assignments(raw.Assignments);
-            this.TaskTags(_.map(raw.TaskTags, function (tag) {
-                return tag.TaskTagId;
-            }));
-            this.Notes(_.map(raw.Notes, function (raw) {
-                return new ScrumThing.Note(raw);
-            }));
+            this.TaskTags(_.map(raw.TaskTags, function (tag) { return tag.TaskTagId; }));
+            this.Notes(_.map(raw.Notes, function (raw) { return new ScrumThing.Note(raw); }));
             this.TaskText.subscribe(this.UpdateTask);
             this.State.subscribe(this.UpdateTask);
             this.EstimatedDevHours.subscribe(this.UpdateTask);
@@ -95,16 +89,15 @@
         Task.prototype.HasTaskTag = function (taskTagId) {
             return _.contains(this.TaskTags(), taskTagId);
         };
-
         Task.prototype.ToggleTaskTag = function (taskTagId) {
             var _this = this;
             return function () {
                 if (_this.HasTaskTag(taskTagId)) {
                     _this.TaskTags.remove(taskTagId);
-                } else {
+                }
+                else {
                     _this.TaskTags.push(taskTagId);
                 }
-
                 _this.UpdateTask();
                 return true;
             };

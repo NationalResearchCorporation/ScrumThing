@@ -1,4 +1,4 @@
-﻿/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Scripts/typings/underscore/underscore.d.ts" />
 /// <reference path="Utility.ts" />
 /// <reference path="globals.ts" />
 var ScrumThing;
@@ -15,81 +15,48 @@ var ScrumThing;
             this.teams = ko.observableArray();
             this.currentTeam = ko.observable();
             this.committedStories = ko.computed(function () {
-                return _.filter(_this.stories(), function (story) {
-                    return !story.IsReachGoal();
-                }).sort(function (a, b) {
-                    return a.Ordinal() - b.Ordinal();
-                });
+                return _.filter(_this.stories(), function (story) { return !story.IsReachGoal(); })
+                    .sort(function (a, b) { return a.Ordinal() - b.Ordinal(); });
             });
-
             this.reachStories = ko.computed(function () {
-                return _.filter(_this.stories(), function (story) {
-                    return story.IsReachGoal();
-                }).sort(function (a, b) {
-                    return a.Ordinal() - b.Ordinal();
-                });
+                return _.filter(_this.stories(), function (story) { return story.IsReachGoal(); })
+                    .sort(function (a, b) { return a.Ordinal() - b.Ordinal(); });
             });
-
             this.tasks = ko.computed(function () {
-                return _.flatten(_.map(_this.stories(), function (story) {
-                    return story.Tasks();
-                }));
+                return _.flatten(_.map(_this.stories(), function (story) { return story.Tasks(); }));
             });
-
             this.committedTasks = ko.computed(function () {
-                return _.flatten(_.map(_this.committedStories(), function (story) {
-                    return story.Tasks();
-                }));
+                return _.flatten(_.map(_this.committedStories(), function (story) { return story.Tasks(); }));
             });
-
             this.currentTeamDropdown = ko.computed(function () {
                 return _this.currentTeam() ? _this.currentTeam().TeamName : '';
             });
-
             this.totalDevHoursAvailable = ko.computed(function () {
-                var hours = _.map(_this.resources(), function (r) {
-                    return r.TotalDevHours();
-                });
+                var hours = _.map(_this.resources(), function (r) { return r.TotalDevHours(); });
                 return ScrumThing.sum(hours);
             });
-
             this.totalQsHoursAvailable = ko.computed(function () {
-                var hours = _.map(_this.resources(), function (r) {
-                    return r.TotalQsHours();
-                });
+                var hours = _.map(_this.resources(), function (r) { return r.TotalQsHours(); });
                 return ScrumThing.sum(hours);
             });
-
             this.totalDevHoursAllocated = ko.computed(function () {
-                return ScrumThing.sum(_.map(_this.committedTasks(), function (task) {
-                    return (task.EstimatedDevHours());
-                }));
+                return ScrumThing.sum(_.map(_this.committedTasks(), function (task) { return (task.EstimatedDevHours()); }));
             });
-
             this.totalQsHoursAllocated = ko.computed(function () {
-                return ScrumThing.sum(_.map(_this.committedTasks(), function (task) {
-                    return (task.EstimatedQsHours());
-                }));
+                return ScrumThing.sum(_.map(_this.committedTasks(), function (task) { return (task.EstimatedQsHours()); }));
             });
-
             this.totalDevHoursRemaining = ko.computed(function () {
                 return Math.round(_this.totalDevHoursAvailable() - _this.totalDevHoursAllocated());
             });
-
             this.totalQsHoursRemaining = ko.computed(function () {
                 return Math.round(_this.totalQsHoursAvailable() - _this.totalQsHoursAllocated());
             });
-
             this.totalStoryPoints = ko.computed(function () {
-                return ScrumThing.sum(_.map(_this.committedStories(), function (story) {
-                    return story.StoryPoints();
-                }));
+                return ScrumThing.sum(_.map(_this.committedStories(), function (story) { return story.StoryPoints(); }));
             });
-
             this.sprintIsEmpty = ko.computed(function () {
                 return _this.stories().length == 0;
             });
-
             this.GetTeams();
             this.GetStoryTags();
             this.GetTaskTags();
@@ -99,9 +66,7 @@ var ScrumThing;
             this.currentTeam.subscribe(function () {
                 jQuery.cookie('team', _this.currentTeam().TeamName);
             });
-
             this.sprintName.subscribe(this.UpdateSprint, this);
-
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
             });
@@ -115,10 +80,7 @@ var ScrumThing;
                     TeamId: this.currentTeam().TeamId
                 },
                 success: function (rawSprints) {
-                    _this.sprints(_.map(rawSprints, function (rawSprint) {
-                        return new ScrumThing.Sprint(rawSprint);
-                    }));
-
+                    _this.sprints(_.map(rawSprints, function (rawSprint) { return new ScrumThing.Sprint(rawSprint); }));
                     if (rawSprints.length > 0) {
                         _this.sprintId(rawSprints[rawSprints.length - 1].SprintId);
                         _this.sprintName(rawSprints[rawSprints.length - 1].Name);
@@ -126,10 +88,9 @@ var ScrumThing;
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to get sprints: " + errorThrown);
-                }
+                },
             });
         };
-
         BaseSprintViewModel.prototype.ChangeSprint = function (newSprintId, newSprintName) {
             var _this = this;
             return function () {
@@ -137,12 +98,10 @@ var ScrumThing;
                 _this.sprintName(newSprintName);
             };
         };
-
         BaseSprintViewModel.prototype.OpenAddSprintModal = function () {
             this.newSprintName('');
             jQuery("#createNewSprintModal").modal();
         };
-
         BaseSprintViewModel.prototype.AddSprint = function () {
             var _this = this;
             jQuery.ajax({
@@ -162,7 +121,6 @@ var ScrumThing;
                 }
             });
         };
-
         BaseSprintViewModel.prototype.UpdateSprint = function () {
             var _this = this;
             jQuery.ajax({
@@ -173,9 +131,7 @@ var ScrumThing;
                     Name: this.sprintName()
                 },
                 success: function (sprintId) {
-                    var sprint = _.find(_this.sprints(), function (s) {
-                        return s.SprintId == _this.sprintId();
-                    });
+                    var sprint = _.find(_this.sprints(), function (s) { return s.SprintId == _this.sprintId(); });
                     sprint.Name(_this.sprintName());
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -183,7 +139,6 @@ var ScrumThing;
                 }
             });
         };
-
         BaseSprintViewModel.prototype.GetResources = function () {
             var _this = this;
             if (typeof this.sprintId() === 'number') {
@@ -204,11 +159,9 @@ var ScrumThing;
                 });
             }
         };
-
         BaseSprintViewModel.prototype.GetStoryTags = function () {
             var _this = this;
             this.storyTags = ko.observableArray();
-
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/GetStoryTags',
@@ -220,11 +173,9 @@ var ScrumThing;
                 }
             });
         };
-
         BaseSprintViewModel.prototype.GetTaskTags = function () {
             var _this = this;
             this.taskTags = ko.observableArray();
-
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/GetTaskTags',
@@ -236,7 +187,6 @@ var ScrumThing;
                 }
             });
         };
-
         BaseSprintViewModel.prototype.GetSprintInfo = function () {
             var _this = this;
             if (typeof this.sprintId() === 'number') {
@@ -246,19 +196,13 @@ var ScrumThing;
                     data: { SprintId: this.sprintId() },
                     success: function (data) {
                         var newStories = new Array();
-
                         for (var ii = 0; ii < data.length; ii++) {
                             var story = data[ii];
-                            var storyTags = _.map(story.StoryTags, function (tag) {
-                                return tag.StoryTagId;
-                            });
+                            var storyTags = _.map(story.StoryTags, function (tag) { return tag.StoryTagId; });
                             var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags);
-                            newStory.Tasks(_.map(story.Tasks, function (task) {
-                                return new ScrumThing.Task(task);
-                            }));
+                            newStory.Tasks(_.map(story.Tasks, function (task) { return new ScrumThing.Task(task); }));
                             newStories.push(newStory);
                         }
-
                         _this.stories(newStories);
                     },
                     error: function (xhr, textStatus, errorThrown) {
@@ -267,7 +211,6 @@ var ScrumThing;
                 });
             }
         };
-
         BaseSprintViewModel.prototype.GetTeams = function () {
             var _this = this;
             jQuery.ajax({
@@ -275,17 +218,14 @@ var ScrumThing;
                 url: '/Home/GetTeams',
                 success: function (data) {
                     _this.teams(data);
-
                     var presetTeam = _this.getUrlVars()["Team"] || jQuery.cookie('team');
                     var newTeam = _this.teams()[0];
-
                     for (var ii = 0; ii < _this.teams().length; ii++) {
                         var team = _this.teams()[ii];
                         if (team.TeamName == presetTeam) {
                             newTeam = team;
                         }
                     }
-
                     _this.currentTeam(newTeam);
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -293,35 +233,31 @@ var ScrumThing;
                 }
             });
         };
-
         BaseSprintViewModel.prototype.MakeSetCollapsedHandler = function (story, collapsed) {
             var _this = this;
             return function () {
                 _this.SetCollapsed(story, collapsed);
             };
         };
-
         BaseSprintViewModel.prototype.SetCollapsed = function (story, collapsed) {
             localStorage.setItem('collapsed' + story.StoryId, JSON.stringify(collapsed));
             story.CollapsedOverride(collapsed);
         };
-
         BaseSprintViewModel.prototype.ExpandAll = function () {
             var _this = this;
             _.forEach(this.stories(), function (story) {
                 _this.SetCollapsed(story, false);
             });
         };
-
         BaseSprintViewModel.prototype.CollapseAll = function () {
             var _this = this;
             _.forEach(this.stories(), function (story) {
                 _this.SetCollapsed(story, true);
             });
         };
-
         BaseSprintViewModel.prototype.SmartCollapse = function () {
-            Object.keys(localStorage).forEach(function (key) {
+            Object.keys(localStorage)
+                .forEach(function (key) {
                 if (/^collapsed/.test(key)) {
                     localStorage.removeItem(key);
                 }
@@ -330,7 +266,6 @@ var ScrumThing;
                 story.CollapsedOverride(null);
             });
         };
-
         // Read a page's GET URL variables and return them as an associative array.
         // http://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url
         BaseSprintViewModel.prototype.getUrlVars = function () {

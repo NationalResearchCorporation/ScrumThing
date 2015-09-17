@@ -18,7 +18,8 @@
         public Complete: KnockoutComputed<boolean>;
         public Blocked: KnockoutComputed<boolean>;
         public QSReadyOrInProgress: KnockoutComputed<boolean>;
-        public Progressing: KnockoutComputed<boolean>;
+        public DevInProgress: KnockoutComputed<boolean>;
+        public CssClassForState: KnockoutComputed<string>;
         public ReachToggleText: KnockoutComputed<string>;
 
         public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[]) {
@@ -73,12 +74,32 @@
             });
 
             this.QSReadyOrInProgress = ko.computed(() => {
-                return !this.Blocked() && (_.any(this.Tasks(), (task) => { return task.State() == "ReadyForQs" }) || _.any(this.Tasks(), (task) => { return task.State() == "QsInProgress"; }));
+                return _.any(this.Tasks(), (task) => { return task.State() == "ReadyForQs" }) ||
+                       _.any(this.Tasks(), (task) => { return task.State() == "QsInProgress"; });
             });
 
+            this.DevInProgress = ko.computed(() => {
+                return _.any(this.Tasks(), (task) => { return task.State() == "DevInProgress"; });
+            });
 
-            this.Progressing = ko.computed(() => {
-                return !(this.Complete() || this.Blocked() || this.QSReadyOrInProgress);
+            this.CssClassForState = ko.computed(() => {
+                if (this.Complete()) {
+                    return "complete";
+                }
+
+                if (this.Blocked()) {
+                    return "blocked";
+                }
+
+                if (this.QSReadyOrInProgress()) {
+                    return "qsReadyOrInProgress";
+                }
+
+                if (this.DevInProgress()) {
+                    return "devInProgress";
+                }
+
+                return "readyForDev";
             });
 
             this.Collapsed = ko.computed(() => {

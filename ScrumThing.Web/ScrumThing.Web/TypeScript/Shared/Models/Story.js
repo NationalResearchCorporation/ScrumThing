@@ -69,10 +69,26 @@ var ScrumThing;
                 return _.any(_this.Tasks(), function (task) { return task.State() == "Blocked"; });
             });
             this.QSReadyOrInProgress = ko.computed(function () {
-                return !_this.Blocked() && (_.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; }) || _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; }));
+                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; }) ||
+                    _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; });
             });
-            this.Progressing = ko.computed(function () {
-                return !(_this.Complete() || _this.Blocked() || _this.QSReadyOrInProgress);
+            this.DevInProgress = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "DevInProgress"; });
+            });
+            this.CssClassForState = ko.computed(function () {
+                if (_this.Complete()) {
+                    return "complete";
+                }
+                if (_this.Blocked()) {
+                    return "blocked";
+                }
+                if (_this.QSReadyOrInProgress()) {
+                    return "qsReadyOrInProgress";
+                }
+                if (_this.DevInProgress()) {
+                    return "devInProgress";
+                }
+                return "readyForDev";
             });
             this.Collapsed = ko.computed(function () {
                 if (_this.CollapsedOverride() === null) {

@@ -30,7 +30,7 @@ The burndown rolls up how much work has been done against the projected ideal, g
 The "estimates vs actuals" page is a key tool for ScrumMasters looking to see where the stories actually landed compared to planning.
 
 ## Screenshots
-- Plan sprint
+- ![Plan sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)
 - View sprint
 - Burndown
 - Estimates vs Actuals

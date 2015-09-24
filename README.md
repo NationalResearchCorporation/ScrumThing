@@ -46,7 +46,7 @@ Estimates vs Actuals
 So you're ready to use ScrumThing?  Here's everything you need to set it up.
 
 ### Website
-Deploy the ScrumThing.Web to an IIS instance.  Then configure the Web.config's connection string for the database deployment below.  You will also need to update the highcharts license status key described below.
+Deploy the ScrumThing.Web to an IIS instance.  Then configure the Web.config's connection string for the database deployment below.
 
 ### Database
 Deploy ScrumThing.Database to a SQL Server instance.  While we continue to work on administrative tools, you'll need to set up teams and tags manually in the database.

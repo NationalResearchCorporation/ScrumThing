@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Optimization;
+using LicensedBundler;
 
 namespace ScrumThing.Web {
     public class BundleConfig {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles) {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/json2.js",
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js",
@@ -16,54 +17,54 @@ namespace ScrumThing.Web {
                         "~/Scripts/jquery.stickytableheaders.js",
                         "~/Scripts/idle-timer.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/underscore").Include(
                         "~/Scripts/underscore.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/highcharts").Include(
                         "~/Scripts/highcharts.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/bootstrap-multiselect.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/toastr").Include(
                       "~/Scripts/toastr.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/nrc").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/nrc").Include(
                       "~/TypeScript/Shared/Models/*.js",
                       "~/TypeScript/Shared/Utility.js",
                       "~/TypeScript/Knockout/TooltipBinding.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/scrumthing").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/scrumthing").Include(
                       "~/TypeScript/Shared/BaseSprintViewModel.js",
                       "~/TypeScript/Shared/Globals.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/bundles/burndownScripts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/burndownScripts").Include(
                       "~/TypeScript/Home/Burndown.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/estimateVsActualsScripts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/estimateVsActualsScripts").Include(
                       "~/TypeScript/Home/EstimatesVsActualsChart.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/homeScripts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/homeScripts").Include(
                       "~/TypeScript/Home/Home.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/planSprintScripts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/planSprintScripts").Include(
                       "~/TypeScript/Home/PlanSprint.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/viewSprintScripts").Include(
+            bundles.Add(new LicensedScriptBundle("~/bundles/viewSprintScripts").Include(
                       "~/TypeScript/Home/ViewSprint.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

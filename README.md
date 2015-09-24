@@ -31,10 +31,10 @@ The "estimates vs actuals" page is a key tool for ScrumMasters looking to see wh
 
 ## Screenshots
 Sprint Planning:
-![Plan sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)
+![Plan sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/PlanSprint.png)
 
 Sprint Execution:
-![View Sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/ViewSprint.PNG)
+![View Sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/ViewSprint.png)
 
 Burndown:
 ![Burndown](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)

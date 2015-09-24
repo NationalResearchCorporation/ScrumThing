@@ -30,10 +30,17 @@ The burndown rolls up how much work has been done against the projected ideal, g
 The "estimates vs actuals" page is a key tool for ScrumMasters looking to see where the stories actually landed compared to planning.
 
 ## Screenshots
-- ![Plan sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)
-- View sprint
-- Burndown
-- Estimates vs Actuals
+Sprint Planning:
+![Plan sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)
+
+Sprint Execution:
+![View Sprint](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/ViewSprint.PNG)
+
+Burndown:
+![Burndown](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/Burndown.PNG)
+
+Estimates vs Actuals
+![Estimates vs Actuals](https://raw.githubusercontent.com/NationalResearchCorporation/ScrumThing/master/Screenshots/EstimatesVsActuals.PNG)
 
 ## Deployment
 So you're ready to use ScrumThing?  Here's everything you need to set it up.
@@ -60,7 +67,4 @@ To add tags for tasks:
     INSERT INTO TaskTags (TaskTagId, TaskTagDescription)
     VALUES (1, 'YourTaskTag')
 ```
-
-### Highcharts License
-The burndown and other reports are generated with the help of [Highcharts.js](http://www.highcharts.com/).  To generate these reports, [evaluate and purchase the license](https://shop.highsoft.com/highcharts.html) you need.  Then configure the website's Web.config "LicensedWithHighcharts" key to reflect your license status.
 

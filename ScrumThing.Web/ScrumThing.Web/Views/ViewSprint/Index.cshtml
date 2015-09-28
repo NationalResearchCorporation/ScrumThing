@@ -207,7 +207,7 @@
 </script>
 
 <script type="text/html" id="storyTagTemplate">
-    <!-- ko foreach: $parent.GetSelectedStoryTags($data) -->
+    <!-- ko foreach: StoryTags() -->
         <span class="label tag-story" data-bind="text: StoryTagDescription"></span>
     <!-- /ko -->
 </script>

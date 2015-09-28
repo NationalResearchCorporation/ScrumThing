@@ -158,8 +158,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public void SetStoryTags(int storyId, string storyTagIds) {
-            RunSproc(new object[] { storyId, storyTagIds });
+        public List<Output_SetStoryTags> SetStoryTags(int storyId, string storyTagIds) {
+            return RunSproc<Output_SetStoryTags>(new object[] { storyId, storyTagIds });
         }
     }
 }

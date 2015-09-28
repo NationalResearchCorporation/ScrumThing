@@ -43,7 +43,7 @@ var ScrumThing;
             });
             this.StoryTagsForDropdown = ko.computed({
                 read: function () {
-                    return _this.StoryTags();
+                    return _.map(_this.StoryTags(), function (storyTag) { return storyTag.StoryTagId; });
                 },
                 write: function (newStoryTagIds) {
                     jQuery.ajax({
@@ -53,8 +53,8 @@ var ScrumThing;
                             StoryId: _this.StoryId,
                             StoryTagIds: newStoryTagIds.join('|')
                         },
-                        success: function () {
-                            _this.StoryTags(newStoryTagIds);
+                        success: function (data) {
+                            _this.StoryTags(data);
                         },
                         error: function (xhr, textStatus, errorThrown) {
                             toastr.error("Failed to set story tags: " + errorThrown);
@@ -145,7 +145,8 @@ var ScrumThing;
             var _this = this;
             return _.all(searchTerms, function (term) { return _this.StoryTextMatches(term) ||
                 _this.AnyAssignmentMatches(term) ||
-                _this.AnyTaskTextMatches(term); });
+                _this.AnyTaskTextMatches(term) ||
+                _this.AnyStoryTagMatches(term); });
         };
         Story.prototype.StoryTextMatches = function (term) {
             return this.SearchableStoryText().indexOf(term) != -1;
@@ -157,6 +158,9 @@ var ScrumThing;
         };
         Story.prototype.AnyTaskTextMatches = function (term) {
             return _.any(this.Tasks(), function (task) { return task.SearchableTaskText().indexOf(term) != -1; });
+        };
+        Story.prototype.AnyStoryTagMatches = function (term) {
+            return _.any(this.StoryTags(), function (storyTag) { return storyTag.StoryTagDescription.toLowerCase().indexOf(term) != -1; });
         };
         return Story;
     })();

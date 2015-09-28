@@ -18,5 +18,13 @@ BEGIN
     SELECT @StoryId, TagId
     FROM @TagIds t;
 
+    SELECT
+        sit.StoryId,
+        st.StoryTagId,
+        st.StoryTagDescription
+    FROM dbo.StoryTags st
+    JOIN dbo.StoriesInTags sit ON st.StoryTagId = sit.StoryTagId
+    WHERE sit.StoryId = @StoryId;
+
     COMMIT
 END

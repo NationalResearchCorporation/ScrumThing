@@ -43,12 +43,6 @@ module ScrumThing {
             });
         }
 
-        public GetSelectedStoryTags(story: Story): KnockoutComputed<RawStoryTag[]> {
-            return ko.computed(() => {
-                return _.filter(this.storyTags(), (tag) => { return _.contains(story.StoryTags(), tag.StoryTagId) });
-            });
-        }
-
         public GetAllAssignmentsForStory(story: Story): KnockoutComputed<string[]> {
             return ko.computed(() => {
                 var assignments: RawAssignment[][] = _.map(story.Tasks(), (task) => task.Assignments());

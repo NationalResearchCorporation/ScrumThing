@@ -42,12 +42,6 @@ var ScrumThing;
                 return _.sortBy(_.filter(story.Tasks(), function (task) { return task.State() == state; }), function (task) { return task.Ordinal(); });
             });
         };
-        ViewSprintViewModel.prototype.GetSelectedStoryTags = function (story) {
-            var _this = this;
-            return ko.computed(function () {
-                return _.filter(_this.storyTags(), function (tag) { return _.contains(story.StoryTags(), tag.StoryTagId); });
-            });
-        };
         ViewSprintViewModel.prototype.GetAllAssignmentsForStory = function (story) {
             return ko.computed(function () {
                 var assignments = _.map(story.Tasks(), function (task) { return task.Assignments(); });

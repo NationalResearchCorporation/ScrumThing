@@ -6,7 +6,7 @@
         public StoryText: KnockoutObservable<string> = ko.observable<string>();
         public StoryPoints: KnockoutObservable<number> = observableNumber();
         public Tasks: KnockoutObservableArray<Task> = ko.observableArray<Task>();
-        public StoryTags: KnockoutObservableArray<number> = ko.observableArray<number>();
+        public StoryTags: KnockoutObservableArray<RawStoryTag> = ko.observableArray<RawStoryTag>();
         public StoryTagsForDropdown: KnockoutComputed<number[]>;
         public IsReachGoal: KnockoutObservable<boolean> = ko.observable<boolean>();
 
@@ -24,7 +24,7 @@
 
         public SearchableStoryText: KnockoutComputed<string>;
 
-        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[]) {
+        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
             this.StoryText(storyText);
@@ -47,7 +47,7 @@
 
             this.StoryTagsForDropdown = ko.computed<number[]>({
                 read: (): number[]=> {
-                    return this.StoryTags();
+                    return _.map(this.StoryTags(), (storyTag) => storyTag.StoryTagId);
                 },
                 write: (newStoryTagIds: number[]) => {
                     jQuery.ajax({
@@ -57,8 +57,8 @@
                             StoryId: this.StoryId,
                             StoryTagIds: newStoryTagIds.join('|')
                         },
-                        success: () => {
-                            this.StoryTags(newStoryTagIds);
+                        success: (data: Array<RawStoryTag>) => {
+                            this.StoryTags(data);
                         },
                         error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                             toastr.error("Failed to set story tags: " + errorThrown);
@@ -179,7 +179,8 @@
         public MatchesSearchTerms(searchTerms: Array<string>): boolean {
             return _.all(searchTerms, (term) => this.StoryTextMatches(term) ||
                                                 this.AnyAssignmentMatches(term) ||
-                                                this.AnyTaskTextMatches(term));
+                                                this.AnyTaskTextMatches(term) ||
+                                                this.AnyStoryTagMatches(term));
         }
 
         public StoryTextMatches(term: string): boolean {
@@ -194,6 +195,10 @@
 
         public AnyTaskTextMatches(term: string): boolean {
             return _.any(this.Tasks(), (task) => task.SearchableTaskText().indexOf(term) != -1);
+        }
+
+        public AnyStoryTagMatches(term: string): boolean {
+            return _.any(this.StoryTags(), (storyTag) => storyTag.StoryTagDescription.toLowerCase().indexOf(term) != -1);
         }
     }
 }

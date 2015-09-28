@@ -219,6 +219,7 @@
     <Compile Include="Database\Inputs\AddStory.cs" />
     <Compile Include="Database\Inputs\SetResources.cs" />
     <Compile Include="Database\Outputs\AddNote.cs" />
+    <Compile Include="Database\Outputs\SetStoryTags.cs" />
     <Compile Include="Database\Outputs\RemoveTask.cs" />
     <Compile Include="Database\Outputs\RemoveStory.cs" />
     <Compile Include="Database\Outputs\AddStory.cs" />

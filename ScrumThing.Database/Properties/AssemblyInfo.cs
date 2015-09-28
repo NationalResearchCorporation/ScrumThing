@@ -19,4 +19,4 @@
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.2.12.0")]
+[assembly: AssemblyVersion("0.2.13.0")]

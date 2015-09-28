@@ -252,8 +252,7 @@ module ScrumThing {
 
                         for (var ii = 0; ii < data.length; ii++) {
                             var story = data[ii];
-                            var storyTags = _.map(story.StoryTags, (tag) => tag.StoryTagId);
-                            var newStory = new Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, storyTags)
+                            var newStory = new Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, story.StoryTags);
                             newStory.Tasks(_.map(story.Tasks, (task) => new Task(task)));
                             newStories.push(newStory);
                         }

@@ -119,8 +119,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult SetStoryTags(Input_SetStoryTags formData) {
-            context.SetStoryTags(formData.StoryId, formData.StoryTagIds);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return Json(context.SetStoryTags(formData.StoryId, formData.StoryTagIds));
         }
     }
 }

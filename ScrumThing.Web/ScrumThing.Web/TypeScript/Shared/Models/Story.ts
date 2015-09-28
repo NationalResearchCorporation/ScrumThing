@@ -22,6 +22,8 @@
         public CssClassForState: KnockoutComputed<string>;
         public ReachToggleText: KnockoutComputed<string>;
 
+        public SearchableStoryText: KnockoutComputed<string>;
+
         public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: number[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
@@ -109,6 +111,10 @@
                 return this.CollapsedOverride();
             });
 
+            this.SearchableStoryText = ko.computed(() => {
+                return this.StoryText().toLowerCase();
+            });
+
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
 
             this.StoryText.subscribe(this.UpdateStory);
@@ -168,6 +174,26 @@
                     });
                 }
             });
+        }
+
+        public MatchesSearchTerms(searchTerms: Array<string>): boolean {
+            return _.all(searchTerms, (term) => this.StoryTextMatches(term) ||
+                                                this.AnyAssignmentMatches(term) ||
+                                                this.AnyTaskTextMatches(term));
+        }
+
+        public StoryTextMatches(term: string): boolean {
+            return this.SearchableStoryText().indexOf(term) != -1;
+        }
+
+        public AnyAssignmentMatches(term: string): boolean {
+            return _.any(this.Tasks(), (task) => {
+                return _.any(task.Assignments(), (assignment) => assignment.UserName.toLowerCase().indexOf(term) != -1);
+            });
+        }
+
+        public AnyTaskTextMatches(term: string): boolean {
+            return _.any(this.Tasks(), (task) => task.SearchableTaskText().indexOf(term) != -1);
         }
     }
 }

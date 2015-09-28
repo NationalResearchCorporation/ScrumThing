@@ -15,6 +15,8 @@
         public TaskTags: KnockoutObservableArray<number> = ko.observableArray<number>();
         public Notes: KnockoutObservableArray<Note> = ko.observableArray<Note>();
 
+        public SearchableTaskText: KnockoutComputed<string>;
+
         public AssignmentsForDropdown: KnockoutComputed<string[]> = ko.pureComputed<string[]>({
             read: () => {
                 return _.map(this.Assignments(), (assignment) => { return assignment.UserName; });
@@ -65,6 +67,10 @@
             this.QsHoursBurned.subscribe(this.UpdateTask);
             this.RemainingDevHours.subscribe(this.UpdateTask);
             this.RemainingQsHours.subscribe(this.UpdateTask);
+
+            this.SearchableTaskText = ko.computed(() => {
+                return this.TaskText().toLowerCase();
+            });
         }
 
         public UpdateTask = () => {

@@ -4,6 +4,10 @@
     <button class="btn btn-default" data-bind="click: $root.SmartCollapse, tooltip: { title: 'Collapse complete stories only', placement: 'top' }">Smart Collapse</button>
 </div>
 
+<div class="input-group pull-right">
+    <input type="text" class="form-control" placeholder="Search" data-bind="value: searchTerms, valueUpdate: 'afterkeydown'" />
+</div>
+
 <table id="viewSprintTable" class="table table-bordered table-fixed">
     <thead>
         <tr>
@@ -149,56 +153,56 @@
 
 <script type="text/html" id="viewSprintStoryTemplate">
     <!-- ko if: Collapsed() -->
-    <tr>
-        <td data-bind="css: CssClassForState()"></td>
-        <td colspan="7">
-            <div class="text-left">
-                <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
-                <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
-                <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
-            </div>
-            <!-- We inherit the display property directly from td to avoid styling applied globally to tr by site.css. -->
-            <div style="display: inherit;">
-                <!-- ko template: { name: 'storyTagTemplate' } -->
-                <!-- /ko -->
+        <tr>
+            <td data-bind="css: CssClassForState()"></td>
+            <td colspan="7">
+                <div class="text-left">
+                    <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
+                    <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
+                    <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
+                </div>
+                <!-- We inherit the display property directly from td to avoid styling applied globally to tr by site.css. -->
+                <div style="display: inherit;">
+                    <!-- ko template: { name: 'storyTagTemplate' } -->
+                    <!-- /ko -->
 
-                <!-- ko foreach: $root.GetAllAssignmentsForStory($data) -->
-                    <span class="label tag-assignment" data-bind="text: $data"></span>
-                <!-- /ko -->
-            </div>
-        </td>
-    </tr>
+                    <!-- ko foreach: $root.GetAllAssignmentsForStory($data) -->
+                        <span class="label tag-assignment" data-bind="text: $data"></span>
+                    <!-- /ko -->
+                </div>
+            </td>
+        </tr>
     <!-- /ko -->
     <!-- ko if: !Collapsed() -->
-    <tr>
-        <td data-bind="css: CssClassForState()"></td>
-        <td class="break-word">
-            <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
-            <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
-            <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
-            <div>
-                <!-- ko template: { name: 'storyTagTemplate' } -->
-                <!-- /ko -->
-            </div>
-        </td>
+        <tr>
+            <td data-bind="css: CssClassForState()"></td>
+            <td class="break-word">
+                <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
+                <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
+                <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
+                <div>
+                    <!-- ko template: { name: 'storyTagTemplate' } -->
+                    <!-- /ko -->
+                </div>
+            </td>
 
-        <!-- ko foreach: $root.states -->
-            <!-- ko template: { name: 'stateTemplate', data: { Story: $parent, State: $data } }-->
+            <!-- ko foreach: $root.states -->
+                <!-- ko template: { name: 'stateTemplate', data: { Story: $parent, State: $data } }-->
+                <!-- /ko -->
             <!-- /ko -->
-        <!-- /ko -->
-    </tr>
-    <!-- /ko -->
+        </tr>
+<!-- /ko -->
 </script>
 
 <script type="text/html" id="taskTagTemplate">
     <!-- ko if: _.any(TaskTags(), function (tag) { return tag.IsIncluded; }) -->
-    <div class="taskTags">
-        <!-- ko foreach: TaskTags() -->
-            <!-- ko if: IsIncluded -->
-                <span data-bind="text: TaskTagDescription, attr: { class: TaskTagClasses }"></span>
+        <div class="taskTags">
+            <!-- ko foreach: TaskTags() -->
+                <!-- ko if: IsIncluded -->
+                    <span data-bind="text: TaskTagDescription, attr: { class: TaskTagClasses }"></span>
+                <!-- /ko -->
             <!-- /ko -->
-        <!-- /ko -->
-    </div>
+        </div>
     <!-- /ko -->
 </script>
 

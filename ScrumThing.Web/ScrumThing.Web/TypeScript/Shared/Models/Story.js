@@ -96,6 +96,9 @@ var ScrumThing;
                 }
                 return _this.CollapsedOverride();
             });
+            this.SearchableStoryText = ko.computed(function () {
+                return _this.StoryText().toLowerCase();
+            });
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
@@ -137,6 +140,23 @@ var ScrumThing;
                     });
                 }
             });
+        };
+        Story.prototype.MatchesSearchTerms = function (searchTerms) {
+            var _this = this;
+            return _.all(searchTerms, function (term) { return _this.StoryTextMatches(term) ||
+                _this.AnyAssignmentMatches(term) ||
+                _this.AnyTaskTextMatches(term); });
+        };
+        Story.prototype.StoryTextMatches = function (term) {
+            return this.SearchableStoryText().indexOf(term) != -1;
+        };
+        Story.prototype.AnyAssignmentMatches = function (term) {
+            return _.any(this.Tasks(), function (task) {
+                return _.any(task.Assignments(), function (assignment) { return assignment.UserName.toLowerCase().indexOf(term) != -1; });
+            });
+        };
+        Story.prototype.AnyTaskTextMatches = function (term) {
+            return _.any(this.Tasks(), function (task) { return task.SearchableTaskText().indexOf(term) != -1; });
         };
         return Story;
     })();

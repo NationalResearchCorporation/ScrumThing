@@ -85,6 +85,9 @@ var ScrumThing;
             this.QsHoursBurned.subscribe(this.UpdateTask);
             this.RemainingDevHours.subscribe(this.UpdateTask);
             this.RemainingQsHours.subscribe(this.UpdateTask);
+            this.SearchableTaskText = ko.computed(function () {
+                return _this.TaskText().toLowerCase();
+            });
         }
         Task.prototype.HasTaskTag = function (taskTagId) {
             return _.contains(this.TaskTags(), taskTagId);

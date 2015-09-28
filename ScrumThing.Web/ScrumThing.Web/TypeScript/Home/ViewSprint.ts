@@ -34,6 +34,7 @@ module ScrumThing {
             jQuery(document).idleTimer(60 * 1000);
             // Then when they return, reload all the sprint info
             jQuery(document).on("active.idleTimer", () => { this.GetSprintInfo(); })
+
         }
 
         public GetStoryTasksInState(story: Story, state: string): KnockoutComputed<Task[]> {

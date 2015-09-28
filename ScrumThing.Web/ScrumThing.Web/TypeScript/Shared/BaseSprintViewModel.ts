@@ -31,15 +31,29 @@ module ScrumThing {
         public teams: KnockoutObservableArray<RawTeam> = ko.observableArray<RawTeam>();
         public currentTeam: KnockoutObservable<RawTeam> = ko.observable<RawTeam>();
 
+        public searchTerms: KnockoutObservable<string> = ko.observable<string>("");
+        public searchFilteredStories: KnockoutComputed<Story[]>;
+
         constructor() {
 
+            this.searchFilteredStories = ko.computed(() => {
+                var splitTerms = _.filter(this.searchTerms().split(" "), (term) => term != "");
+                var loweredTerms = _.map(splitTerms, (term) => term.toLowerCase());
+                
+                if (loweredTerms.length == 0) {
+                    return this.stories();
+                } else {
+                    return _.filter(this.stories(), (story) => story.MatchesSearchTerms(loweredTerms));
+                }
+            });
+
             this.committedStories = ko.computed(() => {
-                return _.filter(this.stories(), (story) => { return !story.IsReachGoal(); })
+                return _.filter(this.searchFilteredStories(), (story) => { return !story.IsReachGoal(); })
                         .sort((a, b) => { return a.Ordinal() - b.Ordinal() });
             });
 
             this.reachStories = ko.computed(() => {
-                return _.filter(this.stories(), (story) => { return story.IsReachGoal(); })
+                return _.filter(this.searchFilteredStories(), (story) => { return story.IsReachGoal(); })
                         .sort((a, b) => { return a.Ordinal() - b.Ordinal() });
             }); 
                     

@@ -14,12 +14,23 @@ var ScrumThing;
             this.stories = ko.observableArray();
             this.teams = ko.observableArray();
             this.currentTeam = ko.observable();
+            this.searchTerms = ko.observable("");
+            this.searchFilteredStories = ko.computed(function () {
+                var splitTerms = _.filter(_this.searchTerms().split(" "), function (term) { return term != ""; });
+                var loweredTerms = _.map(splitTerms, function (term) { return term.toLowerCase(); });
+                if (loweredTerms.length == 0) {
+                    return _this.stories();
+                }
+                else {
+                    return _.filter(_this.stories(), function (story) { return story.MatchesSearchTerms(loweredTerms); });
+                }
+            });
             this.committedStories = ko.computed(function () {
-                return _.filter(_this.stories(), function (story) { return !story.IsReachGoal(); })
+                return _.filter(_this.searchFilteredStories(), function (story) { return !story.IsReachGoal(); })
                     .sort(function (a, b) { return a.Ordinal() - b.Ordinal(); });
             });
             this.reachStories = ko.computed(function () {
-                return _.filter(_this.stories(), function (story) { return story.IsReachGoal(); })
+                return _.filter(_this.searchFilteredStories(), function (story) { return story.IsReachGoal(); })
                     .sort(function (a, b) { return a.Ordinal() - b.Ordinal(); });
             });
             this.tasks = ko.computed(function () {

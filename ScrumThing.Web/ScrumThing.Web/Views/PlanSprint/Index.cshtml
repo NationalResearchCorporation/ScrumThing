@@ -57,18 +57,31 @@
                             <th>Dev %</th>
                             <th>QS %</th>
                             <th>Days Available</th>
-                            <th>Total</th>
+                            <th>Dev Hours</th>
+                            <th>QS Hours</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: resources">
+                    <tbody>
+                        <!-- ko foreach: resources -->
+                            <tr>
+                                <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
+                                <td><input class="form-control" type="number" data-bind="value: DevPercentage" /></td>
+                                <td><input class="form-control" type="number" data-bind="value: QsPercentage" /></td>
+                                <td><input class="form-control" type="number" data-bind="value: Days" /></td>
+                                <td data-bind="text: TotalDevHours"></td>
+                                <td data-bind="text: TotalQsHours"></td>
+                                <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
+                            </tr>
+                        <!-- /ko -->
                         <tr>
-                            <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
-                            <td><input class="form-control" type="number" data-bind="value: DevPercentage" /></td>
-                            <td><input class="form-control" type="number" data-bind="value: QsPercentage" /></td>
-                            <td><input class="form-control" type="number" data-bind="value: Days" /></td>
-                            <td data-bind="text: TotalHours"></td>
-                            <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
+                            <td>Totals:</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td data-bind="text: totalDevHoursAvailable"></td>
+                            <td data-bind="text: totalQsHoursAvailable"></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -94,7 +107,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Story / Task</th>
+                            <th data-bind="text: 'Story (' + $root.committedStories().length + ') / Task'"></th>
                             <th>Points (<span data-bind="text: totalStoryPoints"></span>)</th>
                             <th data-bind="css: $root.HoursRemainingClass(totalDevHoursRemaining)">Dev Hours: (<span data-bind="text: totalDevHoursRemaining"></span> remain)</th>
                             <th data-bind="css: $root.HoursRemainingClass(totalQsHoursRemaining)">QS Hours: (<span data-bind="text: totalQsHoursRemaining"></span> remain)</th>
@@ -118,32 +131,6 @@
                 <div class="btn-group" data-bind="visible: sprintIsEmpty()">
                     <button class="btn btn-primary" data-bind="click: AddStory(1, false)">Add Story</button>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading collapsed pointer" data-toggle="collapse" data-parent="#accordion" href="#byTheNumbersPanel">
-            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#byTheNumbersPanel">By The Numbers</a></h4>
-        </div>
-        <div id="byTheNumbersPanel" class="panel-collapse collapse">
-            <div class="panel-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Story Points</th>
-                            <th>Dev Hours</th>
-                            <th>QS Hours</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-bind="text: totalStoryPoints"></td>
-                            <td data-bind="text: totalDevHoursAllocated"></td>
-                            <td data-bind="text: totalQsHoursAllocated"></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

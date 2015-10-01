@@ -144,35 +144,36 @@ tbody {
 }
 
 .complete {
-    -webkit-transition: background-color 0.5s ease;
-    -moz-transition: background-color 0.5s ease;
-    -o-transition: background-color 0.5s ease;
-    transition: background-color 0.5s ease;
     background-color: #64DD17;
 }
 
-.blocked {
+.complete, .complete span {
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease;
+}
+
+.blocked {
     background-color: #D50000;
 }
 
-.qsReadyOrInProgress {
-    -webkit-transition: background-color 0.5s ease;
-    -moz-transition: background-color 0.5s ease;
-    -o-transition: background-color 0.5s ease;
-    transition: background-color 0.5s ease;
-    background-color: #2979FF;
+.blocked span, .complete span {
+    color: #fff;
 }
 
-.devInProgress {
+.blocked, .blocked span {
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease;
-    background-color: #AECDFF
+}
+
+.readyForQS {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
 }
 
 .readyForDev {
@@ -180,7 +181,13 @@ tbody {
     -moz-transition: background-color 0.5s ease;
     -o-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease;
-    background-color: #ECEFF1;
+}
+
+.readyForDev {
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease;
 }
 
 [draggable] {

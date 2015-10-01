@@ -17,7 +17,9 @@
 
         public Complete: KnockoutComputed<boolean>;
         public Blocked: KnockoutComputed<boolean>;
-        public QSReadyOrInProgress: KnockoutComputed<boolean>;
+        public ReadyForQS: KnockoutComputed<boolean>;
+        public QSInProgress: KnockoutComputed<boolean>;
+        public ReadyForDev: KnockoutComputed<boolean>;
         public DevInProgress: KnockoutComputed<boolean>;
         public CssClassForState: KnockoutComputed<string>;
         public ReachToggleText: KnockoutComputed<string>;
@@ -75,9 +77,16 @@
                 return _.any(this.Tasks(), (task) => { return task.State() == "Blocked"; });
             });
 
-            this.QSReadyOrInProgress = ko.computed(() => {
-                return _.any(this.Tasks(), (task) => { return task.State() == "ReadyForQs" }) ||
-                       _.any(this.Tasks(), (task) => { return task.State() == "QsInProgress"; });
+            this.ReadyForQS = ko.computed(() => {
+                return _.any(this.Tasks(), (task) => { return task.State() == "ReadyForQs" });
+            });
+
+            this.QSInProgress = ko.computed(() => {
+                return _.any(this.Tasks(), (task) => { return task.State() == "QsInProgress"; });
+            });
+
+            this.ReadyForDev = ko.computed(() => {
+                return _.any(this.Tasks(), (task) => { return task.State() == "ReadyForDev"; });
             });
 
             this.DevInProgress = ko.computed(() => {
@@ -93,8 +102,20 @@
                     return "blocked";
                 }
 
-                if (this.QSReadyOrInProgress()) {
-                    return "qsReadyOrInProgress";
+                if (this.ReadyForQS() && this.ReadyForDev()) {
+                    return "readyForQSAndDev";
+                }
+
+                if (this.ReadyForDev()) {
+                    return "readyForDev";
+                }
+
+                if (this.ReadyForQS()) {
+                    return "readyForQS";
+                }
+
+                if (this.QSInProgress()) {
+                    return "qsInProgress";
                 }
 
                 if (this.DevInProgress()) {

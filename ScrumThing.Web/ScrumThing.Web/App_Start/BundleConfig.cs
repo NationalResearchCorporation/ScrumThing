@@ -72,6 +72,7 @@ namespace ScrumThing.Web {
                       "~/Content/bootstrap.css",
                       "~/Content/pepper-ginder-custom.css",
                       "~/Content/bootstrap-multiselect.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/Site.css"));
 
             #if !DEBUG

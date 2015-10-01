@@ -11,14 +11,14 @@
 <table id="viewSprintTable" class="table table-bordered table-fixed">
     <thead>
         <tr>
-            <th width="10" style="padding:0"></th>
+            <th width="36" style="padding:0"></th>
             <th>Story</th>
-            <th>Blocked</th>
-            <th>Ready For Dev</th>
+            <th>Blocked <span class="fa fa-exclamation-triangle"></span></th>
+            <th>Ready For Dev <span class="fa fa-code-fork fa-lg"></span></th>
             <th>Dev In Progress</th>
-            <th>Ready For QS</th>
+            <th>Ready For QS <span class="fa fa-bug"></span></th>
             <th>QS In Progress</th>
-            <th>Complete</th>
+            <th>Complete <span class="fa fa-check-circle"></span></th>
         </tr>
     </thead>
     <tbody>
@@ -152,46 +152,58 @@
 </script>
 
 <script type="text/html" id="viewSprintStoryTemplate">
-    <!-- ko if: Collapsed() -->
-        <tr>
-            <td data-bind="css: CssClassForState()"></td>
-            <td colspan="7">
-                <div class="text-left">
-                    <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
-                    <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
-                    <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
-                </div>
-                <!-- We inherit the display property directly from td to avoid styling applied globally to tr by site.css. -->
-                <div style="display: inherit;">
-                    <!-- ko template: { name: 'storyTagTemplate' } -->
-                    <!-- /ko -->
-
-                    <!-- ko foreach: $root.GetAllAssignmentsForStory($data) -->
-                        <span class="label tag-assignment" data-bind="text: $data"></span>
-                    <!-- /ko -->
-                </div>
-            </td>
-        </tr>
-    <!-- /ko -->
-    <!-- ko if: !Collapsed() -->
-        <tr>
-            <td data-bind="css: CssClassForState()"></td>
-            <td class="break-word">
-                <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
-                <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
+    <tr>
+        <td data-bind="css: CssClassForState()">
+            <!-- ko if: CssClassForState() == 'readyForDev' -->
+            <span class="fa fa-code-fork fa-2x"></span>
+            <!-- /ko -->
+            <!-- ko if: CssClassForState() == 'readyForQS' -->
+            <span class="fa fa-bug fa-lg"></span>
+            <!-- /ko -->
+            <!-- ko if: CssClassForState() == 'readyForQSAndDev' -->
+            <span class="fa fa-code-fork fa-2x"></span>
+            <span class="fa fa-bug fa-lg"></span>
+            <!-- /ko -->
+            <!-- ko if: CssClassForState() == 'blocked' -->
+            <span class="fa fa-exclamation-triangle fa-lg"></span>
+            <!-- /ko -->
+            <!-- ko if: CssClassForState() == 'complete' -->
+            <span class="fa fa-check-circle fa-lg"></span>
+            <!-- /ko -->
+        </td>
+        <!-- ko if: Collapsed() -->
+        <td colspan="7">
+            <div class="text-left">
+                <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
+                <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
                 <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
-                <div>
-                    <!-- ko template: { name: 'storyTagTemplate' } -->
-                    <!-- /ko -->
-                </div>
-            </td>
-
+            </div>
+            <!-- We inherit the display property directly from td to avoid styling applied globally to tr by site.css. -->
+            <div style="display: inherit;">
+                <!-- ko template: { name: 'storyTagTemplate' } -->
+                <!-- /ko -->
+                <!-- ko foreach: $root.GetAllAssignmentsForStory($data) -->
+                <span class="label tag-assignment" data-bind="text: $data"></span>
+                <!-- /ko -->
+            </div>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: !Collapsed() -->
+        <td class="break-word">
+            <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
+            <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
+            <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
+            <div>
+                <!-- ko template: { name: 'storyTagTemplate' } -->
+                <!-- /ko -->
+            </div>
+        </td>
             <!-- ko foreach: $root.states -->
                 <!-- ko template: { name: 'stateTemplate', data: { Story: $parent, State: $data } }-->
                 <!-- /ko -->
             <!-- /ko -->
-        </tr>
-<!-- /ko -->
+        <!-- /ko -->
+    </tr>
 </script>
 
 <script type="text/html" id="taskTagTemplate">

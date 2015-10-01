@@ -68,9 +68,14 @@ var ScrumThing;
             this.Blocked = ko.computed(function () {
                 return _.any(_this.Tasks(), function (task) { return task.State() == "Blocked"; });
             });
-            this.QSReadyOrInProgress = ko.computed(function () {
-                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; }) ||
-                    _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; });
+            this.ReadyForQS = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; });
+            });
+            this.QSInProgress = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; });
+            });
+            this.ReadyForDev = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForDev"; });
             });
             this.DevInProgress = ko.computed(function () {
                 return _.any(_this.Tasks(), function (task) { return task.State() == "DevInProgress"; });
@@ -82,8 +87,17 @@ var ScrumThing;
                 if (_this.Blocked()) {
                     return "blocked";
                 }
-                if (_this.QSReadyOrInProgress()) {
-                    return "qsReadyOrInProgress";
+                if (_this.ReadyForQS() && _this.ReadyForDev()) {
+                    return "readyForQSAndDev";
+                }
+                if (_this.ReadyForDev()) {
+                    return "readyForDev";
+                }
+                if (_this.ReadyForQS()) {
+                    return "readyForQS";
+                }
+                if (_this.QSInProgress()) {
+                    return "qsInProgress";
                 }
                 if (_this.DevInProgress()) {
                     return "devInProgress";

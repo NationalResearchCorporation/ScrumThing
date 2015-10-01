@@ -64,6 +64,7 @@
     <Folder Include="Functions" />
     <Folder Include="Functions\Scalar Functions" />
     <Folder Include="Views" />
+    <Folder Include="Functions\Table-valued Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Sprints.sql" />
@@ -116,6 +117,7 @@
     <Build Include="Stored Procedures\GetPersonalActionLog.sql" />
     <Build Include="Functions\Scalar Functions\GetTimeScaleWindowValue.sql" />
     <Build Include="Functions\Scalar Functions\SystemUserName.sql" />
+    <Build Include="Functions\Table-valued Functions\GetMinAndMaxValuesForTimeperiod.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -5,4 +5,4 @@ USE ScrumTool_tSQLt
 GO
 
 EXEC tSQLt.RunAll;
---EXEC tSQLt.Run '[GetPersonalActionLog].[Test_LogsSpanningTimeframe_LogsProperly]';
+--EXEC tSQLt.Run 'GetPersonalActionLog.Test_TimeWindowIsHours_LogsProperly';

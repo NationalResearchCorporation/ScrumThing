@@ -192,11 +192,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\EstimatesVsActualsController.cs" />
+    <Compile Include="Controllers\PersonalActionLogController.cs" />
     <Compile Include="Controllers\PlanSprintController.cs" />
     <Compile Include="Controllers\BurndownController.cs" />
     <Compile Include="Controllers\ViewSprintController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Database\BaseRepository.cs" />
+    <Compile Include="Database\Inputs\GetPersonalActionLog.cs" />
     <Compile Include="Database\Inputs\GetSprints.cs" />
     <Compile Include="Database\Inputs\AddSprint.cs" />
     <Compile Include="Database\Inputs\GetSprintDays.cs" />
@@ -219,6 +221,7 @@
     <Compile Include="Database\Inputs\AddStory.cs" />
     <Compile Include="Database\Inputs\SetResources.cs" />
     <Compile Include="Database\Outputs\AddNote.cs" />
+    <Compile Include="Database\Outputs\GetPersonalActionLog.cs" />
     <Compile Include="Database\Outputs\SetStoryTags.cs" />
     <Compile Include="Database\Outputs\RemoveTask.cs" />
     <Compile Include="Database\Outputs\RemoveStory.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Database\Outputs\GetSprintInfo.cs" />
     <Compile Include="Database\Outputs\GetResources.cs" />
     <Compile Include="Database\Outputs\GetSprints.cs" />
+    <Compile Include="Database\SchemaAttribute.cs" />
     <Compile Include="Database\ScrumThingRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -247,6 +251,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -345,6 +351,8 @@
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -369,6 +377,10 @@
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -400,6 +412,7 @@
     <Content Include="Views\Burndown\Index.cshtml" />
     <Content Include="Views\EstimatesVsActuals\Index.cshtml" />
     <Content Include="Views\Shared\_ChangeSprint.cshtml" />
+    <Content Include="Views\PersonalActionLog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -408,6 +421,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\typings\bootstrap.v3.datetimepicker\bootstrap.v3.datetimepicker.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highstock.d.ts" />
@@ -419,17 +433,39 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery-ui.multidatespicker.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.stickytableheaders.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment-node.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
     <TypeScriptCompile Include="TypeScript\Home\EstimatesVsActualsChart.ts" />
     <TypeScriptCompile Include="TypeScript\Home\Home.ts" />
     <TypeScriptCompile Include="TypeScript\Home\Burndown.ts" />
+    <TypeScriptCompile Include="TypeScript\Home\PersonalActionLog.ts" />
+    <TypeScriptCompile Include="TypeScript\Home\PersonalActionLogBinder.ts" />
+    <TypeScriptCompile Include="TypeScript\Knockout\DateTimePickerBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Knockout\TooltipBinding.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\IPersonalActionLogProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\ITeamProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\ITimeProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\PersonalActionLogProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\TeamProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Providers\TimeProvider.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\BaseViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\BaseSprintViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\Home\PlanSprint.ts" />
     <TypeScriptCompile Include="TypeScript\Home\ViewSprint.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Globals.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\IBaseViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\INote.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\IRawAssignment.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\ITask.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Note.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\ILog.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\ITask.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\ITimeperiod.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\Log.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\Task.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\TimePeriod.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawTaskTag.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawAssignment.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawNote.ts" />
@@ -455,6 +491,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

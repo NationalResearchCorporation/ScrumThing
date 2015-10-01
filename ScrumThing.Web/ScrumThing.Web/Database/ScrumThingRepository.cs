@@ -148,6 +148,11 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
+        public List<Output_GetPersonalActionLog> GetPersonalActionLog(string userIdentity, DateTime fromTime, DateTime toTime, string timeScale) {
+            return RunSproc<Output_GetPersonalActionLog>(new object[] { userIdentity, fromTime, toTime, timeScale });
+        }
+
+        [Schema("dbo")]
         public List<Output_MoveStory> MoveStory(int storyId, int newOrdinal, bool IsReachGoal) {
             return RunSproc<Output_MoveStory>(new object[] { storyId, newOrdinal, IsReachGoal });
         }

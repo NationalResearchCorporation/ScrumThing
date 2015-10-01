@@ -23,6 +23,13 @@ namespace ScrumThing.Web.Specs {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ScrumThingSourceFiles").Include(
+                      "~/ScrumThingSpecifications/PresentationLayerSpecs/SourceFiles/Shared/Models/*.js",
+                      "~/ScrumThingSpecifications/PresentationLayerSpecs/SourceFiles/Shared/Models/PersonalActionLog/*.js",
+                      "~/ScrumThingSpecifications/PresentationLayerSpecs/SourceFiles/Shared/*.js",
+                      "~/ScrumThingSpecifications/PresentationLayerSpecs/SourceFiles/Home/PersonalActionLog.js"
+                ));
         }
     }
 }

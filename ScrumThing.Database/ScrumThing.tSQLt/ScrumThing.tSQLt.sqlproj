@@ -77,7 +77,9 @@
     <None Include="Scripts\test_template.sql" />
     <None Include="Scripts\RunTests.sql" />
     <None Include="Assemblies\tSQLtCLR.dll" />
-    <None Include="ScrumThing.tSQLt.localhost.publish.xml" />
+    <None Include="ScrumThing.tSQLt.localhost.publish.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Build Include="Schemas\dbo\MoveStory.tests.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +213,7 @@
     <Build Include="Schemas\dbo\UpdateSprint.tests.sql" />
     <Build Include="Schemas\dbo\UpdateStory.tests.sql" />
     <Build Include="Schemas\dbo\GetPersonalActionLog.tests.sql" />
+    <Build Include="Schemas\dbo\GetMinAndMaxValuesForTimeperiod.tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

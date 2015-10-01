@@ -11,7 +11,7 @@ BEGIN
     DECLARE @actual INT;
 
     -- Add a third story to the sprint
-    EXEC AddStory 1;
+    EXEC AddStory 1, 3, 0;
 
     -- Delete the second story from the sprint
     EXEC RemoveStory 2;

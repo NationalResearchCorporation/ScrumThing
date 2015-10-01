@@ -1,0 +1,105 @@
+﻿<div style="border-bottom: 1px solid silver; padding-bottom: 1em;">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Time Frame</h3>
+            <div class="col-md-4">
+                <h4>From</h4>
+                <div class='input-group date' data-bind="dateTimePicker: FromDateTime, dateTimePickerOptions: {showTodayButton: true, toolbarPlacement: 'top', showClose: true}">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar">
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Through</h4>
+                <div class='input-group date' data-bind="dateTimePicker: ToDateTime, dateTimePickerOptions: {showTodayButton: true, toolbarPlacement: 'top', showClose: true}">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar">
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Summary Level</h4>
+                <div class="dropdown">
+                    <button class="btn btn-default btn-block dropdown=toggle " type="button" data-toggle="dropdown" aria-expanded="true">
+                        <span>
+                            <!--ko text: CurrentTimeScale --><!--/ko-->
+                            <span class="caret"></span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu scrollable-menu">
+                        <!-- ko foreach: TimeScales -->
+                        <li><a href="#" data-bind="click: function() { $parent.CurrentTimeScale($data); }, text: $data"></a></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin: .5em 0 0 0;" data-bind="visible: DateSelectionIsInvalid">
+        <div class="col-lg-12">
+            <span class="glyphicon glyphicon-alert"></span>
+            <span>The current date/time selection is invalid. Please ensure that the through From timeperiod is earlier than the Through timeperiod.</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Activity</h3>
+        <div data-bind="visible: CurrentlyRefreshingData()">
+            <span>Searching the annals of time...</span>
+        </div>
+        <div data-bind="visible: !CurrentlyRefreshingData()">
+            <div class="panel-group" id="logAccordion" data-bind="visible: Log().HasTimePeriods()">
+                <!-- ko template: {name: 'timeperiodTemplate', foreach: Log().TimePeriods} -->
+                <!-- /ko -->
+            </div>
+            <div data-bind="visible: !Log().HasTimePeriods()">
+                <h2><small>You have no activity logged for the selected time frame.</small></h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="timeperiodTemplate">
+    <div class="panel panel-default" style="margin-bottom:.25em;">
+        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#logAccordion" data-bind="attr: { href: '#logAccordion_' + $index() }">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#logAccordion" data-bind="attr: { href: '#logAccordion_' + $index() }">
+                    <span data-bind="text: ScrumThing.formatJsonDateTimeString(MinTimeperiodValue)"></span>
+                    through
+                    <span data-bind="text: ScrumThing.formatJsonDateTimeString(MaxTimeperiodValue)"></span>
+                </a>
+            </h4>
+        </div>
+    </div>
+    <div data-bind="attr: { id: 'logAccordion_' + $index() }" class="panel-collapse collapse">
+        <div class="panel-body">
+            <!-- ko template: {name: 'taskTemplate', foreach: Tasks} -->
+            <!-- /ko -->
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="taskTemplate">
+    <div style="padding-bottom: 1em; border-bottom: 1px solid silver;">
+        <div><strong><span data-bind="text: 'Task ' + StoryOrdinal + '.' + TaskOrdinal + ': ' + TaskText"></span></strong></div>
+        <div><span data-bind="text: 'Sprint ' + SprintName + ' (' + TeamName + ')'"></span></div>
+        <div><span data-bind="text: 'Updated: ' + ScrumThing.formatJsonDateTimeString(MostRecentTimeStamp) + ' by ' + MostRecentActivityLoggedBy"></span></div>
+        <div>Dev Hours Burned &#916: <strong><span data-bind="text: BurnedDevHoursDelta"></span></strong></div>
+        <div>QS Hours Burned &#916: <strong><span data-bind="text: BurnedQsHoursDelta"></span></strong></div>
+        <div>Dev Hours Remaining &#916: <strong><span data-bind="text: RemainingDevHoursDelta"></span></strong></div>
+        <div>QS Hours Remaining &#916: <strong><span data-bind="text: RemainingQsHoursDelta"></span></strong></div>
+    </div>
+</script>
+
+@Scripts.Render("~/bundles/personalActionLog")

@@ -17,7 +17,7 @@
 </head>
 <body id="body">
 
-    <button class="btn btn-default glyphicon glyphicon-refresh fixed-top-right" data-bind="click: GetSprintInfo"></button>
+    <button class="btn btn-default glyphicon glyphicon-refresh fixed-top-right" data-bind="click: RefreshData"></button>
     <div class="container-fluid">
         <div class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
@@ -38,7 +38,8 @@
                         <li class="@(Request.RawUrl == "/PlanSprint" ? "active" : "")"><a href="/PlanSprint" alt="plan" title="Plan">Plan</a></li>
                         <li class="@(Request.RawUrl == "/ViewSprint" ? "active" : "")"><a href="/ViewSprint" alt="view" title="View">View</a></li>
                         <li class="@(Request.RawUrl == "/Burndown" ? "active" : "")"><a href="/Burndown" alt="burndown" title="Burndown">Burndown</a></li>
-                        <li class="@(Request.RawUrl == "/EstimatesVsActuals" ? "active" : "")"><a href="/EstimatesVsActuals" alt="estimates versus actuals" title="Estimates vs Actuals">Estimates vs Actuals</a></li>
+                        <li class="@(Request.RawUrl == "/EstimatesVsActuals" ? "active" : "")"><a href="/EstimatesVsActuals" alt="Estimates Versus Actuals" title="Estimates vs Actuals">Estimates vs Actuals</a></li>
+                        <li class="@(Request.RawUrl == "/PersonalActionLog" ? "active" : "")"><a href="/PersonalActionLog" alt="Personal Action Log" title="Personal Action Log">Personal Action Log</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="no-link" href="#"><span data-bind="text: ScrumThing.Globals.CurrentUserIdentity"></span></a></li>
@@ -54,17 +55,19 @@
                 </div>
             </div>
         </div>
-        @if (Request.RequestContext.RouteData.Values["Controller"] != "Home") {
+        @if (Request.RequestContext.RouteData.Values["Controller"].ToString() != "Home" &&
+             Request.RequestContext.RouteData.Values["Controller"].ToString() != "PersonalActionLog") {
             @Html.Partial("~/Views/Shared/_ChangeSprint.cshtml")
         }
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        @Scripts.Render("~/bundles/nrc")
+        @Scripts.Render("~/bundles/scrumthing")
+        <script>
+            ScrumThing.Globals.CurrentUserIdentity = '@Html.Raw(@User.Identity.Name).ToString().Replace("\\", "\\\\")';
+        </script>
         @RenderBody()
     </div>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    @Scripts.Render("~/bundles/nrc")
-    @Scripts.Render("~/bundles/scrumthing")
-    <script>
-        ScrumThing.Globals.CurrentUserIdentity = '@Html.Raw(@User.Identity.Name).ToString().Replace("\\", "\\\\")';
-    </script>
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

@@ -8,7 +8,6 @@ ko.bindingHandlers.tooltip = {
         jQuery(element).tooltip({ container: element });
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        // TODO: Figure out what to do when things change
     }
 };
 //# sourceMappingURL=TooltipBinding.js.map

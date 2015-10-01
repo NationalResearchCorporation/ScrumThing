@@ -48,8 +48,9 @@ AS
 BEGIN
 
     EXEC tSQLt.FakeTable N'Users'  INSERT INTO Users (UserName, UserIdentity) VALUES ('User', 'User')
-    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name) VALUES (1, 'Sprint')
+    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name, TeamId) VALUES (1, 'Sprint', 1)
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User', 1)
+    EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
 
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories 
         (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
@@ -68,8 +69,11 @@ BEGIN
         (5       ,  'User'  , 1       , 1     , 2                 , 3                    , '2015-01-02 12:00:00.000')
 
     CREATE TABLE ActualPalResult (
-        MostRecentActivityBy VARCHAR(40),
+        MostRecentActivityLoggedBy VARCHAR(40),
         MostRecentTimestamp DATETIME,
+        MinTimePeriodValue DATETIME,
+        MaxTimePeriodValue DATETIME,
+        TeamName VARCHAR(100),
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
@@ -131,8 +135,9 @@ AS
 BEGIN
 
     EXEC tSQLt.FakeTable N'Users' INSERT INTO Users (UserName, UserIdentity) VALUES ('User', 'User')
-    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name) VALUES (1, 'Sprint')
+    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name, TeamId) VALUES (1, 'Sprint', 1)
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User' ,1 )
+    EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories
         (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
         (1      , 'Story'  , 1       , 1          , 1      , 0          )
@@ -150,8 +155,11 @@ BEGIN
         (5       ,  'User'  , 1       , 1     , 2                 , 3                    , '2015-01-04 00:00:00.000')
 
     CREATE TABLE ActualPalResult (
-        MostRecentActivityBy VARCHAR(40),
+        MostRecentActivityLoggedBy VARCHAR(40),
         MostRecentTimestamp DATETIME,
+        MinTimePeriodValue DATETIME,
+        MaxTimePeriodValue DATETIME,
+        TeamName VARCHAR(100),
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
@@ -215,8 +223,9 @@ CREATE PROCEDURE GetPersonalActionLog.Test_LogTruncatedByTimeframe_LogsProperly
 AS
 BEGIN
     EXEC tSQLt.FakeTable N'Users' INSERT INTO Users (UserName, UserIdentity) VALUES ('User', 'User')
-    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name) VALUES (1, 'Sprint')
+    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name, TeamId) VALUES (1, 'Sprint', 1)
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User' ,1 )
+    EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories
         (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
         (1      , 'Story'  , 1       , 1          , 1      , 0          )
@@ -234,8 +243,11 @@ BEGIN
         (5       ,  'User'  , 1       , 1     , 2                 , 3                    , '2015-01-04 00:00:00.000')
 
     CREATE TABLE ActualPalResult (
-        MostRecentActivityBy VARCHAR(40),
+        MostRecentActivityLoggedBy VARCHAR(40),
         MostRecentTimestamp DATETIME,
+        MinTimePeriodValue DATETIME,
+        MaxTimePeriodValue DATETIME,
+        TeamName VARCHAR(100),
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
@@ -296,8 +308,9 @@ AS
 BEGIN
 
     EXEC tSQLt.FakeTable N'Users'  INSERT INTO Users (UserName, UserIdentity) VALUES ('User', 'User')
-    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name) VALUES (1, 'Sprint')
+    EXEC tSQLt.FakeTable N'Sprints' INSERT INTO Sprints (SprintId, Name, TeamId) VALUES (1, 'Sprint', 1)
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User', 1)
+    EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
 
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories 
         (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
@@ -316,8 +329,11 @@ BEGIN
         (5       ,  'User'  , 1       , 1     , 2                 , 3                    , '2015-01-02 12:00:00.000')
 
     CREATE TABLE ActualPalResult (
-        MostRecentActivityBy VARCHAR(40),
+        MostRecentActivityLoggedBy VARCHAR(40),
         MostRecentTimestamp DATETIME,
+        MinTimePeriodValue DATETIME,
+        MaxTimePeriodValue DATETIME,
+        TeamName VARCHAR(100),
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,

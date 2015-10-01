@@ -164,6 +164,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="ScrumThingSpecifications\PresentationLayerSpecs\Home\PersonalActionLogSpecifications.ts" />
+    <TypeScriptCompile Include="ScrumThingSpecifications\PresentationLayerSpecs\specReferences.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScrumThing.Web\ScrumThing.Web.csproj">
@@ -179,6 +180,10 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -203,6 +208,14 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>echo Purging old source files from spec project...
+rd $(ProjectDir)\ScrumThingSpecifications\PresentationLayerSpecs\SourceFiles /S/Q
+echo Creating new source file directory...
+md $(ProjectDir)\ScrumThingSpecifications\PresentationLayerSpecs\SourceFiles
+echo Copying new source files over to spec project...
+xcopy $(ProjectDir)\..\ScrumThing.Web\TypeScript $(ProjectDir)\ScrumThingSpecifications\PresentationLayerSpecs\SourceFiles /E/Y/Q</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

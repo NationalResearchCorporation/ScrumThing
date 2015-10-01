@@ -2,7 +2,7 @@
     @UserIdentity VARCHAR(40),
     @FromTime DATETIME,         
     @ToTime DATETIME,           
-    @TimeScale VARCHAR(6)      -- sprint, week, day, hour, minute, second, none
+    @TimeScale VARCHAR(6)
 AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM Users WHERE UserIdentity = @UserIdentity)
@@ -79,8 +79,11 @@ BEGIN
             ol.LogRecency = 1
     )
     SELECT
-        MostRecentActivityBy = ld.LoggedBy,
+        MostRecentActivityLoggedBy = ld.LoggedBy,
         ld.MostRecentTimeStamp,
+        MinMax.MinTimeperiodValue,
+        MinMax.MaxTimeperiodValue,
+        te.TeamName,
         ld.SprintId,
         SprintName = sp.Name,
         StoryOrdinal = st.Ordinal,
@@ -89,9 +92,9 @@ BEGIN
         st.StoryPoints,
         TaskOrdinal = t.Ordinal,
         t.TaskText,
-        TastState = t.[State],
-        t.EstimatedDevHours,
-        t.EstimatedQsHours,
+        TaskState = t.[State],
+        CAST(t.EstimatedDevHours AS DECIMAL(9, 4)),
+        CAST(t.EstimatedQsHours AS DECIMAL(9, 4)),
         BurnedDevHours = m.TaskDevHoursBurned,
         BurnedDevHoursDelta = ld.TaskDevHoursBurnedDelta,
         BurnedQsHours = m.TaskQsHoursBurned,
@@ -108,12 +111,16 @@ BEGIN
         JOIN Tasks t ON t.TaskId = ld.TaskId
         JOIN Stories st ON st.SprintId = sp.SprintId
             AND st.StoryId = t.StoryId
+        JOIN Teams te ON sp.TeamId = te.TeamId
+        CROSS APPLY dbo.GetMinAndMaxValuesForTimeperiod(@TimeScale, ld.MostRecentTimeStamp, ld.SprintId)
+            AS MinMax
     WHERE
         ld.MostRecentTimeStamp BETWEEN @FromTime AND @ToTime
     ORDER BY
+        MinMax.MinTimeperiodValue DESC,
+        te.TeamName ASC,
         sp.Name DESC,
         sp.SprintId DESC,
-        ld.MostRecentTimeStamp DESC,
         st.Ordinal ASC,
         t.Ordinal ASC
 END;

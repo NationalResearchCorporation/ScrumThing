@@ -1,4 +1,5 @@
-﻿module ScrumThing {
+﻿/// <reference path="taskordinal.ts" />
+module ScrumThing {
     export class Story {
         public StoryId: number;
         public HtmlId: string;

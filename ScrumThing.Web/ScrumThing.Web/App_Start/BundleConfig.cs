@@ -37,6 +37,9 @@ namespace ScrumThing.Web {
             bundles.Add(new LicensedScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
+                      "~/Scripts/moment.js",
+                      "~/Scripts/moment-with-locales.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/bootstrap-multiselect.js"));
 
             bundles.Add(new LicensedScriptBundle("~/bundles/toastr").Include(
@@ -45,11 +48,14 @@ namespace ScrumThing.Web {
             bundles.Add(new LicensedScriptBundle("~/bundles/nrc").Include(
                       "~/TypeScript/Shared/Models/*.js",
                       "~/TypeScript/Shared/Utility.js",
+                      "~/TypeScript/Knockout/DateTimePickerBinding.js",
                       "~/TypeScript/Knockout/TooltipBinding.js"));
 
             bundles.Add(new LicensedScriptBundle("~/bundles/scrumthing").Include(
-                      "~/TypeScript/Shared/BaseSprintViewModel.js",
-                      "~/TypeScript/Shared/Globals.js"
+                      "~/TypeScript/Shared/Globals.js",
+                      "~/TypeScript/Providers/TeamProvider.js",
+                      "~/TypeScript/Shared/BaseViewModel.js",
+                      "~/TypeScript/Shared/BaseSprintViewModel.js"
                 ));
 
             bundles.Add(new LicensedScriptBundle("~/bundles/burndownScripts").Include(
@@ -67,12 +73,22 @@ namespace ScrumThing.Web {
             bundles.Add(new LicensedScriptBundle("~/bundles/viewSprintScripts").Include(
                       "~/TypeScript/Home/ViewSprint.js"));
 
+            bundles.Add(new LicensedScriptBundle("~/bundles/personalActionLog").Include(
+                      "~/TypeScript/Providers/PersonalActionLogProvider.js",
+                      "~/TypeScript/Providers/TimeProvider.js",
+                      "~/TypeScript/Shared/Models/PersonalActionLog/Task.js",
+                      "~/TypeScript/Shared/Models/PersonalActionLog/TimePeriod.js",
+                      "~/TypeScript/Shared/Models/PersonalActionLog/Log.js",
+                      "~/TypeScript/Home/PersonalActionLog.js",
+                      "~/TypeScript/Home/PersonalActionLogBinder.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/toastr.css",
                       "~/Content/bootstrap.css",
                       "~/Content/pepper-ginder-custom.css",
                       "~/Content/bootstrap-multiselect.css",
                       "~/Content/font-awesome.css",
+                      "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/Site.css"));
 
             #if !DEBUG

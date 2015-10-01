@@ -1,3 +1,4 @@
+/// <reference path="taskordinal.ts" />
 var ScrumThing;
 (function (ScrumThing) {
     var Story = (function () {

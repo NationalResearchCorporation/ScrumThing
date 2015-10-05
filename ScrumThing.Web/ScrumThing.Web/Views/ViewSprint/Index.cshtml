@@ -14,10 +14,10 @@
             <th width="36" style="padding:0"></th>
             <th>Story</th>
             <th>Blocked <span class="fa fa-exclamation-triangle"></span></th>
-            <th>Ready For Dev <span class="fa fa-code-fork fa-lg"></span></th>
-            <th>Dev In Progress</th>
-            <th>Ready For QS <span class="fa fa-bug"></span></th>
-            <th>QS In Progress</th>
+            <th>Ready For Dev <span class="fa fa-code"></span></th>
+            <th>Dev In Progress <span class="fa fa-code-fork"></span></th>
+            <th>Ready For QS <span class="fa fa-flask"></span></th>
+            <th>QS In Progress <span class="fa fa-bug"></span></th>
             <th>Complete <span class="fa fa-check-circle"></span></th>
         </tr>
     </thead>
@@ -153,22 +153,24 @@
 
 <script type="text/html" id="viewSprintStoryTemplate">
     <tr>
-        <td data-bind="css: CssClassForState()">
-            <!-- ko if: CssClassForState() == 'readyForDev' -->
-            <span class="fa fa-code-fork fa-2x"></span>
+        <td data-bind="foreach: { data: CssClassForState, as: 'state' }, css: { complete: _.contains(CssClassForState(), 'complete'), blocked: _.contains(CssClassForState(), 'blocked')}">
+            <!-- ko if: state == 'readyForDev' -->
+            <span class="fa fa-code"></span>
             <!-- /ko -->
-            <!-- ko if: CssClassForState() == 'readyForQS' -->
-            <span class="fa fa-bug fa-lg"></span>
+            <!-- ko if: state == 'devInProgress' -->
+            <span class="fa fa-code-fork"></span>
             <!-- /ko -->
-            <!-- ko if: CssClassForState() == 'readyForQSAndDev' -->
-            <span class="fa fa-code-fork fa-2x"></span>
-            <span class="fa fa-bug fa-lg"></span>
+            <!-- ko if: state == 'readyForQS' -->
+            <span class="fa fa-flask"></span>
             <!-- /ko -->
-            <!-- ko if: CssClassForState() == 'blocked' -->
-            <span class="fa fa-exclamation-triangle fa-lg"></span>
+            <!-- ko if: state == 'qsInProgress' -->
+            <span class="fa fa-bug"></span>
             <!-- /ko -->
-            <!-- ko if: CssClassForState() == 'complete' -->
-            <span class="fa fa-check-circle fa-lg"></span>
+            <!-- ko if: state == 'blocked' -->
+            <span class="fa fa-exclamation-triangle"></span>
+            <!-- /ko -->
+            <!-- ko if: state == 'complete' -->
+            <span class="fa fa-check-circle"></span>
             <!-- /ko -->
         </td>
         <!-- ko if: Collapsed() -->

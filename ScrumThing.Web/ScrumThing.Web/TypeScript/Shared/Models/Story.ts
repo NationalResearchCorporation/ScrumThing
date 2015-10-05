@@ -21,7 +21,7 @@
         public QSInProgress: KnockoutComputed<boolean>;
         public ReadyForDev: KnockoutComputed<boolean>;
         public DevInProgress: KnockoutComputed<boolean>;
-        public CssClassForState: KnockoutComputed<string>;
+        public CssClassForState: KnockoutComputed<string[]>;
         public ReachToggleText: KnockoutComputed<string>;
 
         public SearchableStoryText: KnockoutComputed<string>;
@@ -94,35 +94,32 @@
             });
 
             this.CssClassForState = ko.computed(() => {
-                if (this.Complete()) {
-                    return "complete";
-                }
+
+                var states: Array<string> = [];
 
                 if (this.Blocked()) {
-                    return "blocked";
+                    states.push("blocked");
+                } else if (this.ReadyForDev() || this.DevInProgress() || this.ReadyForQS() || this.QSInProgress()) {
+                    if (this.ReadyForDev()) {
+                        states.push("readyForDev");
+                    }
+
+                    if (this.DevInProgress()) {
+                        states.push("devInProgress");
+                    }
+
+                    if (this.ReadyForQS()) {
+                        states.push("readyForQS");
+                    }
+
+                    if (this.QSInProgress()) {
+                        states.push("qsInProgress");
+                    }
+                } else if (this.Complete()) {
+                    states.push("complete");
                 }
 
-                if (this.ReadyForQS() && this.ReadyForDev()) {
-                    return "readyForQSAndDev";
-                }
-
-                if (this.ReadyForDev()) {
-                    return "readyForDev";
-                }
-
-                if (this.ReadyForQS()) {
-                    return "readyForQS";
-                }
-
-                if (this.QSInProgress()) {
-                    return "qsInProgress";
-                }
-
-                if (this.DevInProgress()) {
-                    return "devInProgress";
-                }
-
-                return "readyForDev";
+                return states;
             });
 
             this.Collapsed = ko.computed(() => {

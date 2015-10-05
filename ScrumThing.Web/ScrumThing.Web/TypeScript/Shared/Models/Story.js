@@ -81,28 +81,47 @@ var ScrumThing;
                 return _.any(_this.Tasks(), function (task) { return task.State() == "DevInProgress"; });
             });
             this.CssClassForState = ko.computed(function () {
-                if (_this.Complete()) {
-                    return "complete";
-                }
+                var states = [];
                 if (_this.Blocked()) {
-                    return "blocked";
+                    states.push("blocked");
                 }
-                if (_this.ReadyForQS() && _this.ReadyForDev()) {
-                    return "readyForQSAndDev";
+                else if (_this.ReadyForDev() || _this.DevInProgress() || _this.ReadyForQS() || _this.QSInProgress()) {
+                    if (_this.ReadyForDev()) {
+                        states.push("readyForDev");
+                    }
+                    if (_this.DevInProgress()) {
+                        states.push("devInProgress");
+                    }
+                    if (_this.ReadyForQS()) {
+                        states.push("readyForQS");
+                    }
+                    if (_this.QSInProgress()) {
+                        states.push("qsInProgress");
+                    }
                 }
-                if (_this.ReadyForDev()) {
-                    return "readyForDev";
+                else if (_this.Complete()) {
+                    states.push("complete");
                 }
-                if (_this.ReadyForQS()) {
-                    return "readyForQS";
-                }
-                if (_this.QSInProgress()) {
-                    return "qsInProgress";
-                }
-                if (_this.DevInProgress()) {
-                    return "devInProgress";
-                }
-                return "readyForDev";
+                //if (this.Blocked()) {
+                //    states.push("blocked");
+                //}
+                //if (this.ReadyForQS() && this.ReadyForDev()) {
+                //    return "readyForQSAndDev";
+                //}
+                //if (this.ReadyForDev()) {
+                //    return "readyForDev";
+                //}
+                //if (this.ReadyForQS()) {
+                //    return "readyForQS";
+                //}
+                //if (this.QSInProgress()) {
+                //    return "qsInProgress";
+                //}
+                //if (this.DevInProgress()) {
+                //    return "devInProgress";
+                //}
+                //return "readyForDev";
+                return states;
             });
             this.Collapsed = ko.computed(function () {
                 if (_this.CollapsedOverride() === null) {

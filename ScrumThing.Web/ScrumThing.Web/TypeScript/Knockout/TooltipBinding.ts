@@ -8,7 +8,7 @@
 
         jQuery(element).attr('title', title);
         jQuery(element).attr('data-placement', placement);
-        jQuery(element).tooltip({ container: 'body' });
+        jQuery(element).tooltip({ container: element });
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         // TODO: Figure out what to do when things change

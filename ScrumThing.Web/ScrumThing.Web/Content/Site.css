@@ -79,7 +79,11 @@ tbody {
 }
 
 .break-word {
-    word-break: break-word;
+    word-wrap: break-word
+}
+
+.task-text {
+    white-space:pre-wrap;
 }
 
 .logo{

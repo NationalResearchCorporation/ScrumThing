@@ -127,7 +127,7 @@
                       click: $root.SetTask($data),
                       css: $root.ClassForTask($data)">
         <strong><span class="bold" data-bind="text: $parent.Story.Ordinal() + '.' + Ordinal()"></span></strong>
-        <span data-bind="text: TaskText"></span>
+        <span class="task-text" data-bind="text: TaskText"></span>
         <br />
 
         <span class="label label-default" data-bind="text: 'Dev: ' + DevHoursBurned() + '/' + RemainingDevHours(), tooltip: { title: 'Burned / Remaining', placement: 'top' }"></span>

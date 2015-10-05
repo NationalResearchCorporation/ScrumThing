@@ -102,25 +102,6 @@ var ScrumThing;
                 else if (_this.Complete()) {
                     states.push("complete");
                 }
-                //if (this.Blocked()) {
-                //    states.push("blocked");
-                //}
-                //if (this.ReadyForQS() && this.ReadyForDev()) {
-                //    return "readyForQSAndDev";
-                //}
-                //if (this.ReadyForDev()) {
-                //    return "readyForDev";
-                //}
-                //if (this.ReadyForQS()) {
-                //    return "readyForQS";
-                //}
-                //if (this.QSInProgress()) {
-                //    return "qsInProgress";
-                //}
-                //if (this.DevInProgress()) {
-                //    return "devInProgress";
-                //}
-                //return "readyForDev";
                 return states;
             });
             this.Collapsed = ko.computed(function () {

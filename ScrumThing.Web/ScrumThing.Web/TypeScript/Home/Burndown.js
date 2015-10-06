@@ -34,6 +34,11 @@ var ScrumThing;
                                 text: 'Sprint Burndown',
                                 x: -20
                             },
+                            tooltip: {
+                                formatter: function () {
+                                    return this.x + '<br /><span style="color:' + this.point.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + Number(Math.round(Math.ceil(this.point.y * 2)) / 2) + '</b><br/>';
+                                }
+                            },
                             xAxis: {
                                 categories: _.pluck(data, 'FormattedBurnDate')
                             },

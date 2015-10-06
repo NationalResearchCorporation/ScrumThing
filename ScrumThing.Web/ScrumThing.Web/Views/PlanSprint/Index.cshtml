@@ -66,9 +66,9 @@
                         <!-- ko foreach: resources -->
                             <tr>
                                 <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
-                                <td><input class="form-control" type="number" data-bind="value: DevPercentage" /></td>
-                                <td><input class="form-control" type="number" data-bind="value: QsPercentage" /></td>
-                                <td><input class="form-control" type="number" data-bind="value: Days" /></td>
+                                <td><input class="form-control" type="number" min="0" data-bind="value: DevPercentage" /></td>
+                                <td><input class="form-control" type="number" min="0" data-bind="value: QsPercentage" /></td>
+                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: Days" /></td>
                                 <td data-bind="text: TotalDevHours"></td>
                                 <td data-bind="text: TotalQsHours"></td>
                                 <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
@@ -197,7 +197,7 @@
         </td>
         <td><textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea></td>
         <td>
-            <input class="form-control" type="number" data-bind="value: StoryPoints" />
+            <input class="form-control" type="number" min="0" data-bind="value: StoryPoints" />
             <select data-bind="multiselect: { numberDisplayed: 2, buttonWidth: '100%', buttonClass: 'multiselect dropdown-toggle btn btn-default storyTagsDropdown' },
                                    options: $root.storyTags,
                                    optionsValue: 'StoryTagId',
@@ -241,8 +241,8 @@
             </div>
             <!-- /ko -->
         </td>
-        <td><input class="form-control" type="number" data-bind="value: EstimatedDevHours" /></td>
-        <td><input class="form-control" type="number" data-bind="value: EstimatedQsHours," /></td>
+        <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: EstimatedDevHours" /></td>
+        <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: EstimatedQsHours," /></td>
         <td>
             <button class="btn btn-danger btn-sm" data-bind="click: function () { $parent.RemoveTask.call($parent, $data); }">Remove Task</button>
         </td>

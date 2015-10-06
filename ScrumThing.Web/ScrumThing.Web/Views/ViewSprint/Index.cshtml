@@ -67,11 +67,11 @@
                         <tbody>
                             <tr>
                                 <td><div class="text-center" data-bind="text: currentTask().EstimatedDevHours"></div></td>
-                                <td><input class="form-control" type="number" data-bind="value: currentTask().DevHoursBurned" /></td>
-                                <td><input class="form-control" type="number" data-bind="value: currentTask().RemainingDevHours" /></td>
+                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: currentTask().DevHoursBurned" /></td>
+                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: currentTask().RemainingDevHours" /></td>
                                 <td><div class="text-center" data-bind="text: currentTask().EstimatedQsHours"></div></td>
-                                <td><input class="form-control" type="number" data-bind="value: currentTask().QsHoursBurned" /></td>
-                                <td><input class="form-control" type="number" data-bind="value: currentTask().RemainingQsHours" /></td>
+                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: currentTask().QsHoursBurned" /></td>
+                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: currentTask().RemainingQsHours" /></td>
                             </tr>
                         </tbody>
                     </table>

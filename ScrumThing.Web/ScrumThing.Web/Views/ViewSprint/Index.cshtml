@@ -155,22 +155,22 @@
     <tr>
         <td data-bind="foreach: { data: CssClassForState, as: 'state' }, css: { complete: _.contains(CssClassForState(), 'complete'), blocked: _.contains(CssClassForState(), 'blocked')}">
             <!-- ko if: state == 'readyForDev' -->
-            <span class="fa fa-code"></span>
+            <span class="fa fa-code" data-bind="tooltip: { title: 'Ready For Dev', placement: 'right' }"></span>
             <!-- /ko -->
             <!-- ko if: state == 'devInProgress' -->
-            <span class="fa fa-code-fork"></span>
+            <span class="fa fa-code-fork" data-bind="tooltip: { title: 'Dev In Progress', placement: 'right' }"></span>
             <!-- /ko -->
             <!-- ko if: state == 'readyForQS' -->
-            <span class="fa fa-flask"></span>
+            <span class="fa fa-flask" data-bind="tooltip: { title: 'Ready For QS', placement: 'right' }"></span>
             <!-- /ko -->
             <!-- ko if: state == 'qsInProgress' -->
-            <span class="fa fa-bug"></span>
+            <span class="fa fa-bug" data-bind="tooltip: { title: 'QS In Progress', placement: 'right' }"></span>
             <!-- /ko -->
             <!-- ko if: state == 'blocked' -->
-            <span class="fa fa-exclamation-triangle"></span>
+            <span class="fa fa-exclamation-triangle" data-bind="tooltip: { title: 'Blocked', placement: 'right' }"></span>
             <!-- /ko -->
             <!-- ko if: state == 'complete' -->
-            <span class="fa fa-check-circle"></span>
+            <span class="fa fa-check-circle" data-bind="tooltip: { title: 'Complete', placement: 'right' }"></span>
             <!-- /ko -->
         </td>
         <!-- ko if: Collapsed() -->

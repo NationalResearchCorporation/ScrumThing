@@ -19,6 +19,9 @@ BEGIN
     DECLARE @PreviousEstimatedDevHours FLOAT = (SELECT EstimatedDevHours FROM Tasks WHERE TaskId = @TaskId);
     DECLARE @PreviousEstimatedQsHours FLOAT = (SELECT EstimatedQsHours FROM Tasks WHERE TaskId = @TaskId);
 
+    SELECT @TaskText = COALESCE(@TaskText, '')
+    SELECT @State = COALESCE(@State, 'ReadyForDev')
+
     -- If we are updating estimated hours, then reset burned and remaining
     IF @TaskText != @PreviousTaskText OR @EstimatedDevHours != @PreviousEstimatedDevHours OR @EstimatedQsHours != @PreviousEstimatedQsHours BEGIN
         SET @DevHoursBurned = 0

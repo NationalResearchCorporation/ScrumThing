@@ -5,6 +5,9 @@ CREATE PROCEDURE AddStory
     @IsReachGoal BIT
 AS
 BEGIN
+   
+    DECLARE @NewStoryID INT
+    
     BEGIN TRANSACTION
 
     UPDATE Stories
@@ -16,11 +19,15 @@ BEGIN
     VALUES
     (@SprintId, '', '', @Ordinal, @IsReachGoal);
 
-    SELECT NewStoryId = SCOPE_IDENTITY();
+    SET @NewStoryId = SCOPE_IDENTITY();
+	
+    SELECT NewStoryID = @NewStoryId
 
     SELECT StoryId, Ordinal
     FROM Stories
     WHERE SprintId = @SprintId;
 
     COMMIT TRANSACTION
+
+    RETURN @NewStoryID
 END

@@ -7,7 +7,7 @@ namespace ScrumThing.Web.Database.Outputs {
     }
 
     public class Output_AddStory_NewStoryId {
-        public decimal NewStoryId { get; set; }
+        public int NewStoryId { get; set; }
     }
 
     public class Output_AddStory_NewOrdinals {

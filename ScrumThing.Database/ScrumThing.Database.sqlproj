@@ -118,6 +118,7 @@
     <Build Include="Functions\Scalar Functions\GetTimeScaleWindowValue.sql" />
     <Build Include="Functions\Scalar Functions\SystemUserName.sql" />
     <Build Include="Functions\Table-valued Functions\GetMinAndMaxValuesForTimeperiod.sql" />
+    <Build Include="Stored Procedures\CarryOverStory.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

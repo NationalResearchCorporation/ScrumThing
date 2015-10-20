@@ -203,6 +203,7 @@
     <Compile Include="Database\Inputs\AddSprint.cs" />
     <Compile Include="Database\Inputs\GetSprintDays.cs" />
     <Compile Include="Database\Inputs\GetResources.cs" />
+    <Compile Include="Database\Inputs\CarryOverStory.cs" />
     <Compile Include="Database\Inputs\SetTaskTags.cs" />
     <Compile Include="Database\Inputs\SetStoryTags.cs" />
     <Compile Include="Database\Inputs\MoveTask.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Database\Inputs\SetResources.cs" />
     <Compile Include="Database\Outputs\AddNote.cs" />
     <Compile Include="Database\Outputs\GetPersonalActionLog.cs" />
+    <Compile Include="Database\Outputs\CarryOverStory.cs" />
     <Compile Include="Database\Outputs\SetStoryTags.cs" />
     <Compile Include="Database\Outputs\RemoveTask.cs" />
     <Compile Include="Database\Outputs\RemoveStory.cs" />

@@ -20,9 +20,9 @@
     padding: 0;
 }
 
-.dropdown-menu > li > a {
-    padding: 15px;
-}
+    .dropdown-menu > li > a {
+        padding: 15px;
+    }
 
 .navbar .container-fluid {
     margin-right: auto;
@@ -40,11 +40,11 @@
     background-color: #fff;
 }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fff;
-    background-color: #29B6F6;
-    text-decoration: none;
-}
+    .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #fff;
+        background-color: #29B6F6;
+        text-decoration: none;
+    }
 
 .navbar-brand {
     padding: 4px 15px;
@@ -79,20 +79,20 @@ tbody {
 }
 
 .break-word {
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .task-text {
-    white-space:pre-wrap;
+    white-space: pre-wrap;
 }
 
-.logo{
+.logo {
     margin-top: 15px;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.logoIcon{
+.logoIcon {
     margin-top: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -151,27 +151,27 @@ tbody {
     background-color: #64DD17;
 }
 
-.complete, .complete span {
-    -webkit-transition: background-color 0.5s ease;
-    -moz-transition: background-color 0.5s ease;
-    -o-transition: background-color 0.5s ease;
-    transition: background-color 0.5s ease;
-}
+    .complete, .complete span {
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        -o-transition: background-color 0.5s ease;
+        transition: background-color 0.5s ease;
+    }
 
 .blocked {
     background-color: #D50000;
 }
 
-.blocked span, .complete span {
-    color: #fff;
-}
+    .blocked span, .complete span {
+        color: #fff;
+    }
 
-.blocked, .blocked span {
-    -webkit-transition: background-color 0.5s ease;
-    -moz-transition: background-color 0.5s ease;
-    -o-transition: background-color 0.5s ease;
-    transition: background-color 0.5s ease;
-}
+    .blocked, .blocked span {
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        -o-transition: background-color 0.5s ease;
+        transition: background-color 0.5s ease;
+    }
 
 .readyForQS {
     -webkit-transition: background-color 0.5s ease;
@@ -250,6 +250,10 @@ tbody {
     overflow-y: auto;
 }
 
+#carryOverModal .modal-body {
+    overflow-y: initial;
+}
+
 .modal .modal-dialog {
     margin: 0 auto;
     margin-top: 25px;
@@ -260,7 +264,6 @@ tbody {
 }
 
 #viewSprintDropdown {
-    
 }
 
 .draggable {

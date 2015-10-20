@@ -8,7 +8,8 @@ using System.Web;
 
 namespace ScrumThing.Web.Database {
     public class ScrumThingRepository : BaseRepository {
-        public ScrumThingRepository(string connectionString) : base(connectionString) {
+        public ScrumThingRepository(string connectionString)
+            : base(connectionString) {
         }
 
         public static ScrumThingRepository GetContext() {
@@ -37,12 +38,12 @@ namespace ScrumThing.Web.Database {
 
         [Schema("dbo")]
         public List<Output_GetStoryTags> GetStoryTags() {
-            return RunSproc<Output_GetStoryTags>(new object[] {});
+            return RunSproc<Output_GetStoryTags>(new object[] { });
         }
 
         [Schema("dbo")]
         public List<Output_GetTaskTags> GetTaskTags() {
-            return RunSproc<Output_GetTaskTags>(new object[] {});
+            return RunSproc<Output_GetTaskTags>(new object[] { });
         }
 
         [Schema("dbo")]
@@ -109,7 +110,7 @@ namespace ScrumThing.Web.Database {
         [Schema("dbo")]
         public List<Output_RemoveTask> RemoveTask(int taskId) {
             return RunSproc<Output_RemoveTask>(new object[] { taskId });
-        } 
+        }
 
         [Schema("dbo")]
         public List<Output_GetSprintDays> GetSprintDays(int sprintId) {
@@ -139,7 +140,7 @@ namespace ScrumThing.Web.Database {
 
         [Schema("dbo")]
         public List<Output_GetTeams> GetTeams() {
-            return RunSproc<Output_GetTeams>(new object[] {});
+            return RunSproc<Output_GetTeams>(new object[] { });
         }
 
         [Schema("dbo")]
@@ -165,6 +166,11 @@ namespace ScrumThing.Web.Database {
         [Schema("dbo")]
         public List<Output_SetStoryTags> SetStoryTags(int storyId, string storyTagIds) {
             return RunSproc<Output_SetStoryTags>(new object[] { storyId, storyTagIds });
+        }
+
+        [Schema("dbo")]
+        public List<Output_CarryOverStory> CarryOverStory(int storyId, int sprintId) {
+            return RunSproc<Output_CarryOverStory>(new object[] { storyId, sprintId });
         }
     }
 }

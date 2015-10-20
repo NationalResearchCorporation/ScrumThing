@@ -121,5 +121,13 @@ namespace ScrumThing.Web.Controllers {
         public ActionResult SetStoryTags(Input_SetStoryTags formData) {
             return Json(context.SetStoryTags(formData.StoryId, formData.StoryTagIds));
         }
+
+        [HttpPost]
+        public ActionResult CarryOverStory(Input_CarryOverStory formData) {
+            var maxSprint = context.GetSprints(formData.TeamId).OrderByDescending(sprint => sprint.SprintId).FirstOrDefault();
+            return Json(context.CarryOverStory(formData.StoryId, maxSprint.SprintId));
+        }
+
+
     }
 }

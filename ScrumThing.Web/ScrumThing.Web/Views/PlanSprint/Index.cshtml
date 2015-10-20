@@ -64,15 +64,15 @@
                     </thead>
                     <tbody>
                         <!-- ko foreach: resources -->
-                            <tr>
-                                <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
-                                <td><input class="form-control" type="number" min="0" data-bind="value: DevPercentage" /></td>
-                                <td><input class="form-control" type="number" min="0" data-bind="value: QsPercentage" /></td>
-                                <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: Days" /></td>
-                                <td data-bind="text: TotalDevHours"></td>
-                                <td data-bind="text: TotalQsHours"></td>
-                                <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
-                            </tr>
+                        <tr>
+                            <td><input class="form-control" type="text" data-bind="value: UserName" /></td>
+                            <td><input class="form-control" type="number" min="0" data-bind="value: DevPercentage" /></td>
+                            <td><input class="form-control" type="number" min="0" data-bind="value: QsPercentage" /></td>
+                            <td><input class="form-control" type="number" min="0" step="0.5" data-bind="value: Days" /></td>
+                            <td data-bind="text: TotalDevHours"></td>
+                            <td data-bind="text: TotalQsHours"></td>
+                            <td><button class="btn btn-danger" data-bind="click: function() { $root.RemoveResource.call($root, $data); }">Remove</button></td>
+                        </tr>
                         <!-- /ko -->
                         <tr>
                             <td>Totals:</td>
@@ -158,6 +158,37 @@
             <div class="modal-footer">
                 <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                 <button class="btn btn-primary" type="button" data-bind="click: AddSprint">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="carryOverModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span>Select target team</span>
+            </div>
+
+            <div class="modal-body">
+                <!-- ko if: teams() -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle borderless" type="button" data-toggle="dropdown" aria-expanded="true">
+                        Team name: <!--ko text: carryOverTargetTeam --><!--/ko--> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu scrollable-menu">
+                        <!-- ko foreach: teams -->
+                        <li><a href="#" data-bind="text: TeamName, click: function() { $parent.ChangeTargetTeam(TeamName) }"></a></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+                <!-- /ko-->
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" data-bind="click: function() { CarryOverStory() }">Carry over</button>
             </div>
         </div>
     </div>
@@ -254,6 +285,7 @@
                 <li class="btn-group pull-left">
                     <button class="btn btn-primary btn-sm" data-bind="click: function () { $data.AddTask($parent.currentUserIdentity) }">Add Task</button>
                     <button class="btn btn-primary btn-sm" data-bind="click: $parent.AddStory.call($parent, Ordinal() + 1, IsReachGoal())">Insert Story</button>
+                    <button class="btn btn-primary btn-sm" data-bind="click: function () { $parent.CarryOverStoryModal(StoryId) }, visible: $parent.IsAfterLastDayOfSprint() && IsCarryOverEligible()">Carry Over Story</button>
                 </li>
             </ul>
         </td>

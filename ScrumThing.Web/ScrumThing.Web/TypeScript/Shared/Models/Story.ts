@@ -13,6 +13,8 @@ module ScrumThing {
 
         public TotalDevHours: KnockoutComputed<number>;
         public TotalQsHours: KnockoutComputed<number>;
+        public RemainingDevHours: KnockoutComputed<number>;
+        public RemainingQsHours: KnockoutComputed<number>;
         public Collapsed: KnockoutComputed<boolean>;
         public CollapsedOverride: KnockoutObservable<boolean> = ko.observable<boolean>();
 
@@ -26,6 +28,8 @@ module ScrumThing {
         public ReachToggleText: KnockoutComputed<string>;
 
         public SearchableStoryText: KnockoutComputed<string>;
+
+        public IsCarryOverEligible: KnockoutComputed<boolean>;
 
         public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
             this.StoryId = storyId
@@ -94,6 +98,18 @@ module ScrumThing {
                 return _.any(this.Tasks(), (task) => { return task.State() == "DevInProgress"; });
             });
 
+            this.RemainingDevHours = ko.computed(() => {
+                var result: number = 0;
+                _.each(this.Tasks(), (task) => { result += task.RemainingDevHours(); });
+                return result;
+            });
+
+            this.RemainingQsHours = ko.computed(() => {
+                var result: number = 0;
+                _.each(this.Tasks(), (task) => { result += task.RemainingQsHours(); });
+                return result;
+            });
+
             this.CssClassForState = ko.computed(() => {
 
                 var states: Array<string> = [];
@@ -138,6 +154,11 @@ module ScrumThing {
 
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
+
+            this.IsCarryOverEligible = ko.computed(() => {
+                return !this.Complete() &&
+                    (this.RemainingDevHours() > 0 || this.RemainingQsHours() > 0)
+            });
         }
 
         public UpdateStory = () => {
@@ -197,9 +218,9 @@ module ScrumThing {
 
         public MatchesSearchTerms(searchTerms: Array<string>): boolean {
             return _.all(searchTerms, (term) => this.StoryTextMatches(term) ||
-                                                this.AnyAssignmentMatches(term) ||
-                                                this.AnyTaskTextMatches(term) ||
-                                                this.AnyStoryTagMatches(term));
+                this.AnyAssignmentMatches(term) ||
+                this.AnyTaskTextMatches(term) ||
+                this.AnyStoryTagMatches(term));
         }
 
         public StoryTextMatches(term: string): boolean {

@@ -10,14 +10,33 @@ jQuery(function () {
 
 module ScrumThing {
     export class PlanSprintViewModel extends BaseSprintViewModel {
+
+        private lastDay: KnockoutComputed<Date>;
+        public IsAfterLastDayOfSprint: KnockoutComputed<boolean>;
+        private carryOverTargetTeam: KnockoutObservable<string> = ko.observable<string>();
+        private carryOverSourceStory: KnockoutObservable<number> = ko.observable<number>();
+        private days: KnockoutObservableArray<Date> = ko.observableArray<Date>();
+
+
         // This isn't really handled in the standard way.
         // TODO: set up the multidatespicker as a proper knockout binding
         //public sprintDays: KnockoutObservable<string> = ko.observable<string>();
+
+       
 
         constructor() {
             super();
             this.sprintId.subscribe(this.GetSprintDays, this);
             jQuery("#sprintDaysPicker").multiDatesPicker();
+
+            this.lastDay = ko.computed((): Date => {
+                return _.max(this.days());
+            });
+
+            this.IsAfterLastDayOfSprint = ko.computed(() => {
+                var today = new Date();
+                return this.lastDay() < today;
+            });
         }
 
         public AddResource() {
@@ -50,9 +69,11 @@ module ScrumThing {
                     data: { SprintId: this.sprintId() },
                     success: (data: Array<{ Day: string }>) => {
                         var dates = _.map(data, (date) => { return date.Day; });
+                        this.days(_.map(dates, (date) => { return new Date(date); }));
                         if (dates.length > 0) {
                             jQuery('#sprintDaysPicker').multiDatesPicker('addDates', dates);
-                        }                    },
+                        }
+                    },
                     error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                         toastr.error("Failed to get sprint days: " + errorThrown);
                     }
@@ -62,6 +83,9 @@ module ScrumThing {
 
         public SetSprintDays() {
             var dates = <string[]>jQuery('#sprintDaysPicker').multiDatesPicker('getDates');
+
+            this.days(_.map(dates, (date) => { return new Date(date); }));
+
             var packedDates = dates.join('|');
             jQuery.ajax({
                 type: 'POST',
@@ -204,7 +228,7 @@ module ScrumThing {
                     NewStoryId: story,
                     NewOrdinal: ordinal
                 },
-                success: (data: Array<{ TaskId: number; Ordinal: number }>) => {                    
+                success: (data: Array<{ TaskId: number; Ordinal: number }>) => {
                     for (var ii = 0; ii < data.length; ii++) {
                         var modifiedTask = _.findWhere(this.tasks(), { TaskId: data[ii].TaskId });
                         modifiedTask.Ordinal(data[ii].Ordinal);
@@ -212,8 +236,8 @@ module ScrumThing {
 
                     // ToDo. Modify when add StoryId to Task model                
                     var currentTask = _.findWhere(this.tasks(), { TaskId: task.TaskId });
-                    for (var ii = 0; ii < this.stories().length; ii++) {                        
-                        if (_.contains(this.stories()[ii].Tasks(), currentTask)) {                            
+                    for (var ii = 0; ii < this.stories().length; ii++) {
+                        if (_.contains(this.stories()[ii].Tasks(), currentTask)) {
                             if (this.stories()[ii].StoryId != story) {
                                 var newStory = _.findWhere(this.stories(), { StoryId: story });
 
@@ -239,6 +263,37 @@ module ScrumThing {
 
         public ExportSprint() {
             jQuery("#exportSprintForm").submit();
+        }
+
+
+        public CarryOverStoryModal(storyId: number) {
+            this.carryOverTargetTeam(this.currentTeam().TeamName);
+            this.carryOverSourceStory(storyId);
+            jQuery("#carryOverModal").modal();
+        }
+
+        public ChangeTargetTeam(newTeamName: string) {
+            this.carryOverTargetTeam(newTeamName);
+        }
+
+        public CarryOverStory() {
+            var team = _.find(this.teams(), (team) => { return team.TeamName == this.carryOverTargetTeam() });
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/CarryOverStory',
+                data: {
+                    StoryId: this.carryOverSourceStory(),
+                    TeamId: team.TeamId
+                },
+                success: () => {
+                    jQuery("#carryOverModal").modal('hide');
+                    toastr.success("Carried over story to current sprint of team" + team.TeamName);
+                },
+                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                    toastr.error("Failed to carry over story: " + errorThrown);
+                }
+            });
         }
     }
 }

@@ -81,6 +81,16 @@ var ScrumThing;
             this.DevInProgress = ko.computed(function () {
                 return _.any(_this.Tasks(), function (task) { return task.State() == "DevInProgress"; });
             });
+            this.RemainingDevHours = ko.computed(function () {
+                var result = 0;
+                _.each(_this.Tasks(), function (task) { result += task.RemainingDevHours(); });
+                return result;
+            });
+            this.RemainingQsHours = ko.computed(function () {
+                var result = 0;
+                _.each(_this.Tasks(), function (task) { result += task.RemainingQsHours(); });
+                return result;
+            });
             this.CssClassForState = ko.computed(function () {
                 var states = [];
                 if (_this.Blocked()) {
@@ -117,6 +127,10 @@ var ScrumThing;
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
+            this.IsCarryOverEligible = ko.computed(function () {
+                return !_this.Complete() &&
+                    (_this.RemainingDevHours() > 0 || _this.RemainingQsHours() > 0);
+            });
         }
         Story.prototype.AddTask = function (loggedBy) {
             var _this = this;

@@ -64,6 +64,7 @@ var ScrumThing;
                         var dates = _.map(data, function (date) { return date.Day; });
                         _this.days(_.map(dates, function (date) { return new Date(date); }));
                         if (dates.length > 0) {
+                            jQuery('#sprintDaysPicker').multiDatesPicker('resetDates');
                             jQuery('#sprintDaysPicker').multiDatesPicker('addDates', dates);
                         }
                     },

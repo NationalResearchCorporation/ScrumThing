@@ -71,6 +71,7 @@ module ScrumThing {
                         var dates = _.map(data, (date) => { return date.Day; });
                         this.days(_.map(dates, (date) => { return new Date(date); }));
                         if (dates.length > 0) {
+                            jQuery('#sprintDaysPicker').multiDatesPicker('resetDates');
                             jQuery('#sprintDaysPicker').multiDatesPicker('addDates', dates);
                         }
                     },

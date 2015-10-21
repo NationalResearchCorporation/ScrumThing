@@ -259,7 +259,7 @@ var ScrumThing;
                 },
                 success: function () {
                     jQuery("#carryOverModal").modal('hide');
-                    toastr.success("Carried over story to current sprint of team" + team.TeamName);
+                    toastr.success("Carried over story to current sprint of team:" + team.TeamName);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     toastr.error("Failed to carry over story: " + errorThrown);

@@ -289,7 +289,7 @@ module ScrumThing {
                 },
                 success: () => {
                     jQuery("#carryOverModal").modal('hide');
-                    toastr.success("Carried over story to current sprint of team" + team.TeamName);
+                    toastr.success("Carried over story to current sprint of team:" + team.TeamName);
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to carry over story: " + errorThrown);

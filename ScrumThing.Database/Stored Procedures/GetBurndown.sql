@@ -51,7 +51,8 @@ BEGIN
         HoursRemaining = CAST(sl.HoursRemaining AS DECIMAL(9,4)),
         IdealHoursRemaining = @EstimatedHours
                             - SUM(@IdealHoursPerDay) OVER(ORDER BY sd.Day ROWS UNBOUNDED PRECEDING) 
-                            + @IdealHoursPerDay -- This bumps the chart up the y-axis to account for being short one day.
+                            + @IdealHoursPerDay, -- This bumps the chart up the y-axis to account for being short one day.
+        Preliminary = IIF(sd.Day >= CAST(@RelativeDate AS DATE), 1, 0)
     FROM
         SprintLog sl
         RIGHT JOIN SprintDays sd ON 

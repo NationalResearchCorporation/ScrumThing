@@ -13,5 +13,6 @@ namespace ScrumThing.Web.Database.Outputs {
         public decimal? HoursBurned { get; set; }
         public decimal? HoursRemaining { get; set; }
         public double IdealHoursRemaining { get; set; }
+        public bool Preliminary { get; set; }
     }
 }

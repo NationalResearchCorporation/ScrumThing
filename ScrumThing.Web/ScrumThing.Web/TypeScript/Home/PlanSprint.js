@@ -15,9 +15,6 @@ var ScrumThing;
 (function (ScrumThing) {
     var PlanSprintViewModel = (function (_super) {
         __extends(PlanSprintViewModel, _super);
-        // This isn't really handled in the standard way.
-        // TODO: set up the multidatespicker as a proper knockout binding
-        //public sprintDays: KnockoutObservable<string> = ko.observable<string>();
         function PlanSprintViewModel() {
             var _this = this;
             _super.call(this);
@@ -213,7 +210,6 @@ var ScrumThing;
                         var modifiedTask = _.findWhere(_this.tasks(), { TaskId: data[ii].TaskId });
                         modifiedTask.Ordinal(data[ii].Ordinal);
                     }
-                    // ToDo. Modify when add StoryId to Task model                
                     var currentTask = _.findWhere(_this.tasks(), { TaskId: task.TaskId });
                     for (var ii = 0; ii < _this.stories().length; ii++) {
                         if (_.contains(_this.stories()[ii].Tasks(), currentTask)) {
@@ -270,4 +266,4 @@ var ScrumThing;
     })(ScrumThing.BaseSprintViewModel);
     ScrumThing.PlanSprintViewModel = PlanSprintViewModel;
 })(ScrumThing || (ScrumThing = {}));
-//# sourceMappingURL=plansprint.js.map
+//# sourceMappingURL=PlanSprint.js.map

@@ -1,0 +1,42 @@
+﻿
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading pointer" data-toggle="collapse" data-parent="#accordion" href="#sprintInfoPanel">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#sprintInfoPanel">Story Tags</a>
+            </h4>
+        </div>
+        <div id="storyTagPanel" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Description</td>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ko foreach: storyTags -->
+                            <tr>
+                                <td data-bind="text: StoryTagDescription"></td>
+                                <td>
+                                    <button class="btn btn-danger" data-bind="click: function() { $root.RemoveStoryTag($data) }">Delete</button>
+                                </td>
+                            </tr>
+                        <!-- /ko -->
+                        <tr>
+                            <td>
+                                <input class="form-control" data-bind="value: NewStoryTagDescription" />
+                            </td>
+                            <td>
+                                <button class="btn btn-success" data-bind="click: function() { AddStoryTag() }">Add</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/management")

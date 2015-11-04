@@ -51,6 +51,7 @@ var ScrumThing;
                 ko.computed(function () {
                     _this.RefreshData();
                 });
+                this.showSprintDropdown(false);
             }
             return PersonalActionLog;
         })(ScrumThing.BaseViewModel);

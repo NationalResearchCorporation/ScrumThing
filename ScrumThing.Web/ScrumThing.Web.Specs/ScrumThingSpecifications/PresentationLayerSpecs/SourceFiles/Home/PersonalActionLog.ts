@@ -51,6 +51,8 @@
             ko.computed(() => {
                 this.RefreshData();
             });
+
+            this.showSprintDropdown(false);
         }
     }
 }

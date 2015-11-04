@@ -29,10 +29,31 @@ var ScrumThing;
                     data: { SprintId: this.sprintId() },
                     success: function (data) {
                         _this.burndown(JSON.stringify(data));
+                        var preliminaryPoint = _.findIndex(data, function (point) { return point.Preliminary; });
+                        var zones = null;
+                        var notFound = -1;
+                        if (preliminaryPoint != notFound) {
+                            zones = [{
+                                    value: preliminaryPoint - 1,
+                                    dashStyle: 'Solid'
+                                }, {
+                                    value: preliminaryPoint,
+                                    dashStyle: 'Dash'
+                                }];
+                        }
                         jQuery("#burndownChart").highcharts({
                             title: {
                                 text: 'Sprint Burndown',
                                 x: -20
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    var notFinalWarning = '';
+                                    if (!this.point.IsFinal) {
+                                        notFinalWarning = '<b>Preliminary</b><br />';
+                                    }
+                                    return notFinalWarning + this.x + '<br /><span style="color:' + this.point.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + Number(Math.round(Math.ceil(this.point.y * 2)) / 2) + '</b><br/>';
+                                }
                             },
                             xAxis: {
                                 categories: _.pluck(data, 'FormattedBurnDate')
@@ -50,12 +71,26 @@ var ScrumThing;
                             },
                             series: [{
                                     name: 'Remaining',
-                                    data: _.pluck(data, 'HoursRemaining'),
-                                    color: '#7CB5EC'
+                                    data: _.map(data, function (point) {
+                                        return {
+                                            y: point.HoursRemaining,
+                                            IsFinal: point.Preliminary
+                                        };
+                                    }),
+                                    color: '#7CB5EC',
+                                    zoneAxis: 'x',
+                                    zones: zones
                                 }, {
                                     name: 'Burned',
-                                    data: _.pluck(data, 'HoursBurned'),
-                                    color: '#C0C0C0'
+                                    data: _.map(data, function (point) {
+                                        return {
+                                            y: point.HoursBurned,
+                                            IsFinal: point.Preliminary
+                                        };
+                                    }),
+                                    color: '#C0C0C0',
+                                    zoneAxis: 'x',
+                                    zones: zones
                                 }, {
                                     name: 'Ideal (End of Day)',
                                     data: _.pluck(data, 'IdealHoursRemaining'),

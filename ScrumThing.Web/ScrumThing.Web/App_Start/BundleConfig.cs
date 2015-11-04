@@ -82,6 +82,10 @@ namespace ScrumThing.Web {
                       "~/TypeScript/Home/PersonalActionLog.js",
                       "~/TypeScript/Home/PersonalActionLogBinder.js"));
 
+            bundles.Add(new LicensedScriptBundle("~/bundles/management").Include(
+                      "~/TypeScript/Home/Management.js",
+                      "~/TypeScript/Home/ManagementBinder.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/toastr.css",
                       "~/Content/bootstrap.css",

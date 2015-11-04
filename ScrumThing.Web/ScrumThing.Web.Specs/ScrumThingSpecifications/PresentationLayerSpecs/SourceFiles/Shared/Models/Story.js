@@ -69,27 +69,51 @@ var ScrumThing;
             this.Blocked = ko.computed(function () {
                 return _.any(_this.Tasks(), function (task) { return task.State() == "Blocked"; });
             });
-            this.QSReadyOrInProgress = ko.computed(function () {
-                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; }) ||
-                    _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; });
+            this.ReadyForQS = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForQs"; });
+            });
+            this.QSInProgress = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "QsInProgress"; });
+            });
+            this.ReadyForDev = ko.computed(function () {
+                return _.any(_this.Tasks(), function (task) { return task.State() == "ReadyForDev"; });
             });
             this.DevInProgress = ko.computed(function () {
                 return _.any(_this.Tasks(), function (task) { return task.State() == "DevInProgress"; });
             });
+            this.RemainingDevHours = ko.computed(function () {
+                var result = 0;
+                _.each(_this.Tasks(), function (task) { result += task.RemainingDevHours(); });
+                return result;
+            });
+            this.RemainingQsHours = ko.computed(function () {
+                var result = 0;
+                _.each(_this.Tasks(), function (task) { result += task.RemainingQsHours(); });
+                return result;
+            });
             this.CssClassForState = ko.computed(function () {
-                if (_this.Complete()) {
-                    return "complete";
-                }
+                var states = [];
                 if (_this.Blocked()) {
-                    return "blocked";
+                    states.push("blocked");
                 }
-                if (_this.QSReadyOrInProgress()) {
-                    return "qsReadyOrInProgress";
+                else if (_this.ReadyForDev() || _this.DevInProgress() || _this.ReadyForQS() || _this.QSInProgress()) {
+                    if (_this.ReadyForDev()) {
+                        states.push("readyForDev");
+                    }
+                    if (_this.DevInProgress()) {
+                        states.push("devInProgress");
+                    }
+                    if (_this.ReadyForQS()) {
+                        states.push("readyForQS");
+                    }
+                    if (_this.QSInProgress()) {
+                        states.push("qsInProgress");
+                    }
                 }
-                if (_this.DevInProgress()) {
-                    return "devInProgress";
+                else if (_this.Complete()) {
+                    states.push("complete");
                 }
-                return "readyForDev";
+                return states;
             });
             this.Collapsed = ko.computed(function () {
                 if (_this.CollapsedOverride() === null) {
@@ -103,6 +127,10 @@ var ScrumThing;
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
+            this.IsCarryOverEligible = ko.computed(function () {
+                return !_this.Complete() &&
+                    (_this.RemainingDevHours() > 0 || _this.RemainingQsHours() > 0);
+            });
         }
         Story.prototype.AddTask = function (loggedBy) {
             var _this = this;

@@ -110,7 +110,6 @@
     <Build Include="Tables\StoryTags.sql" />
     <Build Include="Stored Procedures\SetStoryTags.sql" />
     <Build Include="Tables\StoriesInTags.sql" />
-    <None Include="PostScripts\StoryTags.sql" />
     <PostDeploy Include="PostScripts\PostDeployment.sql" />
     <Build Include="Stored Procedures\GetStoryTags.sql" />
     <Build Include="Stored Procedures\SetTaskTags.sql" />
@@ -119,6 +118,8 @@
     <Build Include="Functions\Scalar Functions\SystemUserName.sql" />
     <Build Include="Functions\Table-valued Functions\GetMinAndMaxValuesForTimeperiod.sql" />
     <Build Include="Stored Procedures\CarryOverStory.sql" />
+    <Build Include="Stored Procedures\AddStoryTag.sql" />
+    <Build Include="Stored Procedures\RemoveStoryTag.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

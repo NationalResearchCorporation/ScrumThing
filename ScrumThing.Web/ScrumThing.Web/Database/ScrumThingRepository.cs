@@ -42,6 +42,16 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
+        public Output_AddStoryTag AddStoryTag(string storyTagDescription) {
+            return RunSproc<Output_AddStoryTag>(new object[] { storyTagDescription }).First();
+        }
+
+        [Schema("dbo")]
+        public bool RemoveStoryTag(int storyTagId) {
+            return RunSproc<Output_RemoveStoryTag>(new object[] { storyTagId }).First().Success;
+        }
+
+        [Schema("dbo")]
         public List<Output_GetTaskTags> GetTaskTags() {
             return RunSproc<Output_GetTaskTags>(new object[] { });
         }

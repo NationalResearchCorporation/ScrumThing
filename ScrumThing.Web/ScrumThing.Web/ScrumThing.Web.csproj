@@ -195,9 +195,12 @@
     <Compile Include="Controllers\PersonalActionLogController.cs" />
     <Compile Include="Controllers\PlanSprintController.cs" />
     <Compile Include="Controllers\BurndownController.cs" />
+    <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\ViewSprintController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Database\BaseRepository.cs" />
+    <Compile Include="Database\Inputs\RemoveStoryTag.cs" />
+    <Compile Include="Database\Inputs\AddStoryTag.cs" />
     <Compile Include="Database\Inputs\GetPersonalActionLog.cs" />
     <Compile Include="Database\Inputs\GetSprints.cs" />
     <Compile Include="Database\Inputs\AddSprint.cs" />
@@ -222,6 +225,8 @@
     <Compile Include="Database\Inputs\AddStory.cs" />
     <Compile Include="Database\Inputs\SetResources.cs" />
     <Compile Include="Database\Outputs\AddNote.cs" />
+    <Compile Include="Database\Outputs\RemoveStoryTag.cs" />
+    <Compile Include="Database\Outputs\AddStoryTag.cs" />
     <Compile Include="Database\Outputs\GetPersonalActionLog.cs" />
     <Compile Include="Database\Outputs\CarryOverStory.cs" />
     <Compile Include="Database\Outputs\SetStoryTags.cs" />
@@ -415,6 +420,7 @@
     <Content Include="Views\EstimatesVsActuals\Index.cshtml" />
     <Content Include="Views\Shared\_ChangeSprint.cshtml" />
     <Content Include="Views\PersonalActionLog\Index.cshtml" />
+    <Content Include="Views\Management\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -442,6 +448,8 @@
     <TypeScriptCompile Include="TypeScript\Home\EstimatesVsActualsChart.ts" />
     <TypeScriptCompile Include="TypeScript\Home\Home.ts" />
     <TypeScriptCompile Include="TypeScript\Home\Burndown.ts" />
+    <TypeScriptCompile Include="TypeScript\Home\ManagementBinder.ts" />
+    <TypeScriptCompile Include="TypeScript\Home\Management.ts" />
     <TypeScriptCompile Include="TypeScript\Home\PersonalActionLog.ts" />
     <TypeScriptCompile Include="TypeScript\Home\PersonalActionLogBinder.ts" />
     <TypeScriptCompile Include="TypeScript\Knockout\DateTimePickerBinding.ts" />

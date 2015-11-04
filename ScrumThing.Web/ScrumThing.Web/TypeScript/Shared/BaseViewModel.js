@@ -8,6 +8,7 @@ var ScrumThing;
             this.currentTeam = ko.observable();
             this.teams = ko.observableArray();
             this.RefreshData = function () { throw new Error("This method must be overriden."); };
+            this.showSprintDropdown = ko.observable(true);
             this.TeamProvider = teamProvider;
             this.GetTeams();
             this.currentTeamDropdown = ko.computed(function () {

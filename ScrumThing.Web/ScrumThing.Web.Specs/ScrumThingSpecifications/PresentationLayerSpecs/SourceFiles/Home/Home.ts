@@ -11,6 +11,8 @@ module ScrumThing {
     export class HomeViewModel extends BaseSprintViewModel {
         constructor() {
             super();
+
+            this.showSprintDropdown(false);
         }
     }
 }

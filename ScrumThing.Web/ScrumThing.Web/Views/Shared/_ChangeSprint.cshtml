@@ -1,11 +1,19 @@
 ﻿<div class="bottom-spacing">
     <div class="dropdown">
         <button class="btn btn-default dropdown-toggle borderless" type="button" data-toggle="dropdown" aria-expanded="true">
-            <h1><!--ko text: currentTeamDropdown --><!--/ko--> Sprint: <!--ko text: sprintName --><!--/ko--> <span class="caret"></span></h1>
+            <h1>
+                <!--ko text: currentTeamDropdown -->
+                <!--/ko-->
+                Sprint:
+                <!--ko text: sprintName -->
+                <!--/ko-->
+                <span class="caret"></span></h1>
         </button>
         <ul class="dropdown-menu scrollable-menu">
             <!-- ko foreach: sprints -->
-            <li><a href="#" data-bind="click: $root.ChangeSprint(SprintId, Name()), text: Name"></a></li>
+                <li>
+                    <a href="#" data-bind="click: $root.ChangeSprint(SprintId, Name()), text: Name"></a>
+                </li>
             <!-- /ko -->
         </ul>
     </div>

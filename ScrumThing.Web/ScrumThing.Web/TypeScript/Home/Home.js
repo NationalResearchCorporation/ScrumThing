@@ -17,6 +17,7 @@ var ScrumThing;
         __extends(HomeViewModel, _super);
         function HomeViewModel() {
             _super.call(this);
+            this.showSprintDropdown(false);
         }
         return HomeViewModel;
     })(ScrumThing.BaseSprintViewModel);

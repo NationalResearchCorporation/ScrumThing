@@ -10,7 +10,11 @@ module ScrumThing {
         public RefreshData: () => void = () => { throw new Error("This method must be overriden.") };
         private TeamProvider: ScrumThing.Providers.ITeamProvider;
 
+        public showSprintDropdown: KnockoutObservable<boolean>;
+
         constructor(teamProvider: ScrumThing.Providers.ITeamProvider) {
+            this.showSprintDropdown = ko.observable(true);
+
             this.TeamProvider = teamProvider;
 
             this.GetTeams();

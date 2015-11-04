@@ -16,9 +16,20 @@ var ScrumThing;
     var PlanSprintViewModel = (function (_super) {
         __extends(PlanSprintViewModel, _super);
         function PlanSprintViewModel() {
+            var _this = this;
             _super.call(this);
+            this.carryOverTargetTeam = ko.observable();
+            this.carryOverSourceStory = ko.observable();
+            this.days = ko.observableArray();
             this.sprintId.subscribe(this.GetSprintDays, this);
             jQuery("#sprintDaysPicker").multiDatesPicker();
+            this.lastDay = ko.computed(function () {
+                return _.max(_this.days());
+            });
+            this.IsAfterLastDayOfSprint = ko.computed(function () {
+                var today = new Date();
+                return _this.lastDay() < today;
+            });
         }
         PlanSprintViewModel.prototype.AddResource = function () {
             this.resources.push(new ScrumThing.Resource('', 0, 0, 0));
@@ -40,6 +51,7 @@ var ScrumThing;
             });
         };
         PlanSprintViewModel.prototype.GetSprintDays = function () {
+            var _this = this;
             if (typeof this.sprintId() === 'number') {
                 jQuery.ajax({
                     type: 'POST',
@@ -47,7 +59,9 @@ var ScrumThing;
                     data: { SprintId: this.sprintId() },
                     success: function (data) {
                         var dates = _.map(data, function (date) { return date.Day; });
+                        _this.days(_.map(dates, function (date) { return new Date(date); }));
                         if (dates.length > 0) {
+                            jQuery('#sprintDaysPicker').multiDatesPicker('resetDates');
                             jQuery('#sprintDaysPicker').multiDatesPicker('addDates', dates);
                         }
                     },
@@ -59,6 +73,7 @@ var ScrumThing;
         };
         PlanSprintViewModel.prototype.SetSprintDays = function () {
             var dates = jQuery('#sprintDaysPicker').multiDatesPicker('getDates');
+            this.days(_.map(dates, function (date) { return new Date(date); }));
             var packedDates = dates.join('|');
             jQuery.ajax({
                 type: 'POST',
@@ -219,6 +234,33 @@ var ScrumThing;
         };
         PlanSprintViewModel.prototype.ExportSprint = function () {
             jQuery("#exportSprintForm").submit();
+        };
+        PlanSprintViewModel.prototype.CarryOverStoryModal = function (storyId) {
+            this.carryOverTargetTeam(this.currentTeam().TeamName);
+            this.carryOverSourceStory(storyId);
+            jQuery("#carryOverModal").modal();
+        };
+        PlanSprintViewModel.prototype.ChangeTargetTeam = function (newTeamName) {
+            this.carryOverTargetTeam(newTeamName);
+        };
+        PlanSprintViewModel.prototype.CarryOverStory = function () {
+            var _this = this;
+            var team = _.find(this.teams(), function (team) { return team.TeamName == _this.carryOverTargetTeam(); });
+            jQuery.ajax({
+                type: 'POST',
+                url: '/PlanSprint/CarryOverStory',
+                data: {
+                    StoryId: this.carryOverSourceStory(),
+                    TeamId: team.TeamId
+                },
+                success: function () {
+                    jQuery("#carryOverModal").modal('hide');
+                    toastr.success("Carried over story to current sprint of team:" + team.TeamName);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    toastr.error("Failed to carry over story: " + errorThrown);
+                }
+            });
         };
         return PlanSprintViewModel;
     })(ScrumThing.BaseSprintViewModel);

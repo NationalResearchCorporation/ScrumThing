@@ -55,10 +55,9 @@
                 </div>
             </div>
         </div>
-        @if (Request.RequestContext.RouteData.Values["Controller"].ToString() != "Home" &&
-             Request.RequestContext.RouteData.Values["Controller"].ToString() != "PersonalActionLog") {
+        <!-- ko if: showSprintDropdown() -->
             @Html.Partial("~/Views/Shared/_ChangeSprint.cshtml")
-        }
+        <!-- /ko -->
         <script src="http://code.highcharts.com/highcharts.js"></script>
         @Scripts.Render("~/bundles/nrc")
         @Scripts.Render("~/bundles/scrumthing")

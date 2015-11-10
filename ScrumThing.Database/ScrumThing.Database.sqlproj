@@ -120,6 +120,7 @@
     <Build Include="Stored Procedures\CarryOverStory.sql" />
     <Build Include="Stored Procedures\AddStoryTag.sql" />
     <Build Include="Stored Procedures\RemoveStoryTag.sql" />
+    <Build Include="Tables\UserIdentities.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

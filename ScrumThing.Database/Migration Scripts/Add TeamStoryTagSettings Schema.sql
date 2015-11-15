@@ -21,6 +21,3 @@
 --SELECT TeamId, StoryTagId
 --FROM Teams
 --CROSS JOIN StoryTags
-
-SELECT *
-FROM TeamStoryTagSettings

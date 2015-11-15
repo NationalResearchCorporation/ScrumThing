@@ -4,28 +4,11 @@ GO
 EXECUTE sp_addextendedproperty @name = N'tSQLt.TestClass', @value = 1, @level0type = N'SCHEMA', @level0name = N'GetPersonalActionLog';
 GO
 
-CREATE PROCEDURE GetPersonalActionLog.Test_UserIdentityDoesntExist_ThrowsException
-AS
-BEGIN
-    INSERT INTO Users 
-        (UserName   , UserIdentity)
-    VALUES 
-        ('UserName1', 'UserIdentity1'),
-        ('UserName2', NULL)
-
-    EXEC tSQLt.ExpectException N'The user''s identity was not found in the database.'
-
-    EXEC dbo.GetPersonalActionLog
-        @UserIdentity = 'SomeIdentityThatDoesntExist',
-        @FromTime = '2000-01-01',
-        @ToTime = '2000-01-02',
-        @TimeScale = 'none'
-END
-GO
-
 CREATE PROCEDURE GetPersonalActionLog.Test_InvalidWindowSize_ThrowsException
 AS
 BEGIN
+    INSERT INTO UserIdentities (UserIdentity) VALUES ('UserIdentity1')
+
     INSERT INTO Users 
         (UserName   , UserIdentity)
     VALUES 

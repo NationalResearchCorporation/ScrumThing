@@ -214,6 +214,8 @@
     <Build Include="Schemas\dbo\UpdateStory.tests.sql" />
     <Build Include="Schemas\dbo\GetPersonalActionLog.tests.sql" />
     <Build Include="Schemas\dbo\GetMinAndMaxValuesForTimeperiod.tests.sql" />
+    <Build Include="Schemas\dbo\AddStoryTag.tests.sql" />
+    <Build Include="Schemas\dbo\RemoveStoryTag.tests.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="tSQLtCLR">

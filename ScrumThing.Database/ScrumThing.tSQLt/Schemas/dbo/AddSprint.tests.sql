@@ -17,7 +17,6 @@ BEGIN
 	SET @Name = 'Sprint 5';
 
 	EXEC @returnedvalue = dbo.AddSprint @TeamId, @Name;
-	PRINT @returnedvalue;
 
 	EXEC tSQLt.AssertEquals @returnedvalue, 5;
 END

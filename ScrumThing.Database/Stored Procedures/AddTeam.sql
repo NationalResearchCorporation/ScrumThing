@@ -6,4 +6,9 @@ AS
 BEGIN
 	INSERT INTO Teams (TeamId, TeamName)
 	VALUES (@TeamId, @TeamName);
+
+    INSERT INTO TeamStoryTagSettings (TeamId, StoryTagId)
+    SELECT @TeamId, StoryTagId
+    FROM StoryTags
+
 END

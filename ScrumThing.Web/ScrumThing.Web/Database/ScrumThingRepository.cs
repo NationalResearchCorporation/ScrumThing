@@ -37,8 +37,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public List<Output_GetStoryTags> GetStoryTags() {
-            return RunSproc<Output_GetStoryTags>(new object[] { });
+        public List<Output_GetStoryTags> GetStoryTags(int teamId) {
+            return RunSproc<Output_GetStoryTags>(new object[] { teamId });
         }
 
         [Schema("dbo")]
@@ -49,6 +49,11 @@ namespace ScrumThing.Web.Database {
         [Schema("dbo")]
         public bool RemoveStoryTag(int storyTagId) {
             return RunSproc<Output_RemoveStoryTag>(new object[] { storyTagId }).First().Success;
+        }
+
+        [Schema("dbo")]
+        public void UpdateTeamStoryTagSetting(int teamId, int storyTagId, bool enabled) {
+            RunSproc(new object[] { teamId, storyTagId, enabled });
         }
 
         [Schema("dbo")]

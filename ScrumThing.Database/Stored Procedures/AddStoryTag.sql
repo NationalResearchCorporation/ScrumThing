@@ -3,10 +3,20 @@ CREATE PROCEDURE AddStoryTag
     @StoryTagDescription VARCHAR(50)
 AS
 BEGIN
-    INSERT INTO StoryTags (StoryTagDescription)
-    VALUES (@StoryTagDescription)
+    DECLARE @NextOrdinal INT = (SELECT COALESCE(MAX(Ordinal) + 1, 0) FROM StoryTags)
+
+    INSERT INTO StoryTags (StoryTagDescription, Ordinal)
+    VALUES (@StoryTagDescription, @NextOrdinal)
+
+    DECLARE @StoryTagId INT = SCOPE_IDENTITY()
+
+    INSERT INTO TeamStoryTagSettings (TeamId, StoryTagId)
+    SELECT TeamId, @StoryTagId
+    FROM Teams
 
     SELECT
-        StoryTagId = CAST(SCOPE_IDENTITY() AS INT),
-        StoryTagDescription = @StoryTagDescription
+        StoryTagId = @StoryTagId,
+        StoryTagDescription = @StoryTagDescription,
+        Ordinal = @NextOrdinal,
+        [Enabled] = 1
 END

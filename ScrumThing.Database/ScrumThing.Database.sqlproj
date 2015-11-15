@@ -65,6 +65,7 @@
     <Folder Include="Functions\Scalar Functions" />
     <Folder Include="Views" />
     <Folder Include="Functions\Table-valued Functions" />
+    <Folder Include="Migration Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Sprints.sql" />
@@ -121,6 +122,8 @@
     <Build Include="Stored Procedures\AddStoryTag.sql" />
     <Build Include="Stored Procedures\RemoveStoryTag.sql" />
     <Build Include="Tables\UserIdentities.sql" />
+    <Build Include="Tables\TeamStoryTagSettings.sql" />
+    <Build Include="Stored Procedures\UpdateTeamStoryTagSetting.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

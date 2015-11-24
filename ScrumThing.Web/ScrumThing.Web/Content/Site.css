@@ -21,8 +21,12 @@
 }
 
     .dropdown-menu > li > a {
-        padding: 15px;
+        padding: 10px;
     }
+
+.multiselect-container.dropdown-menu > li > a {
+    padding: 3px;
+}
 
 .navbar .container-fluid {
     margin-right: auto;

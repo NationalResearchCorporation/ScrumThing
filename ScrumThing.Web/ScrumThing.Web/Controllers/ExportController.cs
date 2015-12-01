@@ -29,23 +29,25 @@ namespace ScrumThing.Web.Controllers {
 
             // "Constants"
             const int storyOrdinalColumn = 1;
-            const int storyTextColumn = 2;
-            const int storyPointsColumn = 3;
-            const int storyTagsColumn = 4;
-            const int taskOrdinalColumn = 5;
-            const int taskTextColumn = 6;
-            const int devHoursEstimatedColumn = 7;
-            const int qsHoursEstimatedColumn = 8;
-            const int devHoursBurnedColumn = 9;
-            const int qsHoursBurnedColumn = 10;
-            const int devHoursRemainingColumn = 11;
-            const int qsHoursRemainingColumn = 12;
-            const int taskTagsColumn = 13;
-            const int lastColumn = 13;
+            const int storyTitleColumn = 2;
+            const int storyTextColumn = 3;
+            const int storyPointsColumn = 4;
+            const int storyTagsColumn = 5;
+            const int taskOrdinalColumn = 6;
+            const int taskTextColumn = 7;
+            const int devHoursEstimatedColumn = 8;
+            const int qsHoursEstimatedColumn = 9;
+            const int devHoursBurnedColumn = 10;
+            const int qsHoursBurnedColumn = 11;
+            const int devHoursRemainingColumn = 12;
+            const int qsHoursRemainingColumn = 13;
+            const int taskTagsColumn = 14;
+            const int lastColumn = 14;
 
             // Add the header
             int row = 1;
             worksheet.Cell(row, storyOrdinalColumn).Value = "Story Number";
+            worksheet.Cell(row, storyTitleColumn).Value = "Story Title";
             worksheet.Cell(row, storyTextColumn).Value = "Story Text";
             worksheet.Cell(row, storyPointsColumn).Value = "Story Points";
             worksheet.Cell(row, storyTagsColumn).Value = "Story Tags";
@@ -63,6 +65,7 @@ namespace ScrumThing.Web.Controllers {
             // Add the stories and tasks
             foreach (var story in results.Stories.OrderBy(story => story.Ordinal)) {
                 worksheet.Cell(row, storyOrdinalColumn).Value = story.Ordinal;
+                worksheet.Cell(row, storyTitleColumn).Value = story.Title;
                 worksheet.Cell(row, storyTextColumn).Value = story.StoryText;
                 worksheet.Cell(row, storyPointsColumn).Value = story.StoryPoints;
                 worksheet.Cell(row, storyTagsColumn).Value = string.Join(", ", story.StoryTags.Select(tag => tag.StoryTagDescription));
@@ -86,6 +89,7 @@ namespace ScrumThing.Web.Controllers {
             }
 
             // Style the sheet
+            worksheet.Column(storyTitleColumn).Width = 35;
             worksheet.Column(storyTextColumn).Width = 50;
             worksheet.Column(taskTextColumn).Width = 50;
             worksheet.Column(storyTagsColumn).Width = 15;

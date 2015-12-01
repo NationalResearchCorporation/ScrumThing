@@ -16,6 +16,7 @@ BEGIN
 
     SELECT
         StoryId,
+		Title,
         StoryText,
         StoryPoints,
         Ordinal,

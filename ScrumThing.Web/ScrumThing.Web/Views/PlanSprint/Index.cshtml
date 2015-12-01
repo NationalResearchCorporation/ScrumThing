@@ -209,6 +209,7 @@
                       data-bind="attr: { id: HtmlId }"></span>
                 <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
                 <strong><span data-bind="text: Ordinal()"></span></strong>
+                <strong data-bind="text: Title"></strong>
                 <span data-bind="text: StoryText"></span>
             </div>
         </td>
@@ -226,7 +227,10 @@
                 <strong><span data-bind="text: Ordinal()"></span></strong>
             </div>
         </td>
-        <td><textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea></td>
+        <td>
+            <input class="form-control story-title-control" type="text" maxlength="100" data-bind="value: Title" placeholder="Title" />
+            <textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea>
+        </td>
         <td>
             <input class="form-control" type="number" min="0" data-bind="value: StoryPoints" />
             <select data-bind="multiselect: { numberDisplayed: 2, buttonWidth: '100%', buttonClass: 'multiselect dropdown-toggle btn btn-default storyTagsDropdown' },

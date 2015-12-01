@@ -4,6 +4,7 @@ module ScrumThing {
         public StoryId: number;
         public HtmlId: string;
         public Ordinal: KnockoutObservable<number> = ko.observable<number>();
+        public Title: KnockoutObservable<string> = ko.observable<string>();
         public StoryText: KnockoutObservable<string> = ko.observable<string>();
         public StoryPoints: KnockoutObservable<number> = observableNumber();
         public Tasks: KnockoutObservableArray<Task> = ko.observableArray<Task>();
@@ -31,9 +32,10 @@ module ScrumThing {
 
         public IsCarryOverEligible: KnockoutComputed<boolean>;
 
-        public constructor(storyId: number, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
+        public constructor(storyId: number, title: string, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
+            this.Title(title);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
             this.Ordinal(ordinal);
@@ -147,11 +149,14 @@ module ScrumThing {
             });
 
             this.SearchableStoryText = ko.computed(() => {
-                return this.StoryText().toLowerCase();
+                var title = this.Title() ? this.Title() : '';
+                var storyText = this.StoryText() ? this.StoryText() : '';
+                return title.toLowerCase() + ' ' + storyText.toLowerCase();
             });
 
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
 
+            this.Title.subscribe(this.UpdateStory);
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
 
@@ -167,6 +172,7 @@ module ScrumThing {
                 url: '/PlanSprint/UpdateStory',
                 data: {
                     StoryId: this.StoryId,
+                    Title: this.Title(),
                     StoryText: this.StoryText(),
                     StoryPoints: this.StoryPoints(),
                     IsReachGoal: this.IsReachGoal()

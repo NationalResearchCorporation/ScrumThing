@@ -54,11 +54,13 @@ module ScrumThing {
 
                                         var currentText = this.value;
 
-                                        var ordinal = _.find(data, (row) => {
+                                        var story = _.find(data, (row) => {
                                             return row.StoryText == currentText;
-                                        }).StoryOrdinal;
+                                        });
+                                        var ordinal = story.StoryOrdinal;
+                                        var title = story.StoryTitle ? story.StoryTitle : '';
 
-                                        return '<span><b>' + ordinal + '</b> ' + this.value + '</span>';
+                                        return '<span><b>' + ordinal + ' ' + title + '</b> ' + this.value + '</span>';
                                     }
                                 } 
                             },

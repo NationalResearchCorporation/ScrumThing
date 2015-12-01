@@ -5,6 +5,7 @@ BEGIN
 	SELECT
 		s.StoryID,
 		[StoryOrdinal] = s.Ordinal,
+		s.Title as StoryTitle,
 		s.StoryText,
 		t.TaskID,
 		[TaskOrdinal] = t.Ordinal,

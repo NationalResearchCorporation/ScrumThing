@@ -273,3 +273,7 @@ tbody {
 .draggable {
     cursor: ns-resize;
 }
+
+.story-title-control {
+    margin-bottom: 2px;
+}

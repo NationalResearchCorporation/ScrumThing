@@ -87,6 +87,7 @@ BEGIN
         ld.SprintId,
         SprintName = sp.Name,
         StoryOrdinal = st.Ordinal,
+		st.Title as StoryTitle,
         st.StoryText,
         st.IsReachGoal,
         st.StoryPoints,

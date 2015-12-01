@@ -11,6 +11,7 @@ AS
     DECLARE @storyPoints INT;
     DECLARE @storyTags VARCHAR(MAX);
     DECLARE @isReachGoal BIT = 0;
+	DECLARE @title VARCHAR(100);
  
     -- Get source story data
     SELECT 
@@ -20,7 +21,8 @@ AS
 	        STUFF((SELECT '|' + CAST(StoryTagId as VARCHAR(10))
 	        FROM StoriesInTags st
 	        WHERE st.StoryID = s.StoryID
-	        FOR XML PATH('')), 1, 1, '')
+	        FOR XML PATH('')), 1, 1, ''),
+		@title = Title
     FROM Stories s
     WHERE StoryId = @StoryID 
     
@@ -29,7 +31,7 @@ AS
     -- Create new story
     EXEC @newStoryID = dbo.AddStory @SprintID, @ordinal, @isReachGoal
 	    
-    EXEC dbo.UpdateStory @newStoryID, @storyText, @storyPoints, @isReachGoal
+    EXEC dbo.UpdateStory @newStoryID, @storyText, @storyPoints, @isReachGoal, @title
 
     IF @storyTags IS NOT NULL
         EXEC dbo.SetStoryTags @newStoryID, @storyTags

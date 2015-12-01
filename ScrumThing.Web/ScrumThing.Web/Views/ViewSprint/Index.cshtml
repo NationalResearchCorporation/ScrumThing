@@ -178,6 +178,9 @@
             <div class="text-left">
                 <span class="glyphicon glyphicon-chevron-right" data-bind="click: $root.MakeSetCollapsedHandler($data, false)"></span>
                 <strong><span data-bind="text: Ordinal(), css: Complete() ? 'text-success' : ''"></span></strong>
+                <!-- ko if: Title() -->
+                <strong data-bind="text: Title, css: Complete() ? 'text-success' : ''"></strong>
+                <!-- /ko -->
                 <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
             </div>
             <!-- We inherit the display property directly from td to avoid styling applied globally to tr by site.css. -->
@@ -194,6 +197,10 @@
         <td class="break-word">
             <span class="glyphicon glyphicon-chevron-down pull-left" data-bind="click: $root.MakeSetCollapsedHandler($data, true)"></span>
             <strong><span data-bind="text: Ordinal, css: Complete() ? 'text-success' : ''"></span></strong>
+            <!-- ko if: Title() -->
+            <strong data-bind="text: Title, css: Complete() ? 'text-success' : ''"></strong>
+            <br />
+            <!-- /ko -->
             <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
             <div>
                 <!-- ko template: { name: 'storyTagTemplate' } -->

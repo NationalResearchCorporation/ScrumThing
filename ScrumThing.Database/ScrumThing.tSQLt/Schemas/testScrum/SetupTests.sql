@@ -16,6 +16,7 @@ AS
     DELETE FROM Sprints;
     DELETE FROM Teams;
     DELETE FROM Users;
+	DELETE FROM UserIdentities;
 
     DBCC CHECKIDENT ('dbo.Notes', RESEED, 0) WITH NO_INFOMSGS;
     DBCC CHECKIDENT ('dbo.WorkLogs', RESEED, 0) WITH NO_INFOMSGS;
@@ -24,7 +25,13 @@ AS
     DBCC CHECKIDENT ('dbo.Stories', RESEED, 0) WITH NO_INFOMSGS;
     DBCC CHECKIDENT ('dbo.Sprints', RESEED, 0) WITH NO_INFOMSGS;
 
+	INSERT UserIdentities VALUES
+		('ResourceUser', 'First', 'Last'),
+		('UserIdentity1', 'First', 'Last'),
+		('UserIdentity2', 'First', 'Last')
+
     INSERT Users VALUES
+		('ResourceUser', 'resourceuser@nrc.com', 'ResourceUser'),
         ('User1', 'user1@nrc.com', 'UserIdentity1'),
         ('User2', 'user2@nrc.com', 'UserIdentity2')
 

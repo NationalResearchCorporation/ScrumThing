@@ -49,6 +49,7 @@ namespace ScrumThing.Web.Database.Outputs {
 
     public class Output_GetSprintInfo_Story {
         public int StoryId { get; set; }
+        public string Title { get; set; }
         public string StoryText { get; set; }
         public double StoryPoints { get; set; }
         public int Ordinal { get; set; }

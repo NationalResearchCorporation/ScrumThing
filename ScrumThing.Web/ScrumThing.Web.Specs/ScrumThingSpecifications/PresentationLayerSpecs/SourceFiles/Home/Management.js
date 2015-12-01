@@ -23,9 +23,30 @@ var ScrumThing;
                         },
                         success: function (rawStoryTag) {
                             _this.storyTags.push(rawStoryTag);
+                            _this.NewStoryTagDescription("");
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            toastr.error("Failed to add storytag: " + errorThrown);
+                            toastr.error("Failed to add story tag: " + errorThrown);
+                        },
+                    });
+                };
+                this.RemoveStoryTag = function (storyTagToRemove) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/Management/RemoveStoryTag',
+                        data: {
+                            StoryTagId: storyTagToRemove.StoryTagId
+                        },
+                        success: function (success) {
+                            if (success) {
+                                _this.storyTags(_.filter(_this.storyTags(), function (storyTag) { return storyTag.StoryTagId != storyTagToRemove.StoryTagId; }));
+                            }
+                            else {
+                                toastr.info("Story tag in use, can't remove");
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            toastr.error("Failed to remove story tag: " + errorThrown);
                         },
                     });
                 };

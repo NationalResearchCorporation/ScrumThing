@@ -10,6 +10,9 @@ namespace ScrumThing.Web.Database.Inputs {
         public string StoryText { get; set; }
 
         [Required]
+        public string Title { get; set; }
+
+        [Required]
         public int StoryPoints { get; set; }
 
         [Required]

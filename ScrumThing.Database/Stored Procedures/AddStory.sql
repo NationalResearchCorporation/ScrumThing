@@ -15,9 +15,9 @@ BEGIN
     WHERE SprintId = @SprintId AND Ordinal >= @Ordinal;
 
     INSERT INTO Stories
-    (SprintId, StoryText, StoryPoints, Ordinal, IsReachGoal)
+    (SprintId, Title, StoryText, StoryPoints, Ordinal, IsReachGoal)
     VALUES
-    (@SprintId, '', '', @Ordinal, @IsReachGoal);
+    (@SprintId, '', '', '', @Ordinal, @IsReachGoal);
 
     SET @NewStoryId = SCOPE_IDENTITY();
 	

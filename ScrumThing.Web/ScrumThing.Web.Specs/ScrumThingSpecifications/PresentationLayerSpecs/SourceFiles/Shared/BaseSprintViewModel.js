@@ -208,7 +208,7 @@ var ScrumThing;
                         var newStories = new Array();
                         for (var ii = 0; ii < data.length; ii++) {
                             var story = data[ii];
-                            var newStory = new ScrumThing.Story(story.StoryId, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, story.StoryTags);
+                            var newStory = new ScrumThing.Story(story.StoryId, story.Title, story.StoryText, story.StoryPoints, story.Ordinal, story.IsReachGoal, story.StoryTags);
                             newStory.Tasks(_.map(story.Tasks, function (task) { return new ScrumThing.Task(task); }));
                             newStories.push(newStory);
                         }

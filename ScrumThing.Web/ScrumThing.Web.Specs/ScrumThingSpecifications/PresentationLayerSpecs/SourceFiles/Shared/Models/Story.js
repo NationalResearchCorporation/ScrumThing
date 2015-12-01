@@ -2,9 +2,10 @@
 var ScrumThing;
 (function (ScrumThing) {
     var Story = (function () {
-        function Story(storyId, storyText, storyPoints, ordinal, isReachGoal, storyTags) {
+        function Story(storyId, title, storyText, storyPoints, ordinal, isReachGoal, storyTags) {
             var _this = this;
             this.Ordinal = ko.observable();
+            this.Title = ko.observable();
             this.StoryText = ko.observable();
             this.StoryPoints = ScrumThing.observableNumber();
             this.Tasks = ko.observableArray();
@@ -17,6 +18,7 @@ var ScrumThing;
                     url: '/PlanSprint/UpdateStory',
                     data: {
                         StoryId: _this.StoryId,
+                        Title: _this.Title(),
                         StoryText: _this.StoryText(),
                         StoryPoints: _this.StoryPoints(),
                         IsReachGoal: _this.IsReachGoal()
@@ -28,6 +30,7 @@ var ScrumThing;
             };
             this.StoryId = storyId;
             this.HtmlId = 'story' + storyId;
+            this.Title(title);
             this.StoryText(storyText);
             this.StoryPoints(storyPoints);
             this.Ordinal(ordinal);
@@ -122,9 +125,12 @@ var ScrumThing;
                 return _this.CollapsedOverride();
             });
             this.SearchableStoryText = ko.computed(function () {
-                return _this.StoryText().toLowerCase();
+                var title = _this.Title() ? _this.Title() : '';
+                var storyText = _this.StoryText() ? _this.StoryText() : '';
+                return title.toLowerCase() + ' ' + storyText.toLowerCase();
             });
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
+            this.Title.subscribe(this.UpdateStory);
             this.StoryText.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
             this.IsCarryOverEligible = ko.computed(function () {

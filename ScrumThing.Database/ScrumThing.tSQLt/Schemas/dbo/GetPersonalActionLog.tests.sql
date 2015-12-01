@@ -11,7 +11,7 @@ BEGIN
         (UserName   , UserIdentity)
     VALUES 
         ('UserName1', 'UserIdentity1'),
-        ('UserName2', NULL)
+        ('UserName2', 'UserIdentity2')
 
     EXEC tSQLt.ExpectException N'The user''s identity was not found in the database.'
 
@@ -53,8 +53,8 @@ BEGIN
     EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
 
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories 
-        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
-        (1      , 'Story'  , 1       , 1          , 1      , 0          )
+        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal, Title) VALUES
+        (1      , 'Story'  , 1       , 1          , 1      , 0          , 'Title')
 
     EXEC tSQLt.FakeTable @TableName = N'Tasks', @Defaults = 1 INSERT INTO Tasks
         (TaskId, StoryId, EstimatedDevHours, RemainingDevHours, Ordinal) VALUES
@@ -77,6 +77,7 @@ BEGIN
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
+		StoryTitle VARCHAR(100),
         StoryText VARCHAR(1000),
         IsReachGoal BIT,
         StoryPoints INT,
@@ -139,8 +140,8 @@ BEGIN
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User' ,1 )
     EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories
-        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
-        (1      , 'Story'  , 1       , 1          , 1      , 0          )
+        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal, Title) VALUES
+        (1      , 'Story'  , 1       , 1          , 1      , 0          , 'Title')
 
     EXEC tSQLt.FakeTable @TableName = N'Tasks', @Defaults = 1 INSERT INTO Tasks
         (TaskId, StoryId, EstimatedDevHours, RemainingDevHours, Ordinal) VALUES
@@ -163,6 +164,7 @@ BEGIN
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
+		StoryTitle VARCHAR(100),
         StoryText VARCHAR(1000),
         IsReachGoal BIT,
         StoryPoints INT,
@@ -227,8 +229,8 @@ BEGIN
     EXEC tSQLt.FakeTable N'Assignments' INSERT INTO Assignments (UserName, TaskId) VALUES ('User' ,1 )
     EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories
-        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
-        (1      , 'Story'  , 1       , 1          , 1      , 0          )
+        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal, Title) VALUES
+        (1      , 'Story'  , 1       , 1          , 1      , 0          , 'Title')
 
     EXEC tSQLt.FakeTable @TableName = N'Tasks', @Defaults = 1 INSERT INTO Tasks
         (TaskId, StoryId, EstimatedDevHours, RemainingDevHours, Ordinal) VALUES
@@ -251,6 +253,7 @@ BEGIN
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
+		StoryTitle VARCHAR(100),
         StoryText VARCHAR(1000),
         IsReachGoal BIT,
         StoryPoints INT,
@@ -313,8 +316,8 @@ BEGIN
     EXEC tSQLt.FakeTable N'Teams' INSERT INTO Teams (TeamId, TeamName) VALUES (1, 'Team')
 
     EXEC tSQLt.FakeTable N'Stories' INSERT INTO Stories 
-        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal) VALUES
-        (1      , 'Story'  , 1       , 1          , 1      , 0          )
+        (StoryId, StoryText, SprintId, StoryPoints, Ordinal, IsReachGoal, Title) VALUES
+        (1      , 'Story'  , 1       , 1          , 1      , 0          , 'Title')
 
     EXEC tSQLt.FakeTable @TableName = N'Tasks', @Defaults = 1 INSERT INTO Tasks
         (TaskId, StoryId, EstimatedDevHours, RemainingDevHours, Ordinal) VALUES
@@ -337,6 +340,7 @@ BEGIN
         SprintId INT,
         SprintName VARCHAR(200),
         StoryOrdinal INT,
+		StoryTitle VARCHAR(100),
         StoryText VARCHAR(1000),
         IsReachGoal BIT,
         StoryPoints INT,

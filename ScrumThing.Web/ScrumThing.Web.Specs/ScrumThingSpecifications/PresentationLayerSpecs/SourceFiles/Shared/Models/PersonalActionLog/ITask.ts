@@ -8,6 +8,7 @@
         SprintId: number;
         SprintName: string;
         StoryOrdinal: number;
+        StoryTitle: string;
         StoryText: string;
         IsReachGoal: boolean;
         StoryPoints: number;

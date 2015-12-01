@@ -10,6 +10,7 @@ namespace ScrumThing.Web.Database.Outputs {
         public int SprintId { get; set; }
         public string SprintName { get; set; }
         public int StoryOrdinal { get; set; }
+        public string StoryTitle { get; set; }
         public string StoryText { get; set; }
         public bool IsReachGoal { get; set; }
         public int StoryPoints { get; set; }

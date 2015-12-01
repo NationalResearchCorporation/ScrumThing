@@ -17,7 +17,8 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult GetEstimatesVsActuals(int sprintId) {
-            return Json(context.GetEstimatesVsActuals(sprintId));
+            var data = context.GetEstimatesVsActuals(sprintId);
+            return Json(data);
         }
     }
 }

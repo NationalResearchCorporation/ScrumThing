@@ -4,6 +4,7 @@ namespace ScrumThing.Web.Database.Outputs {
 
         public int StoryID { get; set; }
         public int StoryOrdinal { get; set; }
+        public string StoryTitle { get; set; }
         public string StoryText { get; set; }
         public int TaskID { get; set; }
         public int TaskOrdinal { get; set; }

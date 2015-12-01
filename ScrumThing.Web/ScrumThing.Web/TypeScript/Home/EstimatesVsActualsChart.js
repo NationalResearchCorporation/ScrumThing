@@ -52,10 +52,12 @@ var ScrumThing;
                                 labels: {
                                     formatter: function () {
                                         var currentText = this.value;
-                                        var ordinal = _.find(data, function (row) {
+                                        var story = _.find(data, function (row) {
                                             return row.StoryText == currentText;
-                                        }).StoryOrdinal;
-                                        return '<span><b>' + ordinal + '</b> ' + this.value + '</span>';
+                                        });
+                                        var ordinal = story.StoryOrdinal;
+                                        var title = story.StoryTitle ? story.StoryTitle : '';
+                                        return '<span><b>' + ordinal + ' ' + title + '</b> ' + this.value + '</span>';
                                     }
                                 }
                             },

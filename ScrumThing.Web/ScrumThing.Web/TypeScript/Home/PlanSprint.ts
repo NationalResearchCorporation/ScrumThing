@@ -117,7 +117,7 @@ module ScrumThing {
                         toastr.error("Failed to add story: " + errorThrown);
                     },
                     success: (data: NewStoryInfo) => {
-                        var story = new Story(data.NewStoryId, '', '', 0, ordinal, isReachGoal, []);
+                        var story = new Story(data.NewStoryId, '', '', '', 0, ordinal, isReachGoal, []);
                         story.CollapsedOverride(false);
                         this.stories.push(story);
 

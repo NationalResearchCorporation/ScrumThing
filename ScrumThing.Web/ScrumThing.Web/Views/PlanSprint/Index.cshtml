@@ -228,24 +228,37 @@
             </div>
         </td>
         <td>
-            <input class="form-control story-title-control" type="text" maxlength="100" data-bind="value: Title" placeholder="Title" />
-            <textarea rows="4" cols="50" class="form-control" data-bind="value: StoryText, text: StoryText"></textarea>
+            <input class="form-control" type="text" maxlength="100" data-bind="value: Title" placeholder="Title" />
         </td>
         <td>
             <input class="form-control" type="number" min="0" data-bind="value: StoryPoints" />
+        </td>
+        <td data-bind="text: TotalDevHours"></td>
+        <td data-bind="text: TotalQsHours"></td>
+        <td rowspan="2">
+            <div class="btn-group-vertical">
+                <button class="btn btn-danger btn-sm" data-bind="click: function () { $root.RemoveStory.call($root, $data); }">Remove Story</button>
+                <button class="btn btn-default btn-sm" data-bind="text: ReachToggleText, click:  function () { $root.ToggleReachGoal.call($root, $data); }"></button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="interior-plan-cell"></td>
+        <td rowspan="2" class="interior-plan-cell">
+            <textarea rows="4" cols="50" class="form-control story-text-control" placeholder="Story" data-bind="value: StoryText, text: StoryText, sizeToContent: StoryText"></textarea>
+        </td>
+        <td rowspan="2" colspan="3" class="interior-plan-cell">
+            <textarea rows="4" cols="50" class="form-control story-notes-control" data-bind="value: Notes, sizeToContent: Notes" placeholder="Notes"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="interior-plan-cell"></td>
+        <td class="interior-plan-cell">
             <select data-bind="multiselect: { numberDisplayed: 2, buttonWidth: '100%', buttonClass: 'multiselect dropdown-toggle btn btn-default storyTagsDropdown' },
                                    options: $root.storyTags,
                                    optionsValue: 'StoryTagId',
                                    optionsText: 'StoryTagDescription',
                                    selectedOptions: $data.StoryTagsForDropdown" multiple="multiple"></select>
-        </td>
-        <td data-bind="text: TotalDevHours"></td>
-        <td data-bind="text: TotalQsHours"></td>
-        <td>
-            <div class="btn-group-vertical">
-                <button class="btn btn-danger btn-sm" data-bind="click: function () { $root.RemoveStory.call($root, $data); }">Remove Story</button>
-                <button class="btn btn-default btn-sm" data-bind="text: ReachToggleText, click:  function () { $root.ToggleReachGoal.call($root, $data); }"></button>
-            </div>
         </td>
     </tr>
     <!-- ko foreach: _.sortBy(Tasks(), function (task) { return task.Ordinal(); }) -->
@@ -262,7 +275,7 @@
         <td>
             <ul class="indent">
                 <li>
-                    <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText"></textarea>
+                    <textarea rows="3" class="locked-resize form-control" data-bind="value: TaskText, text: TaskText, sizeToContent: TaskText"></textarea>
                 </li>
             </ul>
         </td>

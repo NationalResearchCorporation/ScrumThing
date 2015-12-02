@@ -6,6 +6,7 @@ module ScrumThing {
         public Ordinal: KnockoutObservable<number> = ko.observable<number>();
         public Title: KnockoutObservable<string> = ko.observable<string>();
         public StoryText: KnockoutObservable<string> = ko.observable<string>();
+        public Notes: KnockoutObservable<string> = ko.observable<string>();
         public StoryPoints: KnockoutObservable<number> = observableNumber();
         public Tasks: KnockoutObservableArray<Task> = ko.observableArray<Task>();
         public StoryTags: KnockoutObservableArray<RawStoryTag> = ko.observableArray<RawStoryTag>();
@@ -32,11 +33,12 @@ module ScrumThing {
 
         public IsCarryOverEligible: KnockoutComputed<boolean>;
 
-        public constructor(storyId: number, title: string, storyText: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
+        public constructor(storyId: number, title: string, storyText: string, notes: string, storyPoints: number, ordinal: number, isReachGoal: boolean, storyTags: RawStoryTag[]) {
             this.StoryId = storyId
             this.HtmlId = 'story' + storyId;
             this.Title(title);
             this.StoryText(storyText);
+            this.Notes(notes);
             this.StoryPoints(storyPoints);
             this.Ordinal(ordinal);
             this.IsReachGoal(isReachGoal);
@@ -151,13 +153,15 @@ module ScrumThing {
             this.SearchableStoryText = ko.computed(() => {
                 var title = this.Title() ? this.Title() : '';
                 var storyText = this.StoryText() ? this.StoryText() : '';
-                return title.toLowerCase() + ' ' + storyText.toLowerCase();
+                var notes = this.Notes() ? this.Notes() : '';
+                return title.toLowerCase() + ' ' + storyText.toLowerCase() + ' ' + notes.toLowerCase();
             });
 
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
 
             this.Title.subscribe(this.UpdateStory);
             this.StoryText.subscribe(this.UpdateStory);
+            this.Notes.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
 
             this.IsCarryOverEligible = ko.computed(() => {
@@ -174,6 +178,7 @@ module ScrumThing {
                     StoryId: this.StoryId,
                     Title: this.Title(),
                     StoryText: this.StoryText(),
+                    Notes: this.Notes(),
                     StoryPoints: this.StoryPoints(),
                     IsReachGoal: this.IsReachGoal()
                 },

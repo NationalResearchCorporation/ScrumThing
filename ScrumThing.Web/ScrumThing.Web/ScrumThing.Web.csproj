@@ -492,6 +492,7 @@
     <TypeScriptCompile Include="TypeScript\Shared\Models\StoryOrdinal.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\TaskOrdinal.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\Task.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\SizeToContent.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Utility.ts" />
   </ItemGroup>
   <PropertyGroup>

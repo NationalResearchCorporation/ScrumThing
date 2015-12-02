@@ -202,6 +202,10 @@
             <br />
             <!-- /ko -->
             <span data-bind="text: StoryText, css: Complete() ? 'text-success' : ''"></span>
+            <!-- ko if: Notes() -->
+            <div class="story-notes-view" data-bind="text: Notes, css: Complete() ? 'text-success' : ''">
+            </div>
+            <!-- /ko -->
             <div>
                 <!-- ko template: { name: 'storyTagTemplate' } -->
                 <!-- /ko -->

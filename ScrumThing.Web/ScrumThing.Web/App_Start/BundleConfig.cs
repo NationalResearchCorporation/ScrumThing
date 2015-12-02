@@ -48,6 +48,7 @@ namespace ScrumThing.Web {
             bundles.Add(new LicensedScriptBundle("~/bundles/nrc").Include(
                       "~/TypeScript/Shared/Models/*.js",
                       "~/TypeScript/Shared/Utility.js",
+                      "~/TypeScript/Shared/SizeToContent.js",
                       "~/TypeScript/Knockout/DateTimePickerBinding.js",
                       "~/TypeScript/Knockout/TooltipBinding.js"));
 

@@ -5,6 +5,7 @@ module ScrumThing {
         public Ordinal: number;
         public Title: string;
         public StoryText: string;
+        public Notes: string;
         public StoryPoints: number;
         public IsReachGoal: boolean;
         public Tasks: RawTask[];

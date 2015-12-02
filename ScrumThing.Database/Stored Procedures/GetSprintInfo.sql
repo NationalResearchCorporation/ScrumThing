@@ -18,6 +18,7 @@ BEGIN
         StoryId,
 		Title,
         StoryText,
+		Notes,
         StoryPoints,
         Ordinal,
         IsReachGoal

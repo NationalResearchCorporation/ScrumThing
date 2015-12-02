@@ -226,6 +226,7 @@ tbody {
 
 .storyTagsDropdown {
     margin-top: 2px;
+    margin-bottom: 10px;
 }
 
 .fixed-top-right {
@@ -274,6 +275,18 @@ tbody {
     cursor: ns-resize;
 }
 
-.story-title-control {
-    margin-bottom: 2px;
+.story-text-control {
+    margin-bottom: 10px;
+}
+
+.story-notes-control {
+    margin-bottom: 10px;
+}
+
+.story-notes-view {
+    margin-top: 15px;
+}
+
+.interior-plan-cell {
+    border: none !important;
 }

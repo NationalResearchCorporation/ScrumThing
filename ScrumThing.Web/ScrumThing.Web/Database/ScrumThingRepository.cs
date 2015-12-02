@@ -97,8 +97,8 @@ namespace ScrumThing.Web.Database {
         }
 
         [Schema("dbo")]
-        public void UpdateStory(int storyId, string title, string storyText, int storyPoints, bool isReachGoal) {
-            RunSproc(new object[] { storyId, title, storyText, storyPoints, isReachGoal });
+        public void UpdateStory(int storyId, string title, string storyText, string notes, int storyPoints, bool isReachGoal) {
+            RunSproc(new object[] { storyId, title, storyText, notes, storyPoints, isReachGoal });
         }
 
         [Schema("dbo")]

@@ -12,6 +12,7 @@ AS
     DECLARE @storyTags VARCHAR(MAX);
     DECLARE @isReachGoal BIT = 0;
 	DECLARE @title VARCHAR(100);
+	DECLARE @notes VARCHAR(MAX);
  
     -- Get source story data
     SELECT 
@@ -22,7 +23,8 @@ AS
 	        FROM StoriesInTags st
 	        WHERE st.StoryID = s.StoryID
 	        FOR XML PATH('')), 1, 1, ''),
-		@title = Title
+		@title = Title,
+		@notes = Notes
     FROM Stories s
     WHERE StoryId = @StoryID 
     
@@ -31,7 +33,7 @@ AS
     -- Create new story
     EXEC @newStoryID = dbo.AddStory @SprintID, @ordinal, @isReachGoal
 	    
-    EXEC dbo.UpdateStory @newStoryID, @storyText, @storyPoints, @isReachGoal, @title
+    EXEC dbo.UpdateStory @newStoryID, @storyText, @storyPoints, @isReachGoal, @title, @notes
 
     IF @storyTags IS NOT NULL
         EXEC dbo.SetStoryTags @newStoryID, @storyTags
@@ -110,4 +112,3 @@ AS
     WHERE SprintId = @SprintId;
     
     COMMIT
-

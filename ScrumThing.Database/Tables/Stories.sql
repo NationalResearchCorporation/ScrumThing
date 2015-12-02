@@ -6,6 +6,7 @@
     [Ordinal]     INT            NOT NULL,
     [IsReachGoal] BIT            NOT NULL DEFAULT 0,
     [Title]       VARCHAR(100)   NULL,
+	[Notes]       VARCHAR(MAX)   NULL,
     PRIMARY KEY CLUSTERED ([StoryId] ASC),
     CONSTRAINT [FK_Stories_Sprints] FOREIGN KEY ([SprintId]) REFERENCES [dbo].[Sprints] ([SprintId])
 );

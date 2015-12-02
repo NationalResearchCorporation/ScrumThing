@@ -2,11 +2,12 @@
 var ScrumThing;
 (function (ScrumThing) {
     var Story = (function () {
-        function Story(storyId, title, storyText, storyPoints, ordinal, isReachGoal, storyTags) {
+        function Story(storyId, title, storyText, notes, storyPoints, ordinal, isReachGoal, storyTags) {
             var _this = this;
             this.Ordinal = ko.observable();
             this.Title = ko.observable();
             this.StoryText = ko.observable();
+            this.Notes = ko.observable();
             this.StoryPoints = ScrumThing.observableNumber();
             this.Tasks = ko.observableArray();
             this.StoryTags = ko.observableArray();
@@ -20,6 +21,7 @@ var ScrumThing;
                         StoryId: _this.StoryId,
                         Title: _this.Title(),
                         StoryText: _this.StoryText(),
+                        Notes: _this.Notes(),
                         StoryPoints: _this.StoryPoints(),
                         IsReachGoal: _this.IsReachGoal()
                     },
@@ -32,6 +34,7 @@ var ScrumThing;
             this.HtmlId = 'story' + storyId;
             this.Title(title);
             this.StoryText(storyText);
+            this.Notes(notes);
             this.StoryPoints(storyPoints);
             this.Ordinal(ordinal);
             this.IsReachGoal(isReachGoal);
@@ -127,11 +130,13 @@ var ScrumThing;
             this.SearchableStoryText = ko.computed(function () {
                 var title = _this.Title() ? _this.Title() : '';
                 var storyText = _this.StoryText() ? _this.StoryText() : '';
-                return title.toLowerCase() + ' ' + storyText.toLowerCase();
+                var notes = _this.Notes() ? _this.Notes() : '';
+                return title.toLowerCase() + ' ' + storyText.toLowerCase() + ' ' + notes.toLowerCase();
             });
             this.CollapsedOverride(JSON.parse(localStorage.getItem("collapsed" + this.StoryId)));
             this.Title.subscribe(this.UpdateStory);
             this.StoryText.subscribe(this.UpdateStory);
+            this.Notes.subscribe(this.UpdateStory);
             this.StoryPoints.subscribe(this.UpdateStory);
             this.IsCarryOverEligible = ko.computed(function () {
                 return !_this.Complete() &&

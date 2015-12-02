@@ -104,7 +104,7 @@ var ScrumThing;
                         toastr.error("Failed to add story: " + errorThrown);
                     },
                     success: function (data) {
-                        var story = new ScrumThing.Story(data.NewStoryId, '', '', 0, ordinal, isReachGoal, []);
+                        var story = new ScrumThing.Story(data.NewStoryId, '', '', '', 0, ordinal, isReachGoal, []);
                         story.CollapsedOverride(false);
                         _this.stories.push(story);
                         _.each(data.NewOrdinals, function (newOrdinal) {

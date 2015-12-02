@@ -70,7 +70,7 @@ namespace ScrumThing.Web.Controllers {
 
         [HttpPost]
         public ActionResult UpdateStory(Input_UpdateStory formData) {
-            context.UpdateStory(formData.StoryId, formData.Title, formData.StoryText, formData.StoryPoints, formData.IsReachGoal);
+            context.UpdateStory(formData.StoryId, formData.Title, formData.StoryText, formData.Notes, formData.StoryPoints, formData.IsReachGoal);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

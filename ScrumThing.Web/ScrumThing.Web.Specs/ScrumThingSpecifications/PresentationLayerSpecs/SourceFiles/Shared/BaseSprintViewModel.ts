@@ -1,4 +1,6 @@
-﻿module ScrumThing {
+﻿/// <reference path="Models\StoryTag.ts" />
+
+module ScrumThing {
     export class BaseSprintViewModel extends ScrumThing.BaseViewModel {
         public sprints: KnockoutObservableArray<Sprint> = ko.observableArray<Sprint>();
         public sprintId: KnockoutObservable<number> = ko.observable<number>();

@@ -36,8 +36,8 @@ namespace ScrumThing.Web.Controllers {
         }
 
         [HttpPost]
-        public ActionResult GetStoryTags() {
-            return Json(context.GetStoryTags());
+        public ActionResult GetStoryTags(Input_GetStoryTags formData) {
+            return Json(context.GetStoryTags(formData.TeamId));
         }
 
         [HttpPost]

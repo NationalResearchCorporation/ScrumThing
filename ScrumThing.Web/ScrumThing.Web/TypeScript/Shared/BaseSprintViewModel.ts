@@ -1,4 +1,6 @@
-﻿module ScrumThing {
+﻿/// <reference path="Models\StoryTag.ts" />
+
+module ScrumThing {
     export class BaseSprintViewModel extends ScrumThing.BaseViewModel {
         public sprints: KnockoutObservableArray<Sprint> = ko.observableArray<Sprint>();
         public sprintId: KnockoutObservable<number> = ko.observable<number>();
@@ -18,7 +20,8 @@
         public committedTasks: KnockoutComputed<Task[]>;
         
         public sprintIsEmpty: KnockoutComputed<boolean>;
-        public storyTags: KnockoutObservableArray<RawStoryTag>;
+        public storyTags: KnockoutObservableArray<StoryTag> = ko.observableArray<StoryTag>([]);
+        public enabledStoryTags: KnockoutComputed<Array<StoryTag>>;
         public taskTags: KnockoutObservableArray<RawTaskTag>;
 
         public stories: KnockoutObservableArray<Story> = ko.observableArray<Story>();
@@ -98,11 +101,15 @@
                 return this.stories().length == 0;
             });
 
-            this.GetStoryTags();
+            this.enabledStoryTags = ko.computed(() => {
+                return _.filter(this.storyTags(), (tag) => tag.Enabled());
+            });
+
             this.GetTaskTags();
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
             this.currentTeam.subscribe(this.GetSprints, this);
+            this.currentTeam.subscribe(this.GetStoryTags, this);
 
             this.sprintName.subscribe(this.UpdateSprint, this);
 
@@ -202,18 +209,23 @@
         }
 
         public GetStoryTags() {
-            this.storyTags = ko.observableArray<RawStoryTag>();
-
-            jQuery.ajax({
-                type: 'POST',
-                url: '/PlanSprint/GetStoryTags',
-                success: (data: Array<RawStoryTag>) => {
-                    this.storyTags(data);
-                },
-                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
-                    toastr.error("Failed to get story tags: " + errorThrown);
-                }
-            });
+            if (this.currentTeam()) {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/PlanSprint/GetStoryTags',
+                    data: {
+                        TeamId: this.currentTeam().TeamId
+                    },
+                    success: (data: Array<RawStoryTag>) => {
+                        var inflated = _.map(data, (tag) => new StoryTag(tag));
+                        var sorted = _.sortBy(inflated, (tag) => tag.Ordinal());
+                        this.storyTags(sorted);
+                    },
+                    error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                        toastr.error("Failed to get story tags: " + errorThrown);
+                    }
+                });
+            }
         }
 
         public GetTaskTags() {

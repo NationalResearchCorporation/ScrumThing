@@ -199,6 +199,8 @@
     <Compile Include="Controllers\ViewSprintController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Database\BaseRepository.cs" />
+    <Compile Include="Database\Inputs\GetStoryTags.cs" />
+    <Compile Include="Database\Inputs\UpdateTeamStoryTagSetting.cs" />
     <Compile Include="Database\Inputs\RemoveStoryTag.cs" />
     <Compile Include="Database\Inputs\AddStoryTag.cs" />
     <Compile Include="Database\Inputs\GetPersonalActionLog.cs" />
@@ -476,6 +478,7 @@
     <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\Log.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\Task.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\PersonalActionLog\TimePeriod.ts" />
+    <TypeScriptCompile Include="TypeScript\Shared\Models\StoryTag.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawTaskTag.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawAssignment.ts" />
     <TypeScriptCompile Include="TypeScript\Shared\Models\RawNote.ts" />

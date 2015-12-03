@@ -23,5 +23,10 @@ namespace ScrumThing.Web.Controllers {
         public JsonResult RemoveStoryTag(Input_RemoveStoryTag postData) {
             return Json(context.RemoveStoryTag(postData.StoryTagId));
         }
+
+        public JsonResult UpdateTeamStoryTagSetting(Input_UpdateTeamStoryTagSetting postData) {
+            context.UpdateTeamStoryTagSetting(postData.TeamId, postData.StoryTagId, postData.Enabled);
+            return Json(true);
+        }
     }
 }

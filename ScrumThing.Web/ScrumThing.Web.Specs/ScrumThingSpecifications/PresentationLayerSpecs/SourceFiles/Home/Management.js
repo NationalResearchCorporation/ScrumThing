@@ -22,7 +22,7 @@ var ScrumThing;
                             StoryTagDescription: _this.NewStoryTagDescription()
                         },
                         success: function (rawStoryTag) {
-                            _this.storyTags.push(rawStoryTag);
+                            _this.storyTags.push(new ScrumThing.StoryTag(rawStoryTag));
                             _this.NewStoryTagDescription("");
                         },
                         error: function (xhr, textStatus, errorThrown) {
@@ -50,7 +50,28 @@ var ScrumThing;
                         },
                     });
                 };
-                this.GetStoryTags();
+                this.SetStoryTagEnabled = function (storyTag, enabled) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/Management/UpdateTeamStoryTagSetting',
+                        data: {
+                            TeamId: _this.currentTeam().TeamId,
+                            StoryTagId: storyTag.StoryTagId,
+                            Enabled: enabled
+                        },
+                        success: function (success) {
+                            if (success) {
+                                storyTag.Enabled(enabled);
+                            }
+                            else {
+                                toastr.info("Failed to update story tag");
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            toastr.error("Failed to update story tag: " + errorThrown);
+                        },
+                    });
+                };
                 this.showSprintDropdown(false);
             }
             return Management;

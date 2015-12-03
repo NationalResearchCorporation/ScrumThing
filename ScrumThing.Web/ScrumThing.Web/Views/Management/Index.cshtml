@@ -20,6 +20,12 @@
                             <tr>
                                 <td data-bind="text: StoryTagDescription"></td>
                                 <td>
+                                    <!-- ko if: Enabled() -->
+                                        <button class="btn btn-warning" data-bind="click: function() { $root.SetStoryTagEnabled($data, false) }">Disable</button>
+                                    <!-- /ko -->
+                                    <!-- ko if: !Enabled() -->
+                                        <button class="btn btn-success" data-bind="click: function() { $root.SetStoryTagEnabled($data, true) }">Enable</button>
+                                    <!-- /ko -->
                                     <button class="btn btn-danger" data-bind="click: function() { $root.RemoveStoryTag($data) }">Delete</button>
                                 </td>
                             </tr>

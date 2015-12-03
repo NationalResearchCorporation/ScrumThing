@@ -9,6 +9,9 @@ BEGIN
     END
     ELSE
     BEGIN
+        DELETE TeamStoryTagSettings
+        WHERE StoryTagId = @StoryTagId
+
         DELETE StoryTags
         WHERE StoryTagId = @StoryTagId
 

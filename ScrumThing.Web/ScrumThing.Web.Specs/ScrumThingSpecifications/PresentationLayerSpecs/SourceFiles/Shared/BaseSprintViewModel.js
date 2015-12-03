@@ -1,3 +1,4 @@
+/// <reference path="Models\StoryTag.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,6 +17,7 @@ var ScrumThing;
             this.sprintName = ko.observable();
             this.newSprintName = ko.observable();
             this.resources = ko.observableArray();
+            this.storyTags = ko.observableArray([]);
             this.stories = ko.observableArray();
             this.searchTerms = ko.observable("");
             this.RefreshData = function () {
@@ -71,11 +73,14 @@ var ScrumThing;
             this.sprintIsEmpty = ko.computed(function () {
                 return _this.stories().length == 0;
             });
-            this.GetStoryTags();
+            this.enabledStoryTags = ko.computed(function () {
+                return _.filter(_this.storyTags(), function (tag) { return tag.Enabled(); });
+            });
             this.GetTaskTags();
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
             this.currentTeam.subscribe(this.GetSprints, this);
+            this.currentTeam.subscribe(this.GetStoryTags, this);
             this.sprintName.subscribe(this.UpdateSprint, this);
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
@@ -171,17 +176,23 @@ var ScrumThing;
         };
         BaseSprintViewModel.prototype.GetStoryTags = function () {
             var _this = this;
-            this.storyTags = ko.observableArray();
-            jQuery.ajax({
-                type: 'POST',
-                url: '/PlanSprint/GetStoryTags',
-                success: function (data) {
-                    _this.storyTags(data);
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    toastr.error("Failed to get story tags: " + errorThrown);
-                }
-            });
+            if (this.currentTeam()) {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/PlanSprint/GetStoryTags',
+                    data: {
+                        TeamId: this.currentTeam().TeamId
+                    },
+                    success: function (data) {
+                        var inflated = _.map(data, function (tag) { return new ScrumThing.StoryTag(tag); });
+                        var sorted = _.sortBy(inflated, function (tag) { return tag.Ordinal(); });
+                        _this.storyTags(sorted);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        toastr.error("Failed to get story tags: " + errorThrown);
+                    }
+                });
+            }
         };
         BaseSprintViewModel.prototype.GetTaskTags = function () {
             var _this = this;

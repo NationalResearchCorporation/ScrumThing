@@ -25,10 +25,7 @@ AS
     DBCC CHECKIDENT ('dbo.Stories', RESEED, 0) WITH NO_INFOMSGS;
     DBCC CHECKIDENT ('dbo.Sprints', RESEED, 0) WITH NO_INFOMSGS;
 
-	INSERT UserIdentities VALUES
-		('ResourceUser', 'First', 'Last'),
-		('UserIdentity1', 'First', 'Last'),
-		('UserIdentity2', 'First', 'Last')
+    INSERT UserIdentities (UserIdentity) VALUES ('UserIdentity1'), ('UserIdentity2'), ('Unknown'), ('ResourceUser')
 
     INSERT Users VALUES
 		('ResourceUser', 'resourceuser@nrc.com', 'ResourceUser'),

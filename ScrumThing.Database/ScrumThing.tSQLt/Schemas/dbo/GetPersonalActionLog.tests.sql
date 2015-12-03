@@ -26,10 +26,12 @@ GO
 CREATE PROCEDURE GetPersonalActionLog.Test_InvalidWindowSize_ThrowsException
 AS
 BEGIN
+    INSERT INTO UserIdentities (UserIdentity) VALUES ('UserIdentity3')
+
     INSERT INTO Users 
         (UserName   , UserIdentity)
     VALUES 
-        ('UserName1', 'UserIdentity1')
+        ('UserName1', 'UserIdentity3')
 
     EXEC tSQLt.ExpectException N'The supplied time scale is invalid.'
 

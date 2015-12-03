@@ -6,8 +6,6 @@ module ScrumThing.ViewModels {
         constructor() {
             super();
 
-            this.GetStoryTags();
-
             this.showSprintDropdown(false);
         }
 
@@ -19,7 +17,7 @@ module ScrumThing.ViewModels {
                     StoryTagDescription: this.NewStoryTagDescription()
                 },
                 success: (rawStoryTag: RawStoryTag) => {
-                    this.storyTags.push(rawStoryTag);
+                    this.storyTags.push(new StoryTag(rawStoryTag));
                     this.NewStoryTagDescription("");
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
@@ -44,6 +42,28 @@ module ScrumThing.ViewModels {
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
                     toastr.error("Failed to remove story tag: " + errorThrown);
+                },
+            });
+        }
+
+        public SetStoryTagEnabled = (storyTag: StoryTag, enabled: boolean) => {
+            jQuery.ajax({
+                type: 'POST',
+                url: '/Management/UpdateTeamStoryTagSetting',
+                data: {
+                    TeamId: this.currentTeam().TeamId,
+                    StoryTagId: storyTag.StoryTagId,
+                    Enabled: enabled
+                },
+                success: (success: boolean) => {
+                    if (success) {
+                        storyTag.Enabled(enabled);
+                    } else {
+                        toastr.info("Failed to update story tag");
+                    }
+                },
+                error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
+                    toastr.error("Failed to update story tag: " + errorThrown);
                 },
             });
         }

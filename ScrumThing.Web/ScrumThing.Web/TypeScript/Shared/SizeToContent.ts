@@ -1,11 +1,13 @@
 ﻿module ScrumThing {
     (<any>ko.bindingHandlers).sizeToContent = {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            element.style.resize = 'none';
+            element.style.resize = 'vertical';
+            $(element).on('input', function () { sizeToContent(element); });
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            sizeToContent(element);
-            $(element).on('input', function () { sizeToContent(element); });
+            // Calling sizeToContent here is desirable, but causes performance issues right now when there are
+            // a large number of stories/tasks. Commenting out until a way is found to reduce the performance issues. 
+            //sizeToContent(element);
         }
     };
 

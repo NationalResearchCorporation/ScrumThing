@@ -2,11 +2,10 @@ var ScrumThing;
 (function (ScrumThing) {
     ko.bindingHandlers.sizeToContent = {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            element.style.resize = 'none';
+            element.style.resize = 'vertical';
+            $(element).on('input', function () { sizeToContent(element); });
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            sizeToContent(element);
-            $(element).on('input', function () { sizeToContent(element); });
         }
     };
     function sizeToContent(element) {

@@ -187,7 +187,7 @@ var ScrumThing;
                 _this.AnyAssignmentMatches(term) ||
                 _this.AnyTaskTextMatches(term) ||
                 _this.AnyStoryTagMatches(term) ||
-                _this.AnyOrdinalMatches(term); });
+                _this.StoryOrdinalMatches(term); });
         };
         Story.prototype.StoryTextMatches = function (term) {
             return this.SearchableStoryText().indexOf(term) != -1;
@@ -203,9 +203,8 @@ var ScrumThing;
         Story.prototype.AnyStoryTagMatches = function (term) {
             return _.any(this.StoryTags(), function (storyTag) { return storyTag.StoryTagDescription.toLowerCase().indexOf(term) != -1; });
         };
-        Story.prototype.AnyOrdinalMatches = function (term) {
-            return this.Ordinal().toString() == term ||
-                _.any(this.Tasks(), function (task) { return task.Ordinal().toString() == term; });
+        Story.prototype.StoryOrdinalMatches = function (term) {
+            return this.Ordinal().toString() == term;
         };
         return Story;
     })();

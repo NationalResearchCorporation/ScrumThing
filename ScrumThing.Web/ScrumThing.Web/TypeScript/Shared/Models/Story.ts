@@ -254,7 +254,7 @@ module ScrumThing {
         }
 
         public StoryOrdinalMatches(term: string): boolean {
-            return this.Ordinal().toString() == term;
+            return this.Ordinal().toString().indexOf(term) != -1;
         }
     }
 }

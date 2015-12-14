@@ -204,7 +204,7 @@ var ScrumThing;
             return _.any(this.StoryTags(), function (storyTag) { return storyTag.StoryTagDescription.toLowerCase().indexOf(term) != -1; });
         };
         Story.prototype.StoryOrdinalMatches = function (term) {
-            return this.Ordinal().toString() == term;
+            return this.Ordinal().toString().indexOf(term) != -1;
         };
         return Story;
     })();

@@ -86,7 +86,7 @@
 
 
                     <h2>Task Notes</h2>
-                    <textarea class="form-control" data-bind="text: newNote, value: newNote" placeholder="Add note"></textarea>
+                    <textarea class="form-control" data-bind="markdown: newNote" placeholder="Add note"></textarea>
                     <input class="btn btn-default" type="button" value="Add Note" data-bind="click: $root.AddNote" />
 
                     <!-- TODO: fix ALLLLL this -->
@@ -95,8 +95,8 @@
                     <div class="list-group">
                         <!-- ko foreach: currentTask().Notes -->
                         <span class="list-group-item">
-                            <span class="badge" data-bind="text: UserName() + ' - ' + DisplayTimestamp()"></span>
-                            <span data-bind="text: Note"></span>
+                            <span class="label label-info pull-left" data-bind="text: UserName() + ' - ' + DisplayTimestamp()"></span>
+                            <textarea data-bind="markdown: Note, previewOnly: true"></textarea>
                         </span>
                         <!-- /ko -->
                     </div>

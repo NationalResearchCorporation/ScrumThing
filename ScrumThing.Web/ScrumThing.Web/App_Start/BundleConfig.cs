@@ -40,7 +40,10 @@ namespace ScrumThing.Web {
                       "~/Scripts/moment.js",
                       "~/Scripts/moment-with-locales.js",
                       "~/Scripts/bootstrap-datetimepicker.js",
-                      "~/Scripts/bootstrap-multiselect.js"));
+                      "~/Scripts/bootstrap-multiselect.js",
+                      "~/Scripts/markdown.js",
+                      "~/Scripts/to-markdown.js",
+                      "~/Scripts/bootstrap-markdown.js"));
 
             bundles.Add(new LicensedScriptBundle("~/bundles/toastr").Include(
                       "~/Scripts/toastr.js"));
@@ -50,7 +53,8 @@ namespace ScrumThing.Web {
                       "~/TypeScript/Shared/Utility.js",
                       "~/TypeScript/Shared/SizeToContent.js",
                       "~/TypeScript/Knockout/DateTimePickerBinding.js",
-                      "~/TypeScript/Knockout/TooltipBinding.js"));
+                      "~/TypeScript/Knockout/TooltipBinding.js",
+                      "~/TypeScript/Knockout/MarkdownBinding.js"));
 
             bundles.Add(new LicensedScriptBundle("~/bundles/scrumthing").Include(
                       "~/TypeScript/Shared/Globals.js",
@@ -94,6 +98,7 @@ namespace ScrumThing.Web {
                       "~/Content/bootstrap-multiselect.css",
                       "~/Content/font-awesome.css",
                       "~/Content/bootstrap-datetimepicker.css",
+                      "~/Content/bootstrap-markdown/bootstrap-markdown.css",
                       "~/Content/Site.css"));
 
             #if !DEBUG

@@ -88,12 +88,16 @@ var ScrumThing;
         };
         ViewSprintViewModel.prototype.AddNote = function () {
             var _this = this;
+            var noteToAdd = this.newNote();
+            if (noteToAdd == null || noteToAdd == "") {
+                return;
+            }
             jQuery.ajax({
                 type: 'POST',
                 url: '/ViewSprint/AddNote',
                 data: {
                     TaskId: this.currentTask().TaskId,
-                    Note: this.newNote()
+                    Note: noteToAdd
                 },
                 success: function (data) {
                     _this.newNote('');

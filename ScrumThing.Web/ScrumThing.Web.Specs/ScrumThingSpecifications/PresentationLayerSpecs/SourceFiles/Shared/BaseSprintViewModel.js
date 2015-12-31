@@ -77,17 +77,20 @@ var ScrumThing;
                 return _.filter(_this.storyTags(), function (tag) { return tag.Enabled(); });
             });
             this.GetTaskTags();
+            this.sprintId.subscribe(function () {
+                jQuery.cookie('sprint-' + _this.currentTeam().TeamId, _this.sprintId);
+            });
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
-            this.currentTeam.subscribe(this.GetSprints, this);
+            this.currentTeam.subscribe(function () { return _this.GetSprints(0); }, this);
             this.currentTeam.subscribe(this.GetStoryTags, this);
-            this.sprintName.subscribe(this.UpdateSprint, this);
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
             });
         }
-        BaseSprintViewModel.prototype.GetSprints = function () {
+        BaseSprintViewModel.prototype.GetSprints = function (selectedSprintId) {
             var _this = this;
+            if (selectedSprintId === void 0) { selectedSprintId = 0; }
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/GetSprints',
@@ -96,9 +99,16 @@ var ScrumThing;
                 },
                 success: function (rawSprints) {
                     _this.sprints(_.map(rawSprints, function (rawSprint) { return new ScrumThing.Sprint(rawSprint); }));
-                    if (rawSprints.length > 0) {
-                        _this.sprintId(rawSprints[rawSprints.length - 1].SprintId);
-                        _this.sprintName(rawSprints[rawSprints.length - 1].Name);
+                    if (rawSprints.length < 0)
+                        return;
+                    if (selectedSprintId > 0) {
+                        _this.SwitchSprintById(selectedSprintId);
+                    }
+                    else if (jQuery.cookie('sprint-' + _this.currentTeam().TeamId) > 0) {
+                        _this.SwitchSprintById(jQuery.cookie('sprint-' + _this.currentTeam().TeamId));
+                    }
+                    else {
+                        _this.SwitchSprint(rawSprints[0].SprintId, rawSprints[0].Name);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -112,6 +122,17 @@ var ScrumThing;
                 _this.sprintId(newSprintId);
                 _this.sprintName(newSprintName);
             };
+        };
+        BaseSprintViewModel.prototype.SwitchSprint = function (sprintId, sprintName) {
+            this.sprintId(sprintId);
+            this.sprintName(sprintName);
+        };
+        BaseSprintViewModel.prototype.SwitchSprintById = function (sprintId) {
+            this.SwitchSprint(sprintId, this.GetSprintNameFromId(sprintId));
+        };
+        BaseSprintViewModel.prototype.GetSprintNameFromId = function (sprintId) {
+            var sprint = _.find(this.sprints(), function (s) { return s.SprintId == sprintId; });
+            return sprint.Name();
         };
         BaseSprintViewModel.prototype.OpenAddSprintModal = function () {
             this.newSprintName('');
@@ -127,7 +148,7 @@ var ScrumThing;
                     Name: this.newSprintName()
                 },
                 success: function (sprintId) {
-                    _this.GetSprints();
+                    _this.GetSprints(sprintId);
                     jQuery("#createNewSprintModal").modal('hide');
                 },
                 error: function (xhr, textStatus, errorThrown) {

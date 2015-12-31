@@ -231,7 +231,8 @@ module ScrumThing {
             return _.all(searchTerms, (term) => this.StoryTextMatches(term) ||
                 this.AnyAssignmentMatches(term) ||
                 this.AnyTaskTextMatches(term) ||
-                this.AnyStoryTagMatches(term));
+                this.AnyStoryTagMatches(term) ||
+                this.StoryOrdinalMatches(term));
         }
 
         public StoryTextMatches(term: string): boolean {
@@ -250,6 +251,10 @@ module ScrumThing {
 
         public AnyStoryTagMatches(term: string): boolean {
             return _.any(this.StoryTags(), (storyTag) => storyTag.StoryTagDescription.toLowerCase().indexOf(term) != -1);
+        }
+
+        public StoryOrdinalMatches(term: string): boolean {
+            return this.Ordinal().toString().indexOf(term) != -1;
         }
     }
 }

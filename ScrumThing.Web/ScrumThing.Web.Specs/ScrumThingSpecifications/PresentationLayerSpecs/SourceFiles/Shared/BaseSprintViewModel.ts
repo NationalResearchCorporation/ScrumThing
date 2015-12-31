@@ -106,19 +106,24 @@ module ScrumThing {
             });
 
             this.GetTaskTags();
+
+            this.sprintId.subscribe(
+                jQuery.cookie('sprint-' + this.currentTeam().TeamId, this.sprintId);
+            );
             this.sprintId.subscribe(this.GetResources, this);
             this.sprintId.subscribe(this.GetSprintInfo, this);
-            this.currentTeam.subscribe(this.GetSprints, this);
+            
+            this.currentTeam.subscribe(() => this.GetSprints(0), this);
             this.currentTeam.subscribe(this.GetStoryTags, this);
 
-            this.sprintName.subscribe(this.UpdateSprint, this);
+            //this.sprintName.subscribe(this.UpdateSprint, this);
 
             jQuery(function () {
                 jQuery('table').stickyTableHeaders();
             });
         }
 
-        public GetSprints() {
+        public GetSprints(selectedSprintId: number = 0) {
             jQuery.ajax({
                 type: 'POST',
                 url: '/PlanSprint/GetSprints',
@@ -128,9 +133,16 @@ module ScrumThing {
                 success: (rawSprints: Array<RawSprint>) => {
                     this.sprints(_.map(rawSprints, (rawSprint: RawSprint) => new Sprint(rawSprint)));
 
-                    if (rawSprints.length > 0) {
-                        this.sprintId(rawSprints[rawSprints.length - 1].SprintId);
-                        this.sprintName(rawSprints[rawSprints.length - 1].Name);
+                    if (rawSprints.length < 0) return;
+
+                    if (selectedSprintId > 0) { //force-select a sprint
+                        this.SwitchSprintById(selectedSprintId);
+                    }
+                    else if (jQuery.cookie('sprint-' + this.currentTeam().TeamId) > 0) { //check for a cookie
+                        this.SwitchSprintById(jQuery.cookie('sprint-' + this.currentTeam().TeamId));
+                    }
+                    else { //select to top in the list
+                        this.SwitchSprint(rawSprints[0].SprintId, rawSprints[0].Name);
                     }
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {
@@ -144,6 +156,20 @@ module ScrumThing {
                 this.sprintId(newSprintId);
                 this.sprintName(newSprintName);
             };
+        }
+
+        public SwitchSprint(sprintId: number, sprintName: string) {
+            this.sprintId(sprintId);
+            this.sprintName(sprintName);
+        }
+
+        public SwitchSprintById(sprintId: number) {
+            this.SwitchSprint(sprintId, this.GetSprintNameFromId(sprintId)); 
+        }
+
+        public GetSprintNameFromId(sprintId: number) {
+            var sprint = _.find(this.sprints(), (s: Sprint) => s.SprintId == sprintId);
+            return sprint.Name();
         }
 
         public OpenAddSprintModal() {
@@ -160,7 +186,7 @@ module ScrumThing {
                     Name: this.newSprintName()
                 },
                 success: (sprintId: number) => {
-                    this.GetSprints();
+                    this.GetSprints(sprintId);
                     jQuery("#createNewSprintModal").modal('hide');
                 },
                 error: (xhr: JQueryXHR, textStatus: string, errorThrown: string) => {

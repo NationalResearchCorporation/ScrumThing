@@ -15,7 +15,7 @@ var ScrumThing;
                 return _this.currentTeam() ? _this.currentTeam().TeamName : '';
             });
             this.currentTeam.subscribe(function () {
-                jQuery.cookie('team', _this.currentTeam().TeamName);
+                jQuery.cookie('team', _this.currentTeam().TeamName, { expires: 365 });
             });
         }
         BaseViewModel.prototype.GetTeams = function () {

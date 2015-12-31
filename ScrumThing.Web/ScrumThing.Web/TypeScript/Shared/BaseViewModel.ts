@@ -24,7 +24,7 @@ module ScrumThing {
             });
 
             this.currentTeam.subscribe(() => {
-                jQuery.cookie('team', this.currentTeam().TeamName);
+                jQuery.cookie('team', this.currentTeam().TeamName, { expires: 365 });
             });
         }
 

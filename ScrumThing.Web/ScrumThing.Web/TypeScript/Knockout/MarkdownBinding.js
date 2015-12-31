@@ -1,14 +1,14 @@
 // This binding currently assumes that the valueAccessor is an observable.
 ko.bindingHandlers.markdown = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        var previewOnly = allBindings.get('previewOnly') || false;
+        var previewOnly = ko.unwrap(allBindings.get('previewOnly')) || false;
         var value = valueAccessor();
         var optionsForPreviewOnly = {
             hiddenButtons: 'all',
             fullscreen: {
                 enable: false
             },
-            footer: '<div></div>',
+            resize: "vertical",
             onShow: function (e) {
                 e.setContent(value());
                 e.showPreview();
@@ -26,6 +26,7 @@ ko.bindingHandlers.markdown = {
             fullscreen: {
                 enable: false
             },
+            resize: "vertical",
             onChange: function (e) {
                 value(e.getContent());
             },
@@ -33,10 +34,7 @@ ko.bindingHandlers.markdown = {
                 e.setContent(value());
             }
         };
-        var options = optionsForStandardView;
-        if (previewOnly === true) {
-            options = optionsForPreviewOnly;
-        }
+        var options = previewOnly ? optionsForPreviewOnly : optionsForStandardView;
         jQuery(element).markdown(options);
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
